@@ -1,0 +1,51 @@
+﻿body {
+    padding-top: 70px;
+    padding-bottom: 20px;
+    background-color: darkgray;
+}
+
+html {
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.champion-list-group .list-group-item{
+    height: 75px;
+}
+
+.champion-thumbnail {
+    background-repeat: no-repeat;
+    background-size:contain;
+    height: 53px;
+    width: 53px;
+    display: inline-block;
+}
+
+.result {
+    padding-left: 10px;
+    position: relative;
+    vertical-align: middle;
+    font-weight: bold;
+    color:black;
+}
+
+.result.success{
+}

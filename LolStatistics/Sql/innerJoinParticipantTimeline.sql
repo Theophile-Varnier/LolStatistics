@@ -1,0 +1,24 @@
+select * from participant_timeline pt
+	LEFT JOIN participant_timeline_data pdt1 on pdt1.ID = pt.ANCIENT_GOLEM_ASSISTS_PER_MIN_COUNTS
+	LEFT JOIN participant_timeline_data pdt2 on pdt2.ID = pt.ANCIENT_GOLEM_KILLS_PER_MIN_COUNTS
+	LEFT JOIN participant_timeline_data pdt3 on pdt3.ID = pt.ASSISTED_LANE_DEATHS_PER_MIN_DELTAS
+	LEFT JOIN participant_timeline_data pdt4 on pdt4.ID = pt.ASSISTED_LANE_KILLS_PER_MIN_DELTAS
+	LEFT JOIN participant_timeline_data pdt5 on pdt5.ID = pt.BARON_ASSISTS_PER_MIN_COUNTS
+	LEFT JOIN participant_timeline_data pdt6 on pdt6.ID = pt.BARON_KILLS_PER_MIN_COUNTS
+	LEFT JOIN participant_timeline_data pdt7 on pdt7.ID = pt.CREEPS_PER_MIN_DELTAS
+	LEFT JOIN participant_timeline_data pdt8 on pdt8.ID = pt.CS_DIFF_PER_MIN_DELTAS
+	LEFT JOIN participant_timeline_data pdt9 on pdt9.ID = pt.DAMAGE_TAKEN_DIFF_PER_MIN_DELTAS
+	LEFT JOIN participant_timeline_data pdt10 on pdt10.ID = pt.DAMAGE_TAKEN_PER_MIN_DELTAS
+	LEFT JOIN participant_timeline_data pdt11 on pdt11.ID = pt.DRAGON_ASSISTS_PER_MIN_COUNTS
+	LEFT JOIN participant_timeline_data pdt12 on pdt12.ID = pt.DRAGON_KILLS_PER_MIN_COUNTS
+	LEFT JOIN participant_timeline_data pdt13 on pdt13.ID = pt.ELDER_LIZARD_ASSISTS_PER_MIN_COUNTS
+	LEFT JOIN participant_timeline_data pdt14 on pdt14.ID = pt.ELDER_LIZARD_KILLS_PER_MIN_COUNTS
+	LEFT JOIN participant_timeline_data pdt15 on pdt15.ID = pt.GOLD_PER_MIN_DELTAS
+	LEFT JOIN participant_timeline_data pdt16 on pdt16.ID = pt.INHIBITOR_ASSISTS_PER_MIN_COUNTS
+	LEFT JOIN participant_timeline_data pdt17 on pdt17.ID = pt.INHIBITOR_KILLS_PER_MIN_COUNTS
+	LEFT JOIN participant_timeline_data pdt16 on pdt16.ID = pt.TOWER_ASSISTS_PER_MIN_COUNTS
+	LEFT JOIN participant_timeline_data pdt16 on pdt16.ID = pt.TOWER_KILLS_PER_MIN_COUNTS
+	LEFT JOIN participant_timeline_data pdt16 on pdt16.ID = pt.TOWER_KILLS_PER_MIN_DELTAS
+	LEFT JOIN participant_timeline_data pdt16 on pdt16.ID = pt.WARDS_PER_MIN_DELTAS
+	LEFT JOIN participant_timeline_data pdt16 on pdt16.ID = pt.XP_DIFF_PER_MIN_DELTAS
+	LEFT JOIN participant_timeline_data pdt16 on pdt16.ID = pt.XP_PER_MIN_DELTAS;

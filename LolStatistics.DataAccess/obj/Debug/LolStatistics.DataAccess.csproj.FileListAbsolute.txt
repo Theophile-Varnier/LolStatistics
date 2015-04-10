@@ -1,0 +1,16 @@
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.DataAccess\obj\Debug\LolStatistics.DataAccess.csprojResolveAssemblyReference.cache
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.DataAccess\bin\Debug\LolStatistics.DataAccess.dll.config
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.DataAccess\bin\Debug\LolStatistics.DataAccess.dll
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.DataAccess\bin\Debug\LolStatistics.DataAccess.pdb
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.DataAccess\bin\Debug\log4net.dll
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.DataAccess\bin\Debug\LolStatistics.Logger.dll
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.DataAccess\bin\Debug\LolStatistics.Model.dll
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.DataAccess\bin\Debug\MySql.Data.dll
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.DataAccess\bin\Debug\LolStatistics.Logger.pdb
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.DataAccess\bin\Debug\LolStatistics.Model.pdb
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.DataAccess\bin\Debug\log4net.xml
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.DataAccess\obj\Debug\LolStatistics.DataAccess.dll
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.DataAccess\obj\Debug\LolStatistics.DataAccess.pdb
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.DataAccess\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.DataAccess\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.DataAccess\bin\Debug\Newtonsoft.Json.xml

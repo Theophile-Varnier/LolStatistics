@@ -1,0 +1,9 @@
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.WebServiceConsumers\bin\Release\LolStatistics.WebServiceConsumers.dll
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.WebServiceConsumers\bin\Release\LolStatistics.WebServiceConsumers.pdb
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.WebServiceConsumers\bin\Release\log4net.dll
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.WebServiceConsumers\bin\Release\LolStatistics.Logger.dll
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.WebServiceConsumers\bin\Release\LolStatistics.Logger.pdb
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.WebServiceConsumers\bin\Release\log4net.xml
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.WebServiceConsumers\obj\Release\LolStatistics.WebServiceConsumers.csprojResolveAssemblyReference.cache
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.WebServiceConsumers\obj\Release\LolStatistics.WebServiceConsumers.dll
+C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.WebServiceConsumers\obj\Release\LolStatistics.WebServiceConsumers.pdb
