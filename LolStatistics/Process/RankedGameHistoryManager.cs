@@ -14,11 +14,11 @@ namespace LolStatistics.Process
     /// <summary>
     /// Gestionnaire d'historique de parties classées
     /// </summary>
-    public class RankedGameHistoryManager
+    public class RankedGameHistoryManager : IManager
     {
         private static readonly ILog logger = Logger.GetLogger(typeof(RankedGameHistoryManager));
 
-        private WebServiceConsumer<MatchHistory> matchHistoryWebServiceConsumer;
+        private readonly WebServiceConsumer<MatchHistory> matchHistoryWebServiceConsumer;
 
         private readonly RankedGameRepository rankedGameRepository = new RankedGameRepository();
 
@@ -37,13 +37,14 @@ namespace LolStatistics.Process
         /// </summary>
         public void Execute()
         {
+            logger.Info("Démarrage du traitement des historiques de parties classées");
             // Récupération de l'ensemble des membres
             IList<Summoner> summoners = summonerDao.Get();
 
             foreach (Summoner summoner in summoners)
             {
                 // Paramètres du web service
-                Dictionary<string, string> uriParams = new Dictionary<string, string> {{"SummonerId", summoner.Id.ToString(CultureInfo.InvariantCulture)}};
+                Dictionary<string, string> uriParams = new Dictionary<string, string> { { "SummonerId", summoner.Id.ToString(CultureInfo.InvariantCulture) } };
 
                 logger.Info("Récupération de l'historique des parties pour l'invocateur " + summoner.Name);
                 MatchHistory mh = matchHistoryWebServiceConsumer.Consume(uriParams);
@@ -57,6 +58,7 @@ namespace LolStatistics.Process
                     }
                 }
             }
+            logger.Info("Fin du traitement des historiques de parties classées");
         }
     }
 }

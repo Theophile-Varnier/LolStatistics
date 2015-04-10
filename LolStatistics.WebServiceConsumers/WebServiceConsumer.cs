@@ -45,7 +45,7 @@ namespace LolStatistics.WebServiceConsumers
         public T Consume(Dictionary<string, string> uriParameters = null)
         {
             // Création de l'url à appeler
-            string url = string.Concat(BaseUri, ReplaceParameters(WebServiceUri, uriParameters), "?api_key=", ConfigurationManager.AppSettings["ApiKey"]);
+            string url = string.Concat(BaseUri, ReplaceParameters(WebServiceUri, uriParameters), WebServiceUri.Contains("?") ? "&" : "?", "api_key=", ConfigurationManager.AppSettings["ApiKey"]);
             logger.Info(string.Concat("Appel au WebService ", url));
             try
             {

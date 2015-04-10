@@ -56,7 +56,7 @@ namespace LolStatistics.DataAccess.Dao
                         break;
                     default:
                         logger.Error(e.Message);
-                        throw new BaseDaoException("Erreur dans l'insertion en BD", e);
+                        throw new DaoException("Erreur dans l'insertion en BD : ", e);
                 }
             }
             finally
@@ -102,7 +102,7 @@ namespace LolStatistics.DataAccess.Dao
             catch (MySqlException e)
             {
                 logger.Error(e.Message);
-                throw new BaseDaoException("Erreur dans l'insertion en BD", e);
+                throw new DaoException("Erreur dans l'insertion en BD", e);
             }
             finally
             {

@@ -1,11 +1,8 @@
-﻿using LolStatistics.DataAccess.Dao;
+﻿using System.Collections.Generic;
+using LolStatistics.DataAccess.Dao;
 using LolStatistics.Model.Static;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace LolStatistics.Web.App_Start
+namespace LolStatistics.Web
 {
     public static class LolStatisticsCache
     {
@@ -27,13 +24,13 @@ namespace LolStatistics.Web.App_Start
         }
 
         /// <summary>
-        /// Accède au nom d'un champion à partir de son Id
+        /// Accède à un champion à partir de son Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public static Champion Champion(int id)
         {
-            return Champions[id] ?? null;
+            return Champions[id];
         }
     }
 }

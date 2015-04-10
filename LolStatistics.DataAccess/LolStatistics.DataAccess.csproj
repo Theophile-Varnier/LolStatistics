@@ -60,7 +60,7 @@
     <Compile Include="Repositories\GameHistoryRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\RankedGameRepository.cs" />
-    <Compile Include="Exceptions\BaseDaoException.cs" />
+    <Compile Include="Exceptions\DaoException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

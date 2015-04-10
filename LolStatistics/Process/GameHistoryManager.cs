@@ -14,7 +14,7 @@ namespace LolStatistics.Process
     /// <summary>
     /// Gestionnaire d'historique de parties
     /// </summary>
-    public class GameHistoryManager
+    public class GameHistoryManager : IManager
     {
         private static readonly ILog logger = Logger.GetLogger(typeof(GameHistoryManager));
 
@@ -45,6 +45,7 @@ namespace LolStatistics.Process
         /// </summary>
         public void Execute()
         {
+            logger.Info("Démarrage du traitement des historiques");
             // Récupération des membres
             IList<Summoner> summoners = summonerDao.Get();
             foreach (Summoner summoner in summoners)
@@ -64,6 +65,7 @@ namespace LolStatistics.Process
                     }
                 }
             }
+            logger.Info("Fin du traitement des historiques");
         }
     }
 }

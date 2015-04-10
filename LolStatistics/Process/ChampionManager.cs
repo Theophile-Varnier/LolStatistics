@@ -1,25 +1,22 @@
-﻿using LolStatistics.DataAccess.Dao;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using LolStatistics.DataAccess.Dao;
 using LolStatistics.Model.Static;
 using LolStatistics.WebServiceConsumers;
-using Quartz;
-using System.Configuration;
 
-namespace LolStatistics.Jobs
+namespace LolStatistics.Process
 {
-    /// <summary>
-    /// Classe chargée de récupérer les champions
-    /// Mise à jour une fois par jour
-    /// </summary>
-    public class ChampionsJob : IJob
+    public class ChampionManager : IManager
     {
+
         private readonly WebServiceConsumer<ListOfChampions> webServiceConsummer = new WebServiceConsumer<ListOfChampions>(ConfigurationManager.AppSettings["GlobalApiUrl"], ConfigurationManager.AppSettings["ChampionsUri"]);
         private readonly ChampionDao championDao = new ChampionDao();
 
-        /// <summary>
-        /// Exécution du job
-        /// </summary>
-        /// <param name="context">Le contexte d'exécution du Job</param>
-        public void Execute(IJobExecutionContext context)
+        public void Execute()
         {
             // Récupération des champions
             ListOfChampions champions = webServiceConsummer.Consume();

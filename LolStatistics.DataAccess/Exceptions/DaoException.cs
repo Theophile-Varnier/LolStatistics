@@ -5,17 +5,17 @@ namespace LolStatistics.DataAccess.Exceptions
     /// <summary>
     /// Dao Exception
     /// </summary>
-    public class BaseDaoException : Exception
+    public class DaoException : Exception
     {
-        public BaseDaoException()
+        public DaoException()
         {
 
         }
-        public BaseDaoException(string message)
+        public DaoException(string message)
         {
 
         }
-        public BaseDaoException(string message, Exception innerException)
+        public DaoException(string message, Exception innerException)
         {
 
         }
