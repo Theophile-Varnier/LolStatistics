@@ -1,6 +1,0 @@
-C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.Logger\bin\Release\LolStatistics.Logger.dll
-C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.Logger\bin\Release\LolStatistics.Logger.pdb
-C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.Logger\bin\Release\log4net.dll
-C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.Logger\bin\Release\log4net.xml
-C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.Logger\obj\Release\LolStatistics.Logger.dll
-C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.Logger\obj\Release\LolStatistics.Logger.pdb

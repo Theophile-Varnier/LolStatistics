@@ -1,4 +1,0 @@
-C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.Model\bin\Release\LolStatistics.Model.dll
-C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.Model\bin\Release\LolStatistics.Model.pdb
-C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.Model\obj\Release\LolStatistics.Model.dll
-C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.Model\obj\Release\LolStatistics.Model.pdb

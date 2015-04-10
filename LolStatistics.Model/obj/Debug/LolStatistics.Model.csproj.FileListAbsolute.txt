@@ -1,7 +1,0 @@
-C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.Model\bin\Debug\LolStatistics.Model.dll
-C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.Model\bin\Debug\LolStatistics.Model.pdb
-C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.Model\obj\Debug\LolStatistics.Model.dll
-C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.Model\obj\Debug\LolStatistics.Model.pdb
-C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.Model\bin\Debug\Newtonsoft.Json.dll
-C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.Model\bin\Debug\Newtonsoft.Json.pdb
-C:\Users\Théo\Documents\Programmation\C#\LolStatistics\LolStatistics.Model\bin\Debug\Newtonsoft.Json.xml
