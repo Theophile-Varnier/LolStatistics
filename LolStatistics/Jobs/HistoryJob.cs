@@ -1,4 +1,5 @@
 ﻿using log4net;
+using LolStatistics.Log;
 using LolStatistics.Process;
 using Quartz;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace LolStatistics.Jobs
     /// </summary>
     public class HistoryJob : IJob
     {
-        private static readonly ILog logger = Logger.Logger.GetLogger(typeof(HistoryJob));
+        private static readonly ILog logger = Logger.GetLogger(typeof(HistoryJob));
 
         private GameHistoryManager gameHistoryManager;
         private RankedGameHistoryManager rankedGameHistoryManager;

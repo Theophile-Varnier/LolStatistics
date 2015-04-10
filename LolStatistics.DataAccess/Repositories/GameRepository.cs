@@ -1,8 +1,10 @@
 ﻿using log4net;
 using LolStatistics.DataAccess.Dao;
+using LolStatistics.Log;
 using LolStatistics.Model.Game;
 using LolStatistics.Model.Participant;
 using System;
+using System.Globalization;
 
 namespace LolStatistics.DataAccess.Repositories
 {
@@ -11,7 +13,7 @@ namespace LolStatistics.DataAccess.Repositories
     /// </summary>
     public class GameRepository: IRepository<Game>
     {
-        private static readonly ILog logger = Logger.Logger.GetLogger(typeof(GameRepository));
+        private static readonly ILog logger = Logger.GetLogger(typeof(GameRepository));
 
         private GameDao gameDao = new GameDao();
         private RawStatsDao rawStatsDao = new RawStatsDao();
@@ -21,11 +23,11 @@ namespace LolStatistics.DataAccess.Repositories
         /// Insertion d'une partie
         /// </summary>
         /// <param name="game">Partie à insérer</param>
-        public void Map(Game game)
+        public void Insert(Game game)
         {
             gameDao.Insert(game);
             logger.Info("Insertion des statistiques");
-            game.Stats.GameId = game.GameId.ToString();
+            game.Stats.GameId = game.GameId.ToString(CultureInfo.InvariantCulture);
             rawStatsDao.Insert(game.Stats);
             logger.Info("Insertion des joueurs");
             foreach (Player player in game.FellowPlayers)
@@ -40,7 +42,7 @@ namespace LolStatistics.DataAccess.Repositories
         /// </summary>
         /// <param name="id">L'id de la partie à récupérer</param>
         /// <returns></returns>
-        public Game UnMap(string id)
+        public Game GetById(string id)
         {
             throw new NotImplementedException();
         }

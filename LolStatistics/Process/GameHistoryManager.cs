@@ -1,6 +1,7 @@
 ﻿using log4net;
 using LolStatistics.DataAccess.Dao;
 using LolStatistics.DataAccess.Repositories;
+using LolStatistics.Log;
 using LolStatistics.Model.App;
 using LolStatistics.Model.Game;
 using LolStatistics.WebServiceConsumers;
@@ -15,7 +16,7 @@ namespace LolStatistics.Process
     /// </summary>
     public class GameHistoryManager
     {
-        private static readonly ILog logger = Logger.Logger.GetLogger(typeof(GameHistoryManager));
+        private static readonly ILog logger = Logger.GetLogger(typeof(GameHistoryManager));
 
         private GameRepository gameDbMapper = new GameRepository();
         private SummonerDao summonerDao = new SummonerDao();
@@ -59,7 +60,7 @@ namespace LolStatistics.Process
                     foreach (Game game in gh.Games)
                     {
                         game.SummonerId = gh.SummonerId;
-                        gameDbMapper.Map(game);
+                        gameDbMapper.Insert(game);
                     }
                 }
             }

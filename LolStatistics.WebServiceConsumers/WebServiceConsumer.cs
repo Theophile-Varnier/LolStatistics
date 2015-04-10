@@ -1,4 +1,5 @@
 ﻿using log4net;
+using LolStatistics.Log;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,7 +17,7 @@ namespace LolStatistics.WebServiceConsumers
     /// <typeparam name="T">Le type de données renvoyées par le web service</typeparam>
     public class WebServiceConsumer<T> where T : class
     {
-        private static readonly ILog logger = Logger.Logger.GetLogger(typeof(WebServiceConsumer<T>));
+        private static readonly ILog logger = Logger.GetLogger(typeof(WebServiceConsumer<T>));
 
         private readonly string WebServiceUri;
 

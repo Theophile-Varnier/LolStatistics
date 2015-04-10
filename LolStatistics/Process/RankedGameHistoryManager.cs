@@ -1,12 +1,13 @@
-﻿using System.Globalization;
-using log4net;
+﻿using log4net;
 using LolStatistics.DataAccess.Dao;
 using LolStatistics.DataAccess.Repositories;
+using LolStatistics.Log;
 using LolStatistics.Model.App;
 using LolStatistics.Model.Game;
 using LolStatistics.WebServiceConsumers;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 
 namespace LolStatistics.Process
 {
@@ -15,7 +16,7 @@ namespace LolStatistics.Process
     /// </summary>
     public class RankedGameHistoryManager
     {
-        private static readonly ILog logger = Logger.Logger.GetLogger(typeof(RankedGameHistoryManager));
+        private static readonly ILog logger = Logger.GetLogger(typeof(RankedGameHistoryManager));
 
         private WebServiceConsumer<MatchHistory> matchHistoryWebServiceConsumer;
 
@@ -52,7 +53,7 @@ namespace LolStatistics.Process
                     foreach (RankedGame rg in mh.Matches)
                     {
                         rg.SummonerId = summoner.Id.ToString(CultureInfo.InvariantCulture);
-                        rankedGameRepository.Map(rg);
+                        rankedGameRepository.Insert(rg);
                     }
                 }
             }

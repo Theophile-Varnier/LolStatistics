@@ -14,13 +14,13 @@ namespace LolStatistics.DataAccess.Repositories
         /// Insertion d'un objet
         /// </summary>
         /// <param name="t">Objet à insérer</param>
-        void Map(T t);
+        void Insert(T t);
 
         /// <summary>
         /// Récupération en base depuis un id
         /// </summary>
         /// <param name="id">L'id de l'objet à récupérer</param>
         /// <returns></returns>
-        T UnMap(string id);
+        T GetById(string id);
     }
 }

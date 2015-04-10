@@ -1,6 +1,5 @@
 ﻿using LolStatistics.Model.Game;
 using MySql.Data.MySqlClient;
-using System;
 using System.Collections.Generic;
 
 namespace LolStatistics.DataAccess.Dao
@@ -90,8 +89,6 @@ namespace LolStatistics.DataAccess.Dao
                 SubType = reader.GetString("SUB_TYPE"),
                 TeamId = reader.GetInt32("TEAM_ID")
             };
-
-            // Renseignement des champs
 
             return res;
         }

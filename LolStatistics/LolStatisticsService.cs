@@ -1,5 +1,6 @@
 ﻿using log4net;
 using LolStatistics.Jobs;
+using LolStatistics.Log;
 using Quartz;
 using Quartz.Impl;
 using System.ServiceProcess;
@@ -8,7 +9,7 @@ namespace LolStatistics
 {
     public partial class LolStatisticsService : ServiceBase
     {
-        private static readonly ILog logger = Logger.Logger.GetLogger(typeof(LolStatisticsService));
+        private static readonly ILog logger = Logger.GetLogger(typeof(LolStatisticsService));
 
         private IScheduler scheduler;
 

@@ -15,7 +15,7 @@ namespace LolStatistics.DataAccess.Repositories
         /// Insertion d'un historique
         /// </summary>
         /// <param name="t">Historique à insérer</param>
-        public void Map(GameHistory t)
+        public void Insert(GameHistory t)
         {
             throw new NotImplementedException();
         }
@@ -25,7 +25,7 @@ namespace LolStatistics.DataAccess.Repositories
         /// </summary>
         /// <param name="id">L'id du membre</param>
         /// <returns>L'historique du membre</returns>
-        public GameHistory UnMap(string id)
+        public GameHistory GetById(string id)
         {
             GameDao gameDao = new GameDao();
             RawStatsDao rawStatsDao = new RawStatsDao();

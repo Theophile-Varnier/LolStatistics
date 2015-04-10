@@ -16,7 +16,7 @@ namespace LolStatistics.Web.Controllers
             GameHistoryViewModel model = new GameHistoryViewModel();
             GameDao gameDao = new GameDao();
             string summonerId = "25954150";
-            GameHistory gh = dbMapper.UnMap(summonerId);
+            GameHistory gh = dbMapper.GetById(summonerId);
             gh.Games = gh.Games.OrderBy(g => g.CreateDate).Reverse().ToList();
             model = GameHistoryMapper.MapToModel(gh);
             return View(model);

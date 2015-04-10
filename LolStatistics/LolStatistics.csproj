@@ -106,9 +106,9 @@
       <Project>{7ba370f6-3daa-42aa-b195-22c9f6238b3b}</Project>
       <Name>LolStatistics.DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LolStatistics.Logger\LolStatistics.Logger.csproj">
+    <ProjectReference Include="..\LolStatistics.Logger\LolStatistics.Log.csproj">
       <Project>{89e66974-bb0e-4e07-957f-0789501d4451}</Project>
-      <Name>LolStatistics.Logger</Name>
+      <Name>LolStatistics.Log</Name>
     </ProjectReference>
     <ProjectReference Include="..\LolStatistics.Model\LolStatistics.Model.csproj">
       <Project>{1cb54c30-62d5-4a0d-869f-23c668d864f1}</Project>

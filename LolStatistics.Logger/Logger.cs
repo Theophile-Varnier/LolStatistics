@@ -3,7 +3,7 @@ using log4net;
 using log4net.Config;
 
 [assembly: XmlConfigurator(ConfigFile = "log4net.config", Watch = true)]
-namespace LolStatistics.Logger
+namespace LolStatistics.Log
 {
     /// <summary>
     /// Classe statique pour récupérer un logger

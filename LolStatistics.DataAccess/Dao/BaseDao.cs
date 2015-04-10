@@ -1,5 +1,6 @@
 ﻿using log4net;
 using LolStatistics.DataAccess.Exceptions;
+using LolStatistics.Log;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace LolStatistics.DataAccess.Dao
     {
         protected MySqlConnection conn = new MySqlConnection(ConfigurationManager.AppSettings["DbConnectionString"]);
 
-        private static readonly ILog logger = Logger.Logger.GetLogger(typeof(BaseDao<T>));
+        private static readonly ILog logger = Logger.GetLogger(typeof(BaseDao<T>));
 
         /// <summary>
         /// Requête ne retournant pas de résultat
