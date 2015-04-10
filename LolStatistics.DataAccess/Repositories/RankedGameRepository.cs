@@ -1,31 +1,46 @@
-﻿using log4net;
+﻿using System.Globalization;
+using log4net;
 using LolStatistics.DataAccess.Dao;
 using LolStatistics.Model.Dto;
 using LolStatistics.Model.Game;
+using LolStatistics.Model.Mappers;
 using LolStatistics.Model.Participant;
 using System;
 
 namespace LolStatistics.DataAccess.Repositories
 {
+    /// <summary>
+    /// Repository associé aux parties classées
+    /// </summary>
     public class RankedGameRepository: IRepository<RankedGame>
     {
-        private static readonly ILog logger = Logger.GetLogger(typeof(RankedGameRepository));
+        private static readonly ILog logger = Logger.Logger.GetLogger(typeof(RankedGameRepository));
 
         private readonly RankedGameDao rankedGameDao = new RankedGameDao();
         private readonly ParticipantDao participantDao = new ParticipantDao();
         private readonly ParticipantStatsDao participantStatsDao = new ParticipantStatsDao();
         private readonly ParticipantTimelineDataDao participantTimelineDataDao = new ParticipantTimelineDataDao();
 
+        /// <summary>
+        /// Insertion d'une partie classée
+        /// </summary>
+        /// <param name="t">La partie classée à insérer</param>
         public void Map(RankedGame t)
         {
             logger.Debug("Insertion de la partie");
             rankedGameDao.Insert(t);
+
             logger.Debug("Insertion des participants");
             foreach (Participant participant in t.Participants)
             {
-                participant.MatchId = t.MatchId.ToString();
+                // Code à déplacer dans un mapper ?
+                participant.MatchId = t.MatchId.ToString(CultureInfo.InvariantCulture);
                 participant.ParticipantId = Guid.NewGuid().ToString();
-                ParticipantDto participantDto = ParticipantRepository.Map(participant);
+
+                // Récupération du dto
+                ParticipantDto participantDto = ParticipantMapper.Map(participant);
+
+                // Insertion en base
                 participantDao.Insert(participantDto);
                 participant.Stats.ParticipantId = participant.ParticipantId;
                 participantStatsDao.Insert(participant.Stats);
@@ -41,7 +56,11 @@ namespace LolStatistics.DataAccess.Repositories
             }
         }
 
-
+        /// <summary>
+        /// Récupération en base depuis un id
+        /// </summary>
+        /// <param name="id">L'id de la partie classée à récupérer</param>
+        /// <returns></returns>
         public RankedGame UnMap(string id)
         {
             throw new NotImplementedException();

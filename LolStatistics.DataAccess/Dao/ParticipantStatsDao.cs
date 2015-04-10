@@ -4,15 +4,18 @@ using System;
 
 namespace LolStatistics.DataAccess.Dao
 {
+    /// <summary>
+    /// Dao associée aux statistiques
+    /// </summary>
     public class ParticipantStatsDao : BaseDao<ParticipantStats>
     {
+        /// <summary>
+        /// Insert une série de statistiques en base
+        /// </summary>
+        /// <param name="participantStats">Les statistiques à insérer</param>
         public void Insert(ParticipantStats participantStats)
         {
-
-            // Création de la requête
-            using (MySqlCommand cmd = new MySqlCommand())
-            {
-                cmd.CommandText = "INSERT INTO PARTICIPANT_STATS("
+            const string cmd = "INSERT INTO PARTICIPANT_STATS("
             + "PARTICIPANT_ID, ASSISTS, CHAMP_LEVEL, COMBAT_PLAYER_SCORE, DEATHS, "
             + "DOUBLE_KILLS, FIRST_BLOOD_ASSIST, FIRST_BLOOD_KILL, FIRST_INHIBITOR_ASSIST, FIRST_INHIBITOR_KILL, "
             + "FIRST_TOWER_ASSIST, FIRST_TOWER_KILL, GOLD_EARNED, GOLD_SPENT, INHIBITOR_KILLS, "
@@ -42,83 +45,95 @@ namespace LolStatistics.DataAccess.Dao
 
                 // Exécution de la requête
                 ExecuteNonQuery(cmd, participantStats, addParameters);
-            }
-
         }
+
+        /// <summary>
+        /// Map un objet depuis un enregistrement
+        /// </summary>
+        /// <param name="reader">L'enregistrement à mapper</param>
+        /// <returns></returns>
         public override ParticipantStats RecordToDto(MySqlDataReader reader)
         {
-            ParticipantStats res = new ParticipantStats();
+            ParticipantStats res = new ParticipantStats
+            {
+                ParticipantId = reader.GetString("PARTICIPANT_ID"),
+                Assists = reader.GetInt64("ASSISTS"),
+                ChampLevel = reader.GetInt64("CHAMP_LEVEL"),
+                CombatPlayerScore = reader.GetInt64("COMBAT_PLAYER_SCORE"),
+                Deaths = reader.GetInt64("DEATHS"),
+                DoubleKills = reader.GetInt64("DOUBLE_KILLS"),
+                FirstBloodAssist = reader.GetBoolean("FIRST_BLOOD_ASSIST"),
+                FirstBloodKill = reader.GetBoolean("FIRST_BLOOD_KILL"),
+                FirstInhibitorAssist = reader.GetBoolean("FIRST_INHIBITOR_ASSIST"),
+                FirstInhibitorKill = reader.GetBoolean("FIRST_INHIBITOR_KILL"),
+                FirstTowerAssist = reader.GetBoolean("FIRST_TOWER_ASSIST"),
+                FirstTowerKill = reader.GetBoolean("FIRST_TOWER_KILL"),
+                GoldEarned = reader.GetInt64("GOLD_EARNED"),
+                GoldSpent = reader.GetInt64("GOLD_SPENT"),
+                InhibitorKills = reader.GetInt64("INHIBITOR_KILLS"),
+                Item0 = reader.GetInt64("ITEM0"),
+                Item1 = reader.GetInt64("ITEM1"),
+                Item2 = reader.GetInt64("ITEM2"),
+                Item3 = reader.GetInt64("ITEM3"),
+                Item4 = reader.GetInt64("ITEM4"),
+                Item5 = reader.GetInt64("ITEM5"),
+                Item6 = reader.GetInt64("ITEM6"),
+                KillingSprees = reader.GetInt64("KILLING_SPREES"),
+                Kills = reader.GetInt64("KILLS"),
+                LargestCriticalStrike = reader.GetInt64("LARGEST_CRITICAL_STRIKE"),
+                LargestKillingSpree = reader.GetInt64("LARGEST_KILLING_SPREE"),
+                LargestMultiKill = reader.GetInt64("LARGEST_MULTI_KILL"),
+                MagicDamageDealt = reader.GetInt64("MAGIC_DAMAGE_DEALT"),
+                MagicDamageDealtToChampions = reader.GetInt64("MAGIC_DAMAGE_DEALT_TO_CHAMPIONS"),
+                MagicDamageTaken = reader.GetInt64("MAGIC_DAMAGE_TAKEN"),
+                MinionsKilled = reader.GetInt64("MINIONS_KILLED"),
+                NeutralMinionsKilled = reader.GetInt64("NEUTRAL_MINIONS_KILLED"),
+                NeutralMinionsKilledEnemyJungle = reader.GetInt64("NEUTRAL_MINIONS_KILLED_ENEMY_JUNGLE"),
+                NeutralMinionsKilledTeamJungle = reader.GetInt64("NEUTRAL_MINIONS_KILLED_TEAM_JUNGLE"),
+                NodeCapture = reader.GetInt64("NODE_CAPTURE"),
+                NodeCaptureAssist = reader.GetInt64("NODE_CAPTURE_ASSIST"),
+                NodeNeutralize = reader.GetInt64("NODE_NEUTRALIZE"),
+                NodeNeutralizeAssist = reader.GetInt64("NODE_NEUTRALIZE_ASSIST"),
+                ObjectivePlayerScore = reader.GetInt64("OBJECTIVE_PLAYER_SCORE"),
+                PentaKills = reader.GetInt64("PENTA_KILLS"),
+                PhysicalDamageDealt = reader.GetInt64("PHYSICAL_DAMAGE_DEALT"),
+                PhysicalDamageDealtToChampions = reader.GetInt64("PHYSICAL_DAMAGE_DEALT_TO_CHAMPIONS"),
+                PhysicalDamageTaken = reader.GetInt64("PHYSICAL_DAMAGE_TAKEN"),
+                QuadraKills = reader.GetInt64("QUADRA_KILLS"),
+                SightWardsBoughtInGame = reader.GetInt64("SIGHT_WARDS_BOUGHT_IN_GAME"),
+                TeamObjective = reader.GetInt64("TEAM_OBJECTIVE"),
+                TotalDamageDealt = reader.GetInt64("TOTAL_DAMAGE_DEALT"),
+                TotalDamageDealtToChampions = reader.GetInt64("TOTAL_DAMAGE_DEALT_TO_CHAMPIONS"),
+                TotalDamageTaken = reader.GetInt64("TOTAL_DAMAGE_TAKEN"),
+                TotalHeal = reader.GetInt64("TOTAL_HEAL"),
+                TotalPlayerScore = reader.GetInt64("TOTAL_PLAYER_SCORE"),
+                TotalScoreRank = reader.GetInt64("TOTAL_SCORE_RANK"),
+                TotalTimeCrowdControlDealt = reader.GetInt64("TOTAL_TIME_CROWD_CONTROL_DEALT"),
+                TotalUnitsHealed = reader.GetInt64("TOTAL_UNITS_HEALED"),
+                TowerKills = reader.GetInt64("TOWER_KILLS"),
+                TripleKills = reader.GetInt64("TRIPLE_KILLS"),
+                TrueDamageDealt = reader.GetInt64("TRUE_DAMAGE_DEALT"),
+                TrueDamageDealtToChampions = reader.GetInt64("TRUE_DAMAGE_DEALT_TO_CHAMPIONS"),
+                TrueDamageTaken = reader.GetInt64("TRUE_DAMAGE_TAKEN"),
+                UnrealKills = reader.GetInt64("UNREAL_KILLS"),
+                VisionWardsBoughtInGame = reader.GetInt64("VISION_WARDS_BOUGHT_IN_GAME"),
+                WardsKilled = reader.GetInt64("WARDS_KILLED"),
+                WardsPlaced = reader.GetInt64("WARDS_PLACED"),
+                Winner = reader.GetBoolean("WINNER")
+            };
 
             // Renseignement des champs
-            res.ParticipantId = reader.GetString("PARTICIPANT_ID");
-            res.Assists = reader.GetInt64("ASSISTS");
-            res.ChampLevel = reader.GetInt64("CHAMP_LEVEL");
-            res.CombatPlayerScore = reader.GetInt64("COMBAT_PLAYER_SCORE");
-            res.Deaths = reader.GetInt64("DEATHS");
-            res.DoubleKills = reader.GetInt64("DOUBLE_KILLS");
-            res.FirstBloodAssist = reader.GetBoolean("FIRST_BLOOD_ASSIST");
-            res.FirstBloodKill = reader.GetBoolean("FIRST_BLOOD_KILL");
-            res.FirstInhibitorAssist = reader.GetBoolean("FIRST_INHIBITOR_ASSIST");
-            res.FirstInhibitorKill = reader.GetBoolean("FIRST_INHIBITOR_KILL");
-            res.FirstTowerAssist = reader.GetBoolean("FIRST_TOWER_ASSIST");
-            res.FirstTowerKill = reader.GetBoolean("FIRST_TOWER_KILL");
-            res.GoldEarned = reader.GetInt64("GOLD_EARNED");
-            res.GoldSpent = reader.GetInt64("GOLD_SPENT");
-            res.InhibitorKills = reader.GetInt64("INHIBITOR_KILLS");
-            res.Item0 = reader.GetInt64("ITEM0");
-            res.Item1 = reader.GetInt64("ITEM1");
-            res.Item2 = reader.GetInt64("ITEM2");
-            res.Item3 = reader.GetInt64("ITEM3");
-            res.Item4 = reader.GetInt64("ITEM4");
-            res.Item5 = reader.GetInt64("ITEM5");
-            res.Item6 = reader.GetInt64("ITEM6");
-            res.KillingSprees = reader.GetInt64("KILLING_SPREES");
-            res.Kills = reader.GetInt64("KILLS");
-            res.LargestCriticalStrike = reader.GetInt64("LARGEST_CRITICAL_STRIKE");
-            res.LargestKillingSpree = reader.GetInt64("LARGEST_KILLING_SPREE");
-            res.LargestMultiKill = reader.GetInt64("LARGEST_MULTI_KILL");
-            res.MagicDamageDealt = reader.GetInt64("MAGIC_DAMAGE_DEALT");
-            res.MagicDamageDealtToChampions = reader.GetInt64("MAGIC_DAMAGE_DEALT_TO_CHAMPIONS");
-            res.MagicDamageTaken = reader.GetInt64("MAGIC_DAMAGE_TAKEN");
-            res.MinionsKilled = reader.GetInt64("MINIONS_KILLED");
-            res.NeutralMinionsKilled = reader.GetInt64("NEUTRAL_MINIONS_KILLED");
-            res.NeutralMinionsKilledEnemyJungle = reader.GetInt64("NEUTRAL_MINIONS_KILLED_ENEMY_JUNGLE");
-            res.NeutralMinionsKilledTeamJungle = reader.GetInt64("NEUTRAL_MINIONS_KILLED_TEAM_JUNGLE");
-            res.NodeCapture = reader.GetInt64("NODE_CAPTURE");
-            res.NodeCaptureAssist = reader.GetInt64("NODE_CAPTURE_ASSIST");
-            res.NodeNeutralize = reader.GetInt64("NODE_NEUTRALIZE");
-            res.NodeNeutralizeAssist = reader.GetInt64("NODE_NEUTRALIZE_ASSIST");
-            res.ObjectivePlayerScore = reader.GetInt64("OBJECTIVE_PLAYER_SCORE");
-            res.PentaKills = reader.GetInt64("PENTA_KILLS");
-            res.PhysicalDamageDealt = reader.GetInt64("PHYSICAL_DAMAGE_DEALT");
-            res.PhysicalDamageDealtToChampions = reader.GetInt64("PHYSICAL_DAMAGE_DEALT_TO_CHAMPIONS");
-            res.PhysicalDamageTaken = reader.GetInt64("PHYSICAL_DAMAGE_TAKEN");
-            res.QuadraKills = reader.GetInt64("QUADRA_KILLS");
-            res.SightWardsBoughtInGame = reader.GetInt64("SIGHT_WARDS_BOUGHT_IN_GAME");
-            res.TeamObjective = reader.GetInt64("TEAM_OBJECTIVE");
-            res.TotalDamageDealt = reader.GetInt64("TOTAL_DAMAGE_DEALT");
-            res.TotalDamageDealtToChampions = reader.GetInt64("TOTAL_DAMAGE_DEALT_TO_CHAMPIONS");
-            res.TotalDamageTaken = reader.GetInt64("TOTAL_DAMAGE_TAKEN");
-            res.TotalHeal = reader.GetInt64("TOTAL_HEAL");
-            res.TotalPlayerScore = reader.GetInt64("TOTAL_PLAYER_SCORE");
-            res.TotalScoreRank = reader.GetInt64("TOTAL_SCORE_RANK");
-            res.TotalTimeCrowdControlDealt = reader.GetInt64("TOTAL_TIME_CROWD_CONTROL_DEALT");
-            res.TotalUnitsHealed = reader.GetInt64("TOTAL_UNITS_HEALED");
-            res.TowerKills = reader.GetInt64("TOWER_KILLS");
-            res.TripleKills = reader.GetInt64("TRIPLE_KILLS");
-            res.TrueDamageDealt = reader.GetInt64("TRUE_DAMAGE_DEALT");
-            res.TrueDamageDealtToChampions = reader.GetInt64("TRUE_DAMAGE_DEALT_TO_CHAMPIONS");
-            res.TrueDamageTaken = reader.GetInt64("TRUE_DAMAGE_TAKEN");
-            res.UnrealKills = reader.GetInt64("UNREAL_KILLS");
-            res.VisionWardsBoughtInGame = reader.GetInt64("VISION_WARDS_BOUGHT_IN_GAME");
-            res.WardsKilled = reader.GetInt64("WARDS_KILLED");
-            res.WardsPlaced = reader.GetInt64("WARDS_PLACED");
-            res.Winner = reader.GetBoolean("WINNER");
 
             return res;
 
         }
-        public void addParameters(MySqlCommand cmd, Object obj)
+
+        /// <summary>
+        /// Méthode d'ajout des paramètres pour la requête d'insertion
+        /// </summary>
+        /// <param name="cmd">La commande à laquelle on ajoute les paramètres</param>
+        /// <param name="obj">L'objet qui contient les informations</param>
+        private void addParameters(MySqlCommand cmd, Object obj)
         {
             ParticipantStats participantStats = obj as ParticipantStats;
 

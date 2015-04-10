@@ -2,7 +2,10 @@
 
 namespace LolStatistics.DataAccess.Exceptions
 {
-    class BaseDaoException : Exception
+    /// <summary>
+    /// Dao Exception
+    /// </summary>
+    public class BaseDaoException : Exception
     {
         public BaseDaoException()
         {

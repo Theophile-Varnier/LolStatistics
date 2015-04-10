@@ -12,7 +12,7 @@ namespace LolStatistics.Jobs
     /// </summary>
     public class ChampionsJob : IJob
     {
-        private readonly WebServiceConsumer<ListOfChampions> webServiceConsummer = new WebServiceConsumer<ListOfChampions>(ConfigurationManager.AppSettings["ChampionsUri"]);
+        private readonly WebServiceConsumer<ListOfChampions> webServiceConsummer = new WebServiceConsumer<ListOfChampions>(ConfigurationManager.AppSettings["GlobalApiUrl"], ConfigurationManager.AppSettings["ChampionsUri"]);
         private readonly ChampionDao championDao = new ChampionDao();
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace LolStatistics.Jobs
         public void Execute(IJobExecutionContext context)
         {
             // Récupération des champions
-            ListOfChampions champions = webServiceConsummer.Consume(null);
+            ListOfChampions champions = webServiceConsummer.Consume();
 
             // Insertion en base
             foreach (string key in champions.Champions.Keys)

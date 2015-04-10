@@ -4,23 +4,32 @@ using System;
 
 namespace LolStatistics.DataAccess.Dao
 {
+    /// <summary>
+    /// Dao associée aux timeline datas
+    /// </summary>
     public class ParticipantTimelineDataDao : BaseDao<ParticipantTimelineData>
     {
+        /// <summary>
+        /// Insert une timeline en base
+        /// </summary>
+        /// <param name="participantTimelineData">La timeline à insérer</param>
         public void Insert(ParticipantTimelineData participantTimelineData)
         {
 
-            // Création de la requête
-            using (MySqlCommand cmd = new MySqlCommand())
-            {
-                cmd.CommandText = "INSERT INTO PARTICIPANT_TIMELINE_DATA("
+            const string cmd = "INSERT INTO PARTICIPANT_TIMELINE_DATA("
             + "PARTICIPANT_ID, NAME, TEN_TO_TWENTY, THIRTY_TO_END, TWENTY_TO_THIRTY, ZERO_TO_TEN) VALUES("
             + "@participantId, @name, @tenToTwenty, @thirtyToEnd, @twentyToThirty, @zeroToTen)";
 
                 // Exécution de la requête
                 ExecuteNonQuery(cmd, participantTimelineData, addParameters);
-            }
 
         }
+
+        /// <summary>
+        /// Map un objet depuis un enregistrement
+        /// </summary>
+        /// <param name="reader">L'enregistrement à mapper</param>
+        /// <returns>L'objet mappé</returns>
         public override ParticipantTimelineData RecordToDto(MySqlDataReader reader)
         {
             ParticipantTimelineData res = new ParticipantTimelineData();
@@ -35,7 +44,13 @@ namespace LolStatistics.DataAccess.Dao
             return res;
 
         }
-        public void addParameters(MySqlCommand cmd, Object obj)
+
+        /// <summary>
+        /// Méthode d'ajout des paramètres pour la requête d'insertion
+        /// </summary>
+        /// <param name="cmd">La commande à laquelle on ajoute les paramètres</param>
+        /// <param name="obj">L'objet qui contient les informations</param>
+        private void addParameters(MySqlCommand cmd, Object obj)
         {
             ParticipantTimelineData participantTimelineData = obj as ParticipantTimelineData;
 

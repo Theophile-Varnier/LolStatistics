@@ -1,36 +1,46 @@
 ﻿using LolStatistics.Model.Participant;
 using MySql.Data.MySqlClient;
-using System;
 using System.Collections.Generic;
 
 namespace LolStatistics.DataAccess.Dao
 {
+    /// <summary>
+    /// Dao associée aux joueurs
+    /// </summary>
     public class PlayerDao : BaseDao<Player>
     {
+
+        /// <summary>
+        /// Insert un joueur en base
+        /// </summary>
+        /// <param name="player">Le joueur à insérer</param>
         public void Insert(Player player)
         {
-            using (MySqlCommand cmd = new MySqlCommand())
-            {
-                cmd.CommandText = "INSERT INTO PLAYER("
-            + "GAME_ID, CHAMPION_ID, SUMMONER_ID, TEAM_ID) VALUES("
-            + "@gameId, @championId, @summonerId, @teamId)";
+            const string cmd = "INSERT INTO PLAYER("
+                               + "GAME_ID, CHAMPION_ID, SUMMONER_ID, TEAM_ID) VALUES("
+                               + "@gameId, @championId, @summonerId, @teamId)";
 
-                // Exécution de la requête
-                ExecuteNonQuery(cmd, player, addParameters);
-            }
-
+            // Exécution de la requête
+            ExecuteNonQuery(cmd, player, addParameters);
         }
 
+        /// <summary>
+        /// Récupère les joueurs d'une partie
+        /// </summary>
+        /// <param name="id">L'id de la partie</param>
+        /// <returns></returns>
         public IList<Player> GetByGameId(string id)
         {
-            using (MySqlCommand cmd = new MySqlCommand())
-            {
-                cmd.CommandText = "SELECT * FROM PLAYER WHERE GAME_ID = @gameId";
+            const string cmd = "SELECT * FROM PLAYER WHERE GAME_ID = @gameId";
 
-                return ExecuteReader(cmd, id, new Action<MySqlCommand,object>((c, o) => c.Parameters.AddWithValue("@gameId", o)));
-            }
+            return ExecuteReader(cmd, id, ((c, o) => c.Parameters.AddWithValue("@gameId", o)));
         }
 
+        /// <summary>
+        /// Méthode d'ajout des paramètres pour la requête d'insertion
+        /// </summary>
+        /// <param name="cmd">La commande à laquelle on ajoute les paramètres</param>
+        /// <param name="obj">L'objet qui contient les informations</param>
         private void addParameters(MySqlCommand cmd, object obj)
         {
             Player player = obj as Player;
@@ -42,6 +52,11 @@ namespace LolStatistics.DataAccess.Dao
             cmd.Parameters.AddWithValue("@teamId", player.TeamId);
         }
 
+        /// <summary>
+        /// Map un objet depuis un enregistrement
+        /// </summary>
+        /// <param name="reader">L'enregistrement à mapper</param>
+        /// <returns>L'objet mappé</returns>
         public override Player RecordToDto(MySqlDataReader reader)
         {
             Player res = new Player();

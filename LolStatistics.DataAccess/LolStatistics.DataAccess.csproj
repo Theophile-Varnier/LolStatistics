@@ -59,12 +59,8 @@
     <Compile Include="Repositories\GameRepository.cs" />
     <Compile Include="Repositories\GameHistoryRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
-    <Compile Include="Repositories\ParticipantRepository.cs" />
     <Compile Include="Repositories\RankedGameRepository.cs" />
     <Compile Include="Exceptions\BaseDaoException.cs" />
-    <Compile Include="Exceptions\GameDaoException.cs" />
-    <Compile Include="Exceptions\PlayerDaoException.cs" />
-    <Compile Include="Exceptions\RawStatsDaoException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

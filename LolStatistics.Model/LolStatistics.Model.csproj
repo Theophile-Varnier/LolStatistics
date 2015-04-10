@@ -49,6 +49,7 @@
     <Compile Include="Game\Game.cs" />
     <Compile Include="Game\GameHistory.cs" />
     <Compile Include="Game\MatchHistory.cs" />
+    <Compile Include="Mappers\ParticipantMapper.cs" />
     <Compile Include="Participant\Participant.cs" />
     <Compile Include="Static\Champion.cs" />
     <Compile Include="Static\ListOfChampions.cs" />

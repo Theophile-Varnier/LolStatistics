@@ -1,47 +1,62 @@
-﻿using LolStatistics.Model;
-using LolStatistics.Model.Dto;
+﻿using LolStatistics.Model.Dto;
 using MySql.Data.MySqlClient;
 using System;
 
 namespace LolStatistics.DataAccess.Dao
 {
+    /// <summary>
+    /// Dao associée aux participants
+    /// </summary>
     public class ParticipantDao : BaseDao<ParticipantDto>
     {
+        /// <summary>
+        /// Insertion d'un participant
+        /// </summary>
+        /// <param name="participant">Le participant à insérer</param>
         public void Insert(ParticipantDto participant)
         {
-
-            // Création de la requête
-            using (MySqlCommand cmd = new MySqlCommand())
-            {
-                cmd.CommandText = "INSERT INTO PARTICIPANT("
+            const string cmd = "INSERT INTO PARTICIPANT("
             + "MATCH_ID, CHAMPION_ID, HIGHEST_ACHIEVED_SEASON_TIER, PARTICIPANT_ID, SPELL1_ID, "
             + "SPELL2_ID, TEAM_ID, LANE, ROLE) VALUES("
             + "@matchId, @championId, @highestAchievedSeasonTier, @participantId, @spell1Id, "
             + "@spell2Id, @teamId, @lane, @role)";
 
-                // Exécution de la requête
-                ExecuteNonQuery(cmd, participant, addParameters);
-            }
+            // Exécution de la requête
+            ExecuteNonQuery(cmd, participant, addParameters);
 
         }
+
+        /// <summary>
+        /// Map un objet depuis un enregistrement
+        /// </summary>
+        /// <param name="reader">L'enregistrement à mapper</param>
+        /// <returns></returns>
         public override ParticipantDto RecordToDto(MySqlDataReader reader)
         {
-            ParticipantDto res = new ParticipantDto();
+            ParticipantDto res = new ParticipantDto
+            {
+                MatchId = reader.GetString("MATCH_ID"), 
+                ChampionId = reader.GetInt32("CHAMPION_ID"), 
+                HighestAchievedSeasonTier = reader.GetString("HIGHEST_ACHIEVED_SEASON_TIER"), 
+                ParticipantId = reader.GetString("PARTICIPANT_ID"), 
+                Spell1Id = reader.GetInt32("SPELL1_ID"), 
+                Spell2Id = reader.GetInt32("SPELL2_ID"), 
+                TeamId = reader.GetInt32("TEAM_ID"), 
+                Lane = reader.GetString("LANE"), 
+                Role = reader.GetString("ROLE")
+            };
 
             // Renseignement des champs
-            res.MatchId = reader.GetString("MATCH_ID");
-            res.ChampionId = reader.GetInt32("CHAMPION_ID");
-            res.HighestAchievedSeasonTier = reader.GetString("HIGHEST_ACHIEVED_SEASON_TIER");
-            res.ParticipantId = reader.GetString("PARTICIPANT_ID");
-            res.Spell1Id = reader.GetInt32("SPELL1_ID");
-            res.Spell2Id = reader.GetInt32("SPELL2_ID");
-            res.TeamId = reader.GetInt32("TEAM_ID");
-            res.Lane = reader.GetString("LANE");
-            res.Role = reader.GetString("ROLE");
 
             return res;
 
         }
+
+        /// <summary>
+        /// Méthode d'ajout des paramètres pour la requête d'insertion
+        /// </summary>
+        /// <param name="cmd">La commande à laquelle on ajoute les paramètres</param>
+        /// <param name="obj">L'objet qui contient les informations</param>
         public void addParameters(MySqlCommand cmd, Object obj)
         {
             ParticipantDto participant = obj as ParticipantDto;

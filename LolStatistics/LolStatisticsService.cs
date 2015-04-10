@@ -8,7 +8,7 @@ namespace LolStatistics
 {
     public partial class LolStatisticsService : ServiceBase
     {
-        private static readonly ILog logger = Logger.GetLogger(typeof(LolStatisticsService));
+        private static readonly ILog logger = Logger.Logger.GetLogger(typeof(LolStatisticsService));
 
         private IScheduler scheduler;
 
@@ -41,8 +41,8 @@ namespace LolStatistics
                 .WithIdentity("championTrigger", "group 1")
                 .StartNow()
                 .WithSimpleSchedule(x => x
-                    //.WithIntervalInHours(2)
-                .WithIntervalInMinutes(1)
+                .WithIntervalInHours(2)
+                //.WithIntervalInMinutes(1)
                 .RepeatForever())
                 .Build();
 
@@ -60,8 +60,8 @@ namespace LolStatistics
                 .WithIdentity("historyTrigger", "group 2")
                 .StartNow()
                 .WithSimpleSchedule(x => x
-                    //.WithIntervalInHours(2)
-                .WithIntervalInMinutes(1)
+                .WithIntervalInHours(2)
+                //.WithIntervalInMinutes(1)
                 .RepeatForever())
                 .Build();
 

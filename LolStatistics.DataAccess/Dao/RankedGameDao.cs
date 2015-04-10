@@ -4,27 +4,35 @@ using System;
 
 namespace LolStatistics.DataAccess.Dao
 {
+    /// <summary>
+    /// Dao associée aux parties classées
+    /// </summary>
     public class RankedGameDao : BaseDao<RankedGame>
     {
+        /// <summary>
+        /// Insert une partie classée en base
+        /// </summary>
+        /// <param name="rankedGame">La partie à insérer</param>
         public void Insert(RankedGame rankedGame)
         {
+            const string cmd = "INSERT INTO RANKED_GAME("
+        + "SUMMONER_ID, MAP_ID, MATCH_CREATION, MATCH_DURATION, MATCH_ID, MATCH_MODE, "
+        + "MATCH_TYPE, MATCH_VERSION, PLATFORM_ID, QUEUE_TYPE, REGION, "
+        + "SEASON) VALUES("
+        + "@summonerId, @mapId, @matchCreation, @matchDuration, @matchId, @matchMode, "
+        + "@matchType, @matchVersion, @platformId, @queueType, @region, "
+        + "@season)";
 
-            // Création de la requête
-            using (MySqlCommand cmd = new MySqlCommand())
-            {
-                cmd.CommandText = "INSERT INTO RANKED_GAME("
-            + "SUMMONER_ID, MAP_ID, MATCH_CREATION, MATCH_DURATION, MATCH_ID, MATCH_MODE, "
-            + "MATCH_TYPE, MATCH_VERSION, PLATFORM_ID, QUEUE_TYPE, REGION, "
-            + "SEASON) VALUES("
-            + "@summonerId, @mapId, @matchCreation, @matchDuration, @matchId, @matchMode, "
-            + "@matchType, @matchVersion, @platformId, @queueType, @region, "
-            + "@season)";
-
-                // Exécution de la requête
-                ExecuteNonQuery(cmd, rankedGame, addParameters);
-            }
+            // Exécution de la requête
+            ExecuteNonQuery(cmd, rankedGame, addParameters);
 
         }
+
+        /// <summary>
+        /// Map un objet depuis un enregistrement
+        /// </summary>
+        /// <param name="reader">L'enregistrement à mapper</param>
+        /// <returns>L'objet mappé</returns>
         public override RankedGame RecordToDto(MySqlDataReader reader)
         {
             RankedGame res = new RankedGame();
@@ -46,7 +54,13 @@ namespace LolStatistics.DataAccess.Dao
             return res;
 
         }
-        public void addParameters(MySqlCommand cmd, Object obj)
+
+        /// <summary>
+        /// Méthode d'ajout des paramètres pour la requête d'insertion
+        /// </summary>
+        /// <param name="cmd">La commande à laquelle on ajoute les paramètres</param>
+        /// <param name="obj">L'objet qui contient les informations</param>
+        private void addParameters(MySqlCommand cmd, Object obj)
         {
             RankedGame rankedGame = obj as RankedGame;
 

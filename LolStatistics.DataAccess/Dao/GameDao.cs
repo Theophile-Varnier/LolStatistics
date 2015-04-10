@@ -16,22 +16,18 @@ namespace LolStatistics.DataAccess.Dao
         /// <param name="game">La partie à insérer</param>
         public void Insert(Game game)
         {
+            const string cmd = "INSERT INTO GAME("
+         + "CHAMPION_ID, SUMMONER_ID, CREATE_DATE, GAME_ID, "
+         + "GAME_MODE, GAME_TYPE, INVALID, IP_EARNED, LEVEL, "
+         + "MAP_ID, SPELL1, SPELL2, SUB_TYPE, "
+         + "TEAM_ID) VALUES("
+         + "@championId, @summonerId, @createDate, @gameId, "
+         + "@gameMode, @gameType, @invalid, @ipEarned, @level, "
+         + "@mapId, @spell1, @spell2, @subType, "
+         + "@teamId)";
 
-            using (MySqlCommand cmd = new MySqlCommand())
-            {
-                cmd.CommandText = "INSERT INTO GAME("
-            + "CHAMPION_ID, SUMMONER_ID, CREATE_DATE, GAME_ID, "
-            + "GAME_MODE, GAME_TYPE, INVALID, IP_EARNED, LEVEL, "
-            + "MAP_ID, SPELL1, SPELL2, SUB_TYPE, "
-            + "TEAM_ID) VALUES("
-            + "@championId, @summonerId, @createDate, @gameId, "
-            + "@gameMode, @gameType, @invalid, @ipEarned, @level, "
-            + "@mapId, @spell1, @spell2, @subType, "
-            + "@teamId)";
-
-                // Exécution de la requête
-                ExecuteNonQuery(cmd, game, addParameters);
-            }
+            // Exécution de la requête
+            ExecuteNonQuery(cmd, game, addParameters);
         }
 
         /// <summary>
@@ -41,11 +37,8 @@ namespace LolStatistics.DataAccess.Dao
         /// <returns>La liste des parties associées au joueur</returns>
         public List<Game> GetBySummonerId(string summonerId)
         {
-            using (MySqlCommand cmd = new MySqlCommand())
-            {
-                cmd.CommandText = "SELECT * FROM GAME WHERE SUMMONER_ID = @summonerId";
-                return ExecuteReader(cmd, summonerId, new Action<MySqlCommand,object>((c, o) => c.Parameters.AddWithValue("@summonerId", o)));
-            }
+            const string cmd = "SELECT * FROM GAME WHERE SUMMONER_ID = @summonerId";
+            return ExecuteReader(cmd, summonerId, ((c, o) => c.Parameters.AddWithValue("@summonerId", o)));
         }
 
         /// <summary>
@@ -80,23 +73,25 @@ namespace LolStatistics.DataAccess.Dao
         /// <returns>L'objet bindé</returns>
         public override Game RecordToDto(MySqlDataReader reader)
         {
-            Game res = new Game();
+            Game res = new Game
+            {
+                GameId = reader.GetInt32("GAME_ID"),
+                ChampionId = reader.GetInt32("CHAMPION_ID"),
+                SummonerId = long.Parse(reader.GetString("SUMMONER_ID")),
+                CreateDate = long.Parse(reader.GetString("CREATE_DATE")),
+                GameMode = reader.GetString("GAME_MODE"),
+                GameType = reader.GetString("GAME_TYPE"),
+                Invalid = reader.GetBoolean("INVALID"),
+                IpEarned = reader.GetInt32("IP_EARNED"),
+                Level = reader.GetInt32("LEVEL"),
+                MapId = reader.GetInt32("MAP_ID"),
+                Spell1 = reader.GetInt32("SPELL1"),
+                Spell2 = reader.GetInt32("SPELL2"),
+                SubType = reader.GetString("SUB_TYPE"),
+                TeamId = reader.GetInt32("TEAM_ID")
+            };
 
             // Renseignement des champs
-            res.GameId = reader.GetInt32("GAME_ID");
-            res.ChampionId = reader.GetInt32("CHAMPION_ID");
-            res.SummonerId = long.Parse(reader.GetString("SUMMONER_ID"));
-            res.CreateDate = long.Parse(reader.GetString("CREATE_DATE"));
-            res.GameMode = reader.GetString("GAME_MODE");
-            res.GameType = reader.GetString("GAME_TYPE");
-            res.Invalid = reader.GetBoolean("INVALID");
-            res.IpEarned = reader.GetInt32("IP_EARNED");
-            res.Level = reader.GetInt32("LEVEL");
-            res.MapId = reader.GetInt32("MAP_ID");
-            res.Spell1 = reader.GetInt32("SPELL1");
-            res.Spell2 = reader.GetInt32("SPELL2");
-            res.SubType = reader.GetString("SUB_TYPE");
-            res.TeamId = reader.GetInt32("TEAM_ID");
 
             return res;
         }

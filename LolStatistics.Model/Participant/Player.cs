@@ -1,20 +1,20 @@
-﻿using System.Runtime.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace LolStatistics.Model.Participant
 {
-    [DataContract]
+    [JsonObject]
     public class Player
     {
-        [IgnoreDataMember]
+        [JsonIgnore]
         public string GameId { get; set; }
 
-        [DataMember(Name = "championId")]
+        [JsonProperty("championId")]
         public int ChampionId { get; set; }
 
-        [DataMember(Name = "summonerId")]
+        [JsonProperty("summonerId")]
         public long SummonerId { get; set; }
 
-        [DataMember(Name = "teamId")]
+        [JsonProperty("teamId")]
         public int TeamId { get; set; }
     }
 }

@@ -1,36 +1,36 @@
 ﻿using LolStatistics.Model.Stats;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace LolStatistics.Model.Participant
 {
-    [DataContract]
+    [JsonObject]
     public class Participant
     {
-        [IgnoreDataMember]
+        [JsonIgnore]
         public string MatchId { get; set; }
 
-        [DataMember(Name = "championId")]
+        [JsonProperty("championId")]
         public int ChampionId { get; set; }
 
-        [DataMember(Name = "highestAchievedSeasonTier")]
+        [JsonProperty("highestAchievedSeasonTier")]
         public string HighestAchievedSeasonTier { get; set; }
 
-        [IgnoreDataMember]
+        [JsonIgnore]
         public string ParticipantId { get; set; }
 
-        [DataMember(Name = "spell1Id")]
+        [JsonProperty("spell1Id")]
         public int Spell1Id { get; set; }
 
-        [DataMember(Name = "spell2Id")]
+        [JsonProperty("spell2Id")]
         public int Spell2Id { get; set; }
 
-        [DataMember(Name = "stats")]
+        [JsonProperty("stats")]
         public ParticipantStats Stats { get; set; }
 
-        [DataMember(Name = "teamId")]
+        [JsonProperty("teamId")]
         public int TeamId { get; set; }
 
-        [DataMember(Name = "timeline")]
+        [JsonProperty("timeline")]
         public ParticipantTimeline Timeline { get; set; }
 
     }

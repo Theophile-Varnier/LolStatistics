@@ -10,32 +10,51 @@ using System.Threading;
 
 namespace LolStatistics.WebServiceConsumers
 {
+    /// <summary>
+    /// Classe générique de consommation de web service
+    /// </summary>
+    /// <typeparam name="T">Le type de données renvoyées par le web service</typeparam>
     public class WebServiceConsumer<T> where T : class
     {
-        private static readonly ILog logger = Logger.GetLogger(typeof(WebServiceConsumer<T>));
+        private static readonly ILog logger = Logger.Logger.GetLogger(typeof(WebServiceConsumer<T>));
 
         private readonly string WebServiceUri;
 
-        private string baseUri;
+        private string BaseUri;
 
         private int nbTentatives;
 
-        public WebServiceConsumer(string webUri)
+        /// <summary>
+        /// Constructeur par défaut
+        /// </summary>
+        /// <param name="baseUri">La base de l'url à appeler</param>
+        /// <param name="webUri">Le web service à appeler</param>
+        public WebServiceConsumer(string baseUri, string webUri)
         {
-            baseUri = ConfigurationManager.AppSettings["BaseApiUrl"];
+            BaseUri = baseUri;
             WebServiceUri = webUri;
             nbTentatives = 0;
         }
 
-        public T Consume(Dictionary<string, string> uriParameters)
+        /// <summary>
+        /// Récupération d'un objet à partir d'un webservice
+        /// </summary>
+        /// <param name="uriParameters">Les paramètres du web service</param>
+        /// <returns>L'objet retourné mappé</returns>
+        public T Consume(Dictionary<string, string> uriParameters = null)
         {
-            string url = string.Concat(baseUri, ReplaceParameters(WebServiceUri, uriParameters), "?api_key=", ConfigurationManager.AppSettings["ApiKey"]);
+            // Création de l'url à appeler
+            string url = string.Concat(BaseUri, ReplaceParameters(WebServiceUri, uriParameters), "?api_key=", ConfigurationManager.AppSettings["ApiKey"]);
             logger.Info(string.Concat("Appel au WebService ", url));
             try
             {
+                // Création de la requête
                 HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+
+                // Appel au web service
                 using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
                 {
+                    // Lecture de la réponse et Désérialisation
                     Stream s = response.GetResponseStream();
                     using (StreamReader sr = new StreamReader(s, Encoding.UTF8))
                     {
@@ -47,6 +66,8 @@ namespace LolStatistics.WebServiceConsumers
             }
             catch (WebException we)
             {
+                // En cas d'erreur, on temporise avant de réessayer
+                // Jusqu'à un certain nombre de tentatives
                 if (nbTentatives >= 10)
                 {
                     logger.Error("Nombre max de tentatives atteint. Mise à jour annulée.");
@@ -60,13 +81,23 @@ namespace LolStatistics.WebServiceConsumers
             }
         }
 
+        /// <summary>
+        /// Modifie une uri pour mettre des valeurs à la place des paramètres
+        /// </summary>
+        /// <param name="baseUri">L'uri à modifier</param>
+        /// <param name="values">Les paramètres à ajouter</param>
+        /// <returns></returns>
         private string ReplaceParameters(string baseUri, Dictionary<string, string> values)
         {
             string finalUri = baseUri;
             if (values != null)
             {
                 string paramPattern = @"({[A-z]*})";
+
+                // Récupération de tous les paramètres présents dans l'uri
                 MatchCollection matches = Regex.Matches(baseUri, paramPattern);
+
+                // Remplacement par les valeurs fournies
                 foreach (Match match in matches)
                 {
                     string arg = match.Groups[1].Value;

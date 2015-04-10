@@ -1,26 +1,26 @@
-﻿using System.Runtime.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace LolStatistics.Model.Participant
 {
-    [DataContract]
+    [JsonObject]
     public class ParticipantTimelineData
     {
-        [IgnoreDataMember]
+        [JsonIgnore]
         public string ParticipantId { get; set; }
 
-        [IgnoreDataMember]
+        [JsonIgnore]
         public string Name { get; set; }
 
-        [DataMember(Name = "tenToTwenty")]
+        [JsonProperty("tenToTwenty")]
         public double TenToTwenty { get; set; }
 
-        [DataMember(Name = "thirtyToEnd")]
+        [JsonProperty("thirtyToEnd")]
         public double ThirtyToEnd { get; set; }
 
-        [DataMember(Name = "twentyToThirty")]
+        [JsonProperty("twentyToThirty")]
         public double TwentyToThirty { get; set; }
 
-        [DataMember(Name = "zeroToTen")]
+        [JsonProperty("zeroToTen")]
         public double ZeroToTen { get; set; }
 
     }

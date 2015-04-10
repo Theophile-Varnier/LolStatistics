@@ -1,20 +1,20 @@
-﻿using System.Runtime.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace LolStatistics.Model.Static
 {
-    [DataContract]
+    [JsonObject]
     public class Champion
     {
-        [DataMember(Name = "id")]
+        [JsonProperty("id")]
         public int Id { get; set; }
 
-        [DataMember(Name = "title")]
+        [JsonProperty("title")]
         public string Title { get; set; }
 
-        [DataMember(Name = "name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
-        [DataMember(Name = "key")]
+        [JsonProperty("key")]
         public string Key { get; set; }
 
     }

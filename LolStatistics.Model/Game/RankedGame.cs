@@ -1,48 +1,48 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace LolStatistics.Model.Game
 {
-    [DataContract]
+    [JsonObject]
     public class RankedGame
     {
-        [IgnoreDataMember]
+        [JsonIgnore]
         public string SummonerId { get; set; }
 
-        [DataMember(Name = "mapId")]
+        [JsonProperty("mapId")]
         public int MapId { get; set; }
 
-        [DataMember(Name = "matchCreation")]
+        [JsonProperty("matchCreation")]
         public long MatchCreation { get; set; }
 
-        [DataMember(Name = "matchDuration")]
+        [JsonProperty("matchDuration")]
         public long MatchDuration { get; set; }
 
-        [DataMember(Name = "matchId")]
+        [JsonProperty("matchId")]
         public long MatchId { get; set; }
 
-        [DataMember(Name = "matchMode")]
+        [JsonProperty("matchMode")]
         public string MatchMode { get; set; }
 
-        [DataMember(Name = "matchType")]
+        [JsonProperty("matchType")]
         public string MatchType { get; set; }
 
-        [DataMember(Name = "matchVersion")]
+        [JsonProperty("matchVersion")]
         public string MatchVersion { get; set; }
 
-        [DataMember(Name = "participants")]
+        [JsonProperty("participants")]
         public List<Participant.Participant> Participants { get; set; }
 
-        [DataMember(Name = "platformId")]
+        [JsonProperty("platformId")]
         public string PlatformId { get; set; }
 
-        [DataMember(Name = "queueType")]
+        [JsonProperty("queueType")]
         public string QueueType { get; set; }
 
-        [DataMember(Name = "region")]
+        [JsonProperty("region")]
         public string Region { get; set; }
 
-        [DataMember(Name = "season")]
+        [JsonProperty("season")]
         public string Season { get; set; }
 
     }
