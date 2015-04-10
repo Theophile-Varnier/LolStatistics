@@ -12,8 +12,8 @@ namespace LolStatistics.Jobs
     /// </summary>
     public class ChampionsJob : IJob
     {
-        private ChampionWebServiceConsumer webServiceConsummer = new ChampionWebServiceConsumer(ConfigurationManager.AppSettings["ChampionsUri"]);
-        private ChampionDao championDao = new ChampionDao();
+        private readonly WebServiceConsumer<ListOfChampions> webServiceConsummer = new WebServiceConsumer<ListOfChampions>(ConfigurationManager.AppSettings["ChampionsUri"]);
+        private readonly ChampionDao championDao = new ChampionDao();
 
         /// <summary>
         /// Exécution du job

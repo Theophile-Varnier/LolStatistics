@@ -1,5 +1,5 @@
-﻿using LolStatistics.Model;
-using LolStatistics.Model.Dto;
+﻿using LolStatistics.Model.Dto;
+using LolStatistics.Model.Participant;
 using System.Collections.Generic;
 using System.Reflection;
 

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
+﻿using System.Runtime.Serialization;
 
-namespace LolStatistics.Model
+namespace LolStatistics.Model.Participant
 {
     [DataContract]
     public class ParticipantTimelineData

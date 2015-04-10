@@ -1,8 +1,10 @@
 ﻿using log4net;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Net;
-using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
@@ -12,14 +14,15 @@ namespace LolStatistics.WebServiceConsumers
     {
         private static readonly ILog logger = Logger.GetLogger(typeof(WebServiceConsumer<T>));
 
-        private string WebServiceUri;
+        private readonly string WebServiceUri;
 
-        protected string baseUri = ConfigurationManager.AppSettings["BaseApiUrl"];
+        private string baseUri;
 
         private int nbTentatives;
 
         public WebServiceConsumer(string webUri)
         {
+            baseUri = ConfigurationManager.AppSettings["BaseApiUrl"];
             WebServiceUri = webUri;
             nbTentatives = 0;
         }
@@ -33,10 +36,13 @@ namespace LolStatistics.WebServiceConsumers
                 HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
                 using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
                 {
-                    DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(T));
-                    T castResponse = jsonSerializer.ReadObject(response.GetResponseStream()) as T;
-                    nbTentatives = 0;
-                    return castResponse;
+                    Stream s = response.GetResponseStream();
+                    using (StreamReader sr = new StreamReader(s, Encoding.UTF8))
+                    {
+                        T castResponse = JsonConvert.DeserializeObject<T>(sr.ReadToEnd());
+                        nbTentatives = 0;
+                        return castResponse;
+                    }
                 }
             }
             catch (WebException we)

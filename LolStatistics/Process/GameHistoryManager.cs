@@ -1,12 +1,11 @@
 ﻿using log4net;
 using LolStatistics.DataAccess.Dao;
 using LolStatistics.DataAccess.Repositories;
-using LolStatistics.Model;
+using LolStatistics.Model.App;
+using LolStatistics.Model.Game;
 using LolStatistics.WebServiceConsumers;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Timers;
 
 namespace LolStatistics.Process
 {
@@ -38,8 +37,7 @@ namespace LolStatistics.Process
             IList<Summoner> summoners = summonerDao.Get();
             foreach (Summoner summoner in summoners)
             {
-                Dictionary<string, string> uriParams = new Dictionary<string, string>();
-                uriParams.Add("SummonerId", summoner.Id.ToString());
+                Dictionary<string, string> uriParams = new Dictionary<string, string> {{"SummonerId", summoner.Id.ToString()}};
                 logger.Info("Récupération de l'historique des parties pour l'invocateur " + summoner.Name);
                 GameHistory gh = gameHistoryWebServiceConsumer.Consume(uriParams);
                 if (gh != null)

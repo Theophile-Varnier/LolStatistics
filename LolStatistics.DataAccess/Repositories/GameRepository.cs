@@ -1,11 +1,8 @@
 ﻿using log4net;
 using LolStatistics.DataAccess.Dao;
-using LolStatistics.Model;
+using LolStatistics.Model.Game;
+using LolStatistics.Model.Participant;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LolStatistics.DataAccess.Repositories
 {

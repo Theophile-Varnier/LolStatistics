@@ -1,8 +1,4 @@
-﻿using LolStatistics.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using LolStatistics.Model.Game;
 
 namespace LolStatistics.Web.Models.Mapper
 {

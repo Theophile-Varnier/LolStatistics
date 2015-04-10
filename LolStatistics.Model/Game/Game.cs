@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using LolStatistics.Model.Participant;
+using LolStatistics.Model.Stats;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace LolStatistics.Model
+namespace LolStatistics.Model.Game
 {
     [DataContract]
     public class Game

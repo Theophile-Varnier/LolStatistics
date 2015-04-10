@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
 
-namespace LolStatistics.Model
+namespace LolStatistics.Model.Game
 {
     [DataContract]
     public class RankedGame
@@ -32,7 +31,7 @@ namespace LolStatistics.Model
         public string MatchVersion { get; set; }
 
         [DataMember(Name = "participants")]
-        public List<Participant> Participants { get; set; }
+        public List<Participant.Participant> Participants { get; set; }
 
         [DataMember(Name = "platformId")]
         public string PlatformId { get; set; }

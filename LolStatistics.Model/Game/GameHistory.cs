@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace LolStatistics.Model
+namespace LolStatistics.Model.Game
 {
     [DataContract]
     public class GameHistory

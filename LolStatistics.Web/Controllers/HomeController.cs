@@ -1,10 +1,10 @@
 ﻿using LolStatistics.DataAccess.Dao;
 using LolStatistics.DataAccess.Repositories;
-using LolStatistics.Model;
+using LolStatistics.Model.Game;
 using LolStatistics.Web.Models;
 using LolStatistics.Web.Models.Mapper;
-using System.Web.Mvc;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace LolStatistics.Web.Controllers
 {

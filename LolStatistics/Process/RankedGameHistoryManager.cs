@@ -1,7 +1,8 @@
 ﻿using log4net;
 using LolStatistics.DataAccess.Dao;
 using LolStatistics.DataAccess.Repositories;
-using LolStatistics.Model;
+using LolStatistics.Model.App;
+using LolStatistics.Model.Game;
 using LolStatistics.WebServiceConsumers;
 using System.Collections.Generic;
 using System.Configuration;

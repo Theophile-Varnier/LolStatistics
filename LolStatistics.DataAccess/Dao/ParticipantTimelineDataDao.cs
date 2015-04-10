@@ -1,8 +1,6 @@
-﻿using System;
+﻿using LolStatistics.Model.Participant;
 using MySql.Data.MySqlClient;
-using System.Configuration;
-using LolStatistics.Model;
-using LolStatistics.DataAccess.Exceptions;
+using System;
 
 namespace LolStatistics.DataAccess.Dao
 {

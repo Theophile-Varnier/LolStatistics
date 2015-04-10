@@ -1,7 +1,6 @@
 ﻿using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
 
-namespace LolStatistics.Model
+namespace LolStatistics.Model.Participant
 {
     [DataContract]
     public class Player

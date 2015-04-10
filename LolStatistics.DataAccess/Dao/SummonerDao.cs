@@ -1,4 +1,4 @@
-﻿using LolStatistics.Model;
+﻿using LolStatistics.Model.App;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
