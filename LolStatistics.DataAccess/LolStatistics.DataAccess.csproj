@@ -57,7 +57,6 @@
     <Compile Include="Dao\RawStatsDao.cs" />
     <Compile Include="Dao\SummonerDao.cs" />
     <Compile Include="Extensions\Command.cs" />
-    <Compile Include="Extensions\DbCommandExtension.cs" />
     <Compile Include="Extensions\DbDataReaderExtension.cs" />
     <Compile Include="Repositories\ChampionRepository.cs" />
     <Compile Include="Repositories\GameRepository.cs" />

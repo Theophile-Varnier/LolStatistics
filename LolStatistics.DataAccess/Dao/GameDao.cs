@@ -47,7 +47,7 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="cmd">La commande à laquelle ajouter les paramètres</param>
         /// <param name="obj">La game d'où on tire les données</param>
-        private void addParameters(DbCommand cmd, object obj)
+        private void addParameters(Command cmd, object obj)
         {
             Game game = obj as Game;
             // Ajout des paramètres

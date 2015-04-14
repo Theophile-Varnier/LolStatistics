@@ -6,6 +6,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using LolStatistics.DataAccess.Extensions;
 
 namespace LolStatistics.DataAccess.Dao
 {
@@ -27,13 +28,13 @@ namespace LolStatistics.DataAccess.Dao
         /// <param name="dto">L'objet à partir duquel on ajoute les paramètres</param>
         /// <param name="addParams">La méthode servant à ajouter les paramètres</param>
         /// <param name="conn">La connection à utiliser</param>
-        protected void ExecuteNonQuery(string cmdText, DbConnection conn, object dto = null, Action<DbCommand, object> addParams = null, DbTransaction tran = null)
+        protected void ExecuteNonQuery(string cmdText, DbConnection conn, object dto = null, Action<Command, object> addParams = null, DbTransaction tran = null)
         {
             try
             {
                 // Préparation de la requête
                 conn.Open();
-                using (DbCommand cmd = new MySqlCommand(cmdText))
+                using (Command cmd = new Command(cmdText))
                 {
                     cmd.Connection = conn;
 
@@ -76,14 +77,14 @@ namespace LolStatistics.DataAccess.Dao
         /// <param name="dto">L'objet à partir duquel on ajoute les paramètres</param>
         /// <param name="addParams">La méthode servant à ajouter les paramètres</param>
         /// <returns></returns>
-        protected List<T> ExecuteReader(string cmdText, DbConnection conn, object dto = null, Action<DbCommand, object> addParams = null, DbTransaction tran = null)
+        protected List<T> ExecuteReader(string cmdText, DbConnection conn, object dto = null, Action<Command, object> addParams = null, DbTransaction tran = null)
         {
             List<T> res = new List<T>();
             try
             {
                 // Préparation de la requête
                 // conn.Open();
-                using (DbCommand cmd = new MySqlCommand(cmdText))
+                using (Command cmd = new Command(cmdText))
                 {
                     cmd.Connection = conn;
 

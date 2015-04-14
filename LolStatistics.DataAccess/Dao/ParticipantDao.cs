@@ -58,7 +58,7 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="cmd">La commande à laquelle on ajoute les paramètres</param>
         /// <param name="obj">L'objet qui contient les informations</param>
-        public void addParameters(DbCommand cmd, Object obj)
+        public void addParameters(Command cmd, Object obj)
         {
             ParticipantDto participant = obj as ParticipantDto;
 

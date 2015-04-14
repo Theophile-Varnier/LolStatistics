@@ -75,7 +75,7 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="cmd">La commande à laquelle on ajoute les paramètres</param>
         /// <param name="obj">L'objet qui contient les informations</param>
-        private void addParameters(DbCommand cmd, object obj)
+        private void addParameters(Command cmd, object obj)
         {
             RawStats rawStats = obj as RawStats;
 

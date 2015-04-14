@@ -63,7 +63,7 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="cmd">La commande à laquelle on ajoute les paramètres</param>
         /// <param name="obj">L'objet servant à ajouter les paramètres</param>
-        private void AddParameters(DbCommand cmd, Object obj)
+        private void AddParameters(Command cmd, Object obj)
         {
             Champion champion = obj as Champion;
 
