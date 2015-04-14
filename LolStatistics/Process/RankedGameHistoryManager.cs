@@ -1,5 +1,4 @@
 ﻿using log4net;
-using LolStatistics.DataAccess.Dao;
 using LolStatistics.DataAccess.Repositories;
 using LolStatistics.Log;
 using LolStatistics.Model.App;
@@ -22,7 +21,7 @@ namespace LolStatistics.Process
 
         private readonly RankedGameRepository rankedGameRepository = new RankedGameRepository();
 
-        private readonly SummonerDao summonerDao = new SummonerDao();
+        private readonly SummonerRepository summonerRepository = new SummonerRepository();
 
         /// <summary>
         /// Constructeur par défaut
@@ -39,7 +38,7 @@ namespace LolStatistics.Process
         {
             logger.Info("Démarrage du traitement des historiques de parties classées");
             // Récupération de l'ensemble des membres
-            IList<Summoner> summoners = summonerDao.Get();
+            IList<Summoner> summoners = summonerRepository.Get();
 
             foreach (Summoner summoner in summoners)
             {

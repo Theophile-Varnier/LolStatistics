@@ -1,4 +1,6 @@
-﻿using LolStatistics.Model.App;
+﻿using System.Data.Common;
+using LolStatistics.DataAccess.Extensions;
+using LolStatistics.Model.App;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -14,14 +16,14 @@ namespace LolStatistics.DataAccess.Dao
         /// Insert un invocateur en base
         /// </summary>
         /// <param name="summoner">L'invocateur à insérer</param>
-        public void Insert(Summoner summoner)
+        public void Insert(Summoner summoner, DbConnection conn)
         {
             const string cmd = "INSERT INTO SUMMONER("
             + "ID, NAME, PROFILE_ICON_ID, REVISION_DATE) VALUES("
             + "@id, @name, @profileIconId, @revisionDate)";
 
             // Exécution de la requête
-            ExecuteNonQuery(cmd, summoner, addParameters);
+            ExecuteNonQuery(cmd, conn, summoner, addParameters);
 
         }
 
@@ -30,7 +32,7 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="reader">L'enregistrement à mapper</param>
         /// <returns>L'objet mappé</returns>
-        public override Summoner RecordToDto(MySqlDataReader reader)
+        public override Summoner RecordToDto(DbDataReader reader)
         {
             Summoner res = new Summoner();
 
@@ -49,15 +51,15 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="cmd">La commande à laquelle on ajoute les paramètres</param>
         /// <param name="obj">L'objet qui contient les informations</param>
-        private void addParameters(MySqlCommand cmd, Object obj)
+        private void addParameters(DbCommand cmd, Object obj)
         {
             Summoner summoner = obj as Summoner;
 
             // Ajout des paramètres
-            cmd.Parameters.AddWithValue("@id", summoner.Id.ToString());
-            cmd.Parameters.AddWithValue("@name", summoner.Name);
-            cmd.Parameters.AddWithValue("@profileIconId", summoner.ProfileIconId);
-            cmd.Parameters.AddWithValue("@revisionDate", summoner.RevisionDate);
+            cmd.AddWithValue("@id", summoner.Id.ToString());
+            cmd.AddWithValue("@name", summoner.Name);
+            cmd.AddWithValue("@profileIconId", summoner.ProfileIconId);
+            cmd.AddWithValue("@revisionDate", summoner.RevisionDate);
 
         }
 
@@ -65,10 +67,10 @@ namespace LolStatistics.DataAccess.Dao
         /// Récupère l'ensemble des membres
         /// </summary>
         /// <returns>La liste des membres</returns>
-        public IList<Summoner> Get()
+        public IList<Summoner> Get(DbConnection conn)
         {
             const string cmd = "SELECT * FROM SUMMONER";
-            return ExecuteReader(cmd);
+            return ExecuteReader(cmd, conn);
         }
     }
 }

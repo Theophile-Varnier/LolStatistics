@@ -19,7 +19,7 @@ namespace LolStatistics.Process
         private static readonly ILog logger = Logger.GetLogger(typeof(GameHistoryManager));
 
         private GameRepository gameDbMapper = new GameRepository();
-        private SummonerDao summonerDao = new SummonerDao();
+        private SummonerRepository summonerRepo = new SummonerRepository();
 
         //private static List<string> recordedQueue = new List<string> { 
         //        "NORMAL",
@@ -47,7 +47,7 @@ namespace LolStatistics.Process
         {
             logger.Info("Démarrage du traitement des historiques");
             // Récupération des membres
-            IList<Summoner> summoners = summonerDao.Get();
+            IList<Summoner> summoners = summonerRepo.Get();
             foreach (Summoner summoner in summoners)
             {
                 // Paramètres du web service

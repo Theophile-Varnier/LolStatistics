@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using System.Data.Common;
+using log4net;
 using LolStatistics.DataAccess.Dao;
 using LolStatistics.Log;
 using LolStatistics.Model.Dto;
@@ -7,6 +8,7 @@ using LolStatistics.Model.Mappers;
 using LolStatistics.Model.Participant;
 using System;
 using System.Globalization;
+using MySql.Data.MySqlClient;
 
 namespace LolStatistics.DataAccess.Repositories
 {
@@ -28,8 +30,10 @@ namespace LolStatistics.DataAccess.Repositories
         /// <param name="t">La partie classée à insérer</param>
         public void Insert(RankedGame t)
         {
+            DbConnection conn = new MySqlConnection();
+            DbTransaction tran = null;
             logger.Debug("Insertion de la partie");
-            rankedGameDao.Insert(t);
+            rankedGameDao.Insert(t, conn, tran);
 
             logger.Debug("Insertion des participants");
             foreach (Participant participant in t.Participants)
@@ -42,9 +46,9 @@ namespace LolStatistics.DataAccess.Repositories
                 ParticipantDto participantDto = ParticipantMapper.Map(participant);
 
                 // Insertion en base
-                participantDao.Insert(participantDto);
+                participantDao.Insert(participantDto, conn, tran);
                 participant.Stats.ParticipantId = participant.ParticipantId;
-                participantStatsDao.Insert(participant.Stats);
+                participantStatsDao.Insert(participant.Stats, conn, tran);
                 participant.Timeline.ParticipantId = participant.ParticipantId;
 
                 // On renseigne les id des timeline data
@@ -52,7 +56,7 @@ namespace LolStatistics.DataAccess.Repositories
 
                 foreach (ParticipantTimelineData timelineData in participantDto.TimelineDatas)
                 {
-                    participantTimelineDataDao.Insert(timelineData);
+                    participantTimelineDataDao.Insert(timelineData, conn, tran);
                 }
             }
         }
