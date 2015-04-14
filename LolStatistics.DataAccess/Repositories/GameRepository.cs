@@ -1,12 +1,12 @@
-﻿using System.Data.Common;
-using log4net;
+﻿using log4net;
 using LolStatistics.DataAccess.Dao;
+using LolStatistics.DataAccess.Extensions;
 using LolStatistics.Log;
 using LolStatistics.Model.Game;
 using LolStatistics.Model.Participant;
 using System;
+using System.Data.Common;
 using System.Globalization;
-using MySql.Data.MySqlClient;
 
 namespace LolStatistics.DataAccess.Repositories
 {
@@ -27,17 +27,34 @@ namespace LolStatistics.DataAccess.Repositories
         /// <param name="game">Partie à insérer</param>
         public void Insert(Game game)
         {
-            DbConnection conn = new MySqlConnection();
-            DbTransaction tran = null;
-            gameDao.Insert(game, conn, tran);
-            logger.Info("Insertion des statistiques");
-            game.Stats.GameId = game.GameId.ToString(CultureInfo.InvariantCulture);
-            rawStatsDao.Insert(game.Stats, conn, tran);
-            logger.Info("Insertion des joueurs");
-            foreach (Player player in game.FellowPlayers)
+            using (DbConnection conn = Command.GetConnexion())
             {
-                player.GameId = game.GameId.ToString();
-                playerDao.Insert(player, conn, tran);
+                conn.Open();
+                using (DbTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        gameDao.Insert(game, conn, tran);
+                        logger.Info("Insertion des statistiques");
+                        game.Stats.GameId = game.GameId.ToString(CultureInfo.InvariantCulture);
+                        rawStatsDao.Insert(game.Stats, conn, tran);
+                        logger.Info("Insertion des joueurs");
+                        foreach (Player player in game.FellowPlayers)
+                        {
+                            player.GameId = game.GameId.ToString();
+                            playerDao.Insert(player, conn, tran);
+                        }
+                        tran.Commit();
+                    }
+                    catch (DbException e)
+                    {
+                        tran.Rollback();
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                }
             }
         }
 

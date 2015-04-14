@@ -1,21 +1,21 @@
-﻿using System.Data.Common;
-using log4net;
+﻿using log4net;
 using LolStatistics.DataAccess.Dao;
+using LolStatistics.DataAccess.Extensions;
 using LolStatistics.Log;
 using LolStatistics.Model.Dto;
 using LolStatistics.Model.Game;
 using LolStatistics.Model.Mappers;
 using LolStatistics.Model.Participant;
 using System;
+using System.Data.Common;
 using System.Globalization;
-using MySql.Data.MySqlClient;
 
 namespace LolStatistics.DataAccess.Repositories
 {
     /// <summary>
     /// Repository associé aux parties classées
     /// </summary>
-    public class RankedGameRepository: IRepository<RankedGame>
+    public class RankedGameRepository : IRepository<RankedGame>
     {
         private static readonly ILog logger = Logger.GetLogger(typeof(RankedGameRepository));
 
@@ -30,33 +30,49 @@ namespace LolStatistics.DataAccess.Repositories
         /// <param name="t">La partie classée à insérer</param>
         public void Insert(RankedGame t)
         {
-            DbConnection conn = new MySqlConnection();
-            DbTransaction tran = null;
-            logger.Debug("Insertion de la partie");
-            rankedGameDao.Insert(t, conn, tran);
-
-            logger.Debug("Insertion des participants");
-            foreach (Participant participant in t.Participants)
+            using (DbConnection conn = Command.GetConnexion())
             {
-                // Code à déplacer dans un mapper ?
-                participant.MatchId = t.MatchId.ToString(CultureInfo.InvariantCulture);
-                participant.ParticipantId = Guid.NewGuid().ToString();
-
-                // Récupération du dto
-                ParticipantDto participantDto = ParticipantMapper.Map(participant);
-
-                // Insertion en base
-                participantDao.Insert(participantDto, conn, tran);
-                participant.Stats.ParticipantId = participant.ParticipantId;
-                participantStatsDao.Insert(participant.Stats, conn, tran);
-                participant.Timeline.ParticipantId = participant.ParticipantId;
-
-                // On renseigne les id des timeline data
-                logger.Debug("Insertion des timeline data");
-
-                foreach (ParticipantTimelineData timelineData in participantDto.TimelineDatas)
+                conn.Open();
+                using (DbTransaction tran = conn.BeginTransaction())
                 {
-                    participantTimelineDataDao.Insert(timelineData, conn, tran);
+                    try
+                    {
+                        logger.Debug("Insertion de la partie");
+                        rankedGameDao.Insert(t, conn, tran);
+
+                        logger.Debug("Insertion des participants");
+                        foreach (Participant participant in t.Participants)
+                        {
+                            // Code à déplacer dans un mapper ?
+                            participant.MatchId = t.MatchId.ToString(CultureInfo.InvariantCulture);
+                            participant.ParticipantId = Guid.NewGuid().ToString();
+
+                            // Récupération du dto
+                            ParticipantDto participantDto = ParticipantMapper.Map(participant);
+
+                            // Insertion en base
+                            participantDao.Insert(participantDto, conn, tran);
+                            participant.Stats.ParticipantId = participant.ParticipantId;
+                            participantStatsDao.Insert(participant.Stats, conn, tran);
+                            participant.Timeline.ParticipantId = participant.ParticipantId;
+
+                            // On renseigne les id des timeline data
+                            logger.Debug("Insertion des timeline data");
+
+                            foreach (ParticipantTimelineData timelineData in participantDto.TimelineDatas)
+                            {
+                                participantTimelineDataDao.Insert(timelineData, conn, tran);
+                            }
+                        }
+                    }
+                    catch (DbException e)
+                    {
+                        tran.Rollback();
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
                 }
             }
         }

@@ -1,11 +1,10 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Common;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace LolStatistics.DataAccess.Extensions
 {
@@ -29,6 +28,21 @@ namespace LolStatistics.DataAccess.Extensions
             set
             {
                 internCommand.Connection = value;
+            }
+        }
+
+        /// <summary>
+        /// La transaction de la commande
+        /// </summary>
+        public DbTransaction Transaction
+        {
+            get
+            {
+                return internCommand.Transaction;
+            }
+            set
+            {
+                internCommand.Transaction = value;
             }
         }
 
@@ -109,6 +123,15 @@ namespace LolStatistics.DataAccess.Extensions
         public void Dispose()
         {
             internCommand.Dispose();
+        }
+
+        /// <summary>
+        /// Statique méthode contenant les informations sur le SGBD
+        /// </summary>
+        /// <returns></returns>
+        public static DbConnection GetConnexion()
+        {
+            return new MySqlConnection(ConfigurationManager.AppSettings["DbConnectionString"]);
         }
     }
 }

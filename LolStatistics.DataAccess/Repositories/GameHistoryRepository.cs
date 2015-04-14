@@ -5,6 +5,7 @@ using LolStatistics.Model.Game;
 using System;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
+using LolStatistics.DataAccess.Extensions;
 
 namespace LolStatistics.DataAccess.Repositories
 {
@@ -13,6 +14,11 @@ namespace LolStatistics.DataAccess.Repositories
     /// </summary>
     public class GameHistoryRepository : IRepository<GameHistory>
     {
+
+        private GameDao gameDao = new GameDao();
+        private RawStatsDao rawStatsDao = new RawStatsDao();
+        private PlayerDao playerDao = new PlayerDao();
+
         /// <summary>
         /// Insertion d'un historique
         /// </summary>
@@ -29,29 +35,40 @@ namespace LolStatistics.DataAccess.Repositories
         /// <returns>L'historique du membre</returns>
         public GameHistory GetById(string id)
         {
-            DbConnection conn = new MySqlConnection();
-            GameDao gameDao = new GameDao();
-            RawStatsDao rawStatsDao = new RawStatsDao();
-            PlayerDao playerDao = new PlayerDao();
-            GameHistory res = new GameHistory
+            using (DbConnection conn = Command.GetConnexion())
             {
-                Games = new List<Game>(), 
-                SummonerId = long.Parse(id)
-            };
+                try
+                {
+                    conn.Open();
+                    GameHistory res = new GameHistory
+                    {
+                        Games = new List<Game>(),
+                        SummonerId = long.Parse(id)
+                    };
 
-            // Récupération de toutes les parties du membre
-            IList<Game> games = gameDao.GetBySummonerId(id, conn);
+                    // Récupération de toutes les parties du membre
+                    IList<Game> games = gameDao.GetBySummonerId(id, conn);
 
-            foreach (Game game in games)
-            {
-                // Récupération des statistiques
-                game.Stats = rawStatsDao.GetByGameId(game.GameId.ToString(CultureInfo.InvariantCulture), conn);
+                    foreach (Game game in games)
+                    {
+                        // Récupération des statistiques
+                        game.Stats = rawStatsDao.GetByGameId(game.GameId.ToString(CultureInfo.InvariantCulture), conn);
 
-                // Récupération des autres joueurs
-                game.FellowPlayers = playerDao.GetByGameId(game.GameId.ToString(CultureInfo.InvariantCulture), conn);
-                res.Games.Add(game);
+                        // Récupération des autres joueurs
+                        game.FellowPlayers = playerDao.GetByGameId(game.GameId.ToString(CultureInfo.InvariantCulture), conn);
+                        res.Games.Add(game);
+                    }
+                    return res;
+                }
+                catch (DbException e)
+                {
+                    return new GameHistory();
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
-            return res;
         }
     }
 }

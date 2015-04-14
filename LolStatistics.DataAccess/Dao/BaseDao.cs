@@ -38,6 +38,11 @@ namespace LolStatistics.DataAccess.Dao
                 {
                     cmd.Connection = conn;
 
+                    if (tran != null)
+                    {
+                        cmd.Transaction = tran;
+                    }
+
                     cmd.Prepare();
 
                     // Ajout des paramètres
@@ -87,6 +92,11 @@ namespace LolStatistics.DataAccess.Dao
                 using (Command cmd = new Command(cmdText))
                 {
                     cmd.Connection = conn;
+
+                    if (tran != null)
+                    {
+                        cmd.Transaction = tran;
+                    }
 
                     cmd.Prepare();
 
