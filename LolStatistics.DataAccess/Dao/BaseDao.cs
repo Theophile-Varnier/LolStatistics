@@ -1,12 +1,10 @@
-﻿using System.Data.Common;
-using log4net;
+﻿using log4net;
 using LolStatistics.DataAccess.Exceptions;
+using LolStatistics.DataAccess.Extensions;
 using LolStatistics.Log;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using LolStatistics.DataAccess.Extensions;
+using System.Data.Common;
 
 namespace LolStatistics.DataAccess.Dao
 {
@@ -59,9 +57,9 @@ namespace LolStatistics.DataAccess.Dao
                     logger.Info("Données enregistrées.");
                 }
             }
-            catch (MySqlException e)
+            catch (DbException e)
             {
-                switch (e.Number)
+                switch (e.ErrorCode)
                 {
                         // La donnée existe déjà, tant pis...
                     case 1062:

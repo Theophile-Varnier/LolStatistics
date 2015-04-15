@@ -64,12 +64,12 @@ namespace LolStatistics.DataAccess.Extensions
         }
 
         /// <summary>
-        /// Méthode générique de renvoi de valeur dans un Reader
+        /// Méthode générique de récupération de champs dans un Reader
         /// </summary>
         /// <typeparam name="T">Le type de la valeur recherchée</typeparam>
         /// <param name="reader">Le reader duquel on extrait la valeur</param>
         /// <param name="paramName">Le nom de la colonne recherchée</param>
-        /// <param name="returnFunction">La fonction servant à récupérer de base</param>
+        /// <param name="returnFunction">La fonction servant à récupérer le champ</param>
         /// <param name="defaultValue">La valeur renvoyée par défaut</param>
         /// <returns>Le champ recherché ou une valeur par défaut</returns>
         private static T Get<T>(this DbDataReader reader, string paramName, Func<int, T> returnFunction, T defaultValue)
