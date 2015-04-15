@@ -1,11 +1,11 @@
-﻿using System.Data.Common;
-using System.Globalization;
-using LolStatistics.DataAccess.Dao;
+﻿using LolStatistics.DataAccess.Dao;
+using LolStatistics.DataAccess.Exceptions;
+using LolStatistics.DataAccess.Extensions;
 using LolStatistics.Model.Game;
 using System;
 using System.Collections.Generic;
-using MySql.Data.MySqlClient;
-using LolStatistics.DataAccess.Extensions;
+using System.Data.Common;
+using System.Globalization;
 
 namespace LolStatistics.DataAccess.Repositories
 {
@@ -60,7 +60,7 @@ namespace LolStatistics.DataAccess.Repositories
                     }
                     return res;
                 }
-                catch (DbException e)
+                catch (DaoException e)
                 {
                     return new GameHistory();
                 }

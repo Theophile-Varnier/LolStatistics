@@ -1,5 +1,6 @@
 ﻿using log4net;
 using LolStatistics.DataAccess.Dao;
+using LolStatistics.DataAccess.Exceptions;
 using LolStatistics.DataAccess.Extensions;
 using LolStatistics.Log;
 using LolStatistics.Model.Game;
@@ -46,13 +47,9 @@ namespace LolStatistics.DataAccess.Repositories
                         }
                         tran.Commit();
                     }
-                    catch (DbException e)
+                    catch (DaoException e)
                     {
                         tran.Rollback();
-                    }
-                    finally
-                    {
-                        conn.Close();
                     }
                 }
             }

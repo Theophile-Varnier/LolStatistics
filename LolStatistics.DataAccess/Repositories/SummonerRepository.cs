@@ -1,12 +1,9 @@
-﻿using System;
+﻿using LolStatistics.DataAccess.Dao;
+using LolStatistics.DataAccess.Extensions;
+using LolStatistics.Model.App;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LolStatistics.DataAccess.Dao;
-using LolStatistics.Model.App;
-using MySql.Data.MySqlClient;
 
 namespace LolStatistics.DataAccess.Repositories
 {
@@ -26,8 +23,18 @@ namespace LolStatistics.DataAccess.Repositories
 
         public IList<Summoner> Get()
         {
-            DbConnection conn = new MySqlConnection();
-            return summonerDao.Get(conn);
+            using (DbConnection conn = Command.GetConnexion())
+            {
+                try
+                {
+                    conn.Open();
+                    return summonerDao.Get(conn);
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
         }
     }
 }

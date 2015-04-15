@@ -1,7 +1,7 @@
 ﻿using LolStatistics.DataAccess.Dao;
+using LolStatistics.DataAccess.Exceptions;
 using LolStatistics.DataAccess.Extensions;
 using LolStatistics.Model.Static;
-using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System.Data.Common;
 
@@ -27,7 +27,7 @@ namespace LolStatistics.DataAccess.Repositories
                         championDao.Insert(t, conn, tran);
                         tran.Commit();
                     }
-                    catch (DbException e)
+                    catch (DaoException e)
                     {
                         tran.Rollback();
                     }
@@ -53,7 +53,7 @@ namespace LolStatistics.DataAccess.Repositories
                     conn.Open();
                     return championDao.GetById(id, conn);
                 }
-                catch (DbException e)
+                catch (DaoException e)
                 {
                     return null;
                 }
@@ -77,7 +77,7 @@ namespace LolStatistics.DataAccess.Repositories
                     conn.Open();
                     return championDao.GetAllChampions(conn);
                 }
-                catch (DbException e)
+                catch (DaoException e)
                 {
                     return new List<Champion>();
                 }

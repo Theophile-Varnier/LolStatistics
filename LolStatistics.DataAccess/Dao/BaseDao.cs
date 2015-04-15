@@ -30,10 +30,13 @@ namespace LolStatistics.DataAccess.Dao
         /// <param name="conn">La connection à utiliser</param>
         protected void ExecuteNonQuery(string cmdText, DbConnection conn, object dto = null, Action<Command, object> addParams = null, DbTransaction tran = null)
         {
+            if (addParams != null && dto == null)
+            {
+                throw new ArgumentException("L'objet ne peut être null s'il existe une méthode d'ajout de paramètres");
+            }
             try
             {
                 // Préparation de la requête
-                conn.Open();
                 using (Command cmd = new Command(cmdText))
                 {
                     cmd.Connection = conn;
@@ -46,7 +49,7 @@ namespace LolStatistics.DataAccess.Dao
                     cmd.Prepare();
 
                     // Ajout des paramètres
-                    if (addParams != null && dto != null)
+                    if (addParams != null)
                     {
                         addParams(cmd, dto);
                     }
@@ -67,10 +70,6 @@ namespace LolStatistics.DataAccess.Dao
                         logger.Error(e.Message);
                         throw new DaoException("Erreur dans l'insertion en BD : ", e);
                 }
-            }
-            finally
-            {
-                conn.Close();
             }
         }
 
