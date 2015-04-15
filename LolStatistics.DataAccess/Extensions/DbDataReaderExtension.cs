@@ -1,4 +1,5 @@
-﻿using System.Data.Common;
+﻿using System;
+using System.Data.Common;
 
 namespace LolStatistics.DataAccess.Extensions
 {
@@ -15,16 +16,7 @@ namespace LolStatistics.DataAccess.Extensions
         /// <returns></returns>
         public static int GetInt32(this DbDataReader reader, string paramName)
         {
-            int i = 0;
-            while(i < reader.VisibleFieldCount)
-            {
-                if (reader.GetName(i) == paramName)
-                {
-                    return reader.GetInt32(i);
-                }
-                i++;
-            }
-            return 0;
+            return reader.Get(paramName, reader.GetInt32, 0);
         }
 
         /// <summary>
@@ -35,16 +27,7 @@ namespace LolStatistics.DataAccess.Extensions
         /// <returns></returns>
         public static long GetInt64(this DbDataReader reader, string paramName)
         {
-            int i = 0;
-            while (i < reader.VisibleFieldCount)
-            {
-                if (reader.GetFieldValue<string>(i) == paramName)
-                {
-                    return reader.GetInt64(i);
-                }
-                i++;
-            }
-            return 0;
+            return reader.Get(paramName, reader.GetInt64, 0);
         }
 
         /// <summary>
@@ -55,16 +38,7 @@ namespace LolStatistics.DataAccess.Extensions
         /// <returns></returns>
         public static string GetString(this DbDataReader reader, string paramName)
         {
-            int i = 0;
-            while (i < reader.VisibleFieldCount)
-            {
-                if (reader.GetFieldValue<string>(i) == paramName)
-                {
-                    return reader.GetString(i);
-                }
-                i++;
-            }
-            return string.Empty;
+            return reader.Get(paramName, reader.GetString, string.Empty);
         }
 
         /// <summary>
@@ -75,16 +49,7 @@ namespace LolStatistics.DataAccess.Extensions
         /// <returns></returns>
         public static double GetDouble(this DbDataReader reader, string paramName)
         {
-            int i = 0;
-            while (i < reader.VisibleFieldCount)
-            {
-                if (reader.GetFieldValue<string>(i) == paramName)
-                {
-                    return reader.GetDouble(i);
-                }
-                i++;
-            }
-            return 0;
+            return reader.Get(paramName, reader.GetDouble, 0);
         }
 
         /// <summary>
@@ -95,16 +60,30 @@ namespace LolStatistics.DataAccess.Extensions
         /// <returns></returns>
         public static bool GetBoolean(this DbDataReader reader, string paramName)
         {
+            return reader.Get(paramName, reader.GetBoolean, false);
+        }
+
+        /// <summary>
+        /// Méthode générique de renvoi de valeur dans un Reader
+        /// </summary>
+        /// <typeparam name="T">Le type de la valeur recherchée</typeparam>
+        /// <param name="reader">Le reader duquel on extrait la valeur</param>
+        /// <param name="paramName">Le nom de la colonne recherchée</param>
+        /// <param name="returnFunction">La fonction servant à récupérer de base</param>
+        /// <param name="defaultValue">La valeur renvoyée par défaut</param>
+        /// <returns>Le champ recherché ou une valeur par défaut</returns>
+        private static T Get<T>(this DbDataReader reader, string paramName, Func<int, T> returnFunction, T defaultValue)
+        {
             int i = 0;
-            while (i < reader.VisibleFieldCount)
+            while (i < reader.FieldCount)
             {
-                if (reader.GetFieldValue<string>(i) == paramName)
+                if (reader.GetName(i) == paramName)
                 {
-                    return reader.GetBoolean(i);
+                    return returnFunction(i);
                 }
                 i++;
             }
-            return false;
+            return defaultValue;
         }
     }
 }

@@ -1,9 +1,8 @@
-﻿using System.Data.Common;
-using LolStatistics.DataAccess.Extensions;
+﻿using LolStatistics.DataAccess.Extensions;
 using LolStatistics.Model.App;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 
 namespace LolStatistics.DataAccess.Dao
 {

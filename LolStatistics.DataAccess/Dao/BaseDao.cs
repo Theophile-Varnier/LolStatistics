@@ -106,10 +106,15 @@ namespace LolStatistics.DataAccess.Dao
                     }
 
                     // Exécution
-                    DbDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    using (DbDataReader reader = cmd.ExecuteReader())
                     {
-                        res.Add(RecordToDto(reader));
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                res.Add(RecordToDto(reader));
+                            }
+                        }
                     }
 
                     return res;

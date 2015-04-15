@@ -40,12 +40,6 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="WebServiceConsumer.cs" />
@@ -58,10 +52,6 @@
     <ProjectReference Include="..\LolStatistics.Logger\LolStatistics.Log.csproj">
       <Project>{89e66974-bb0e-4e07-957f-0789501d4451}</Project>
       <Name>LolStatistics.Log</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LolStatistics.Model\LolStatistics.Model.csproj">
-      <Project>{1cb54c30-62d5-4a0d-869f-23c668d864f1}</Project>
-      <Name>LolStatistics.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

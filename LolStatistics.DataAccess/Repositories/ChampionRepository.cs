@@ -7,12 +7,15 @@ using System.Data.Common;
 
 namespace LolStatistics.DataAccess.Repositories
 {
+    /// <summary>
+    /// Repository associé aux champions
+    /// </summary>
     public class ChampionRepository: IRepository<Champion>
     {
         ChampionDao championDao = new ChampionDao();
 
         /// <summary>
-        /// 
+        /// Insert un champion en base
         /// </summary>
         /// <param name="t"></param>
         public void Insert(Champion t)
@@ -40,7 +43,7 @@ namespace LolStatistics.DataAccess.Repositories
         }
 
         /// <summary>
-        /// 
+        /// Récupère un champion à partir de son id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -65,7 +68,7 @@ namespace LolStatistics.DataAccess.Repositories
         }
 
         /// <summary>
-        /// 
+        /// Récupère la liste de tous les champions
         /// </summary>
         /// <returns></returns>
         public List<Champion> GetAllChampions()
