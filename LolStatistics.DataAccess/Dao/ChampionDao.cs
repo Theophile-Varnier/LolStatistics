@@ -16,17 +16,12 @@ namespace LolStatistics.DataAccess.Dao
         /// <param name="champion">Le champion à insérer</param>
         public void Insert(Champion champion)
         {
+            const string cmd = "INSERT INTO CHAMPION("
+        + "ID, TITLE, NAME, KY) VALUES("
+        + "@id, @title, @name, @key)";
 
-            // Création de la requête
-            using (MySqlCommand cmd = new MySqlCommand())
-            {
-                cmd.CommandText = "INSERT INTO CHAMPION("
-            + "ID, TITLE, NAME, KY) VALUES("
-            + "@id, @title, @name, @key)";
-
-                // Exécution de la requête
-                ExecuteNonQuery(cmd, champion, addParameters);
-            }
+            // Exécution de la requête
+            ExecuteNonQuery(cmd, champion, AddParameters);
 
         }
 
@@ -37,13 +32,15 @@ namespace LolStatistics.DataAccess.Dao
         /// <returns>Le champion bindé</returns>
         public override Champion RecordToDto(MySqlDataReader reader)
         {
-            Champion res = new Champion();
+            Champion res = new Champion
+            {
+                Id = reader.GetInt32("ID"), 
+                Title = reader.GetString("TITLE"), 
+                Name = reader.GetString("NAME"), 
+                Key = reader.GetString("KY")
+            };
 
             // Renseignement des champs
-            res.Id = reader.GetInt32("ID");
-            res.Title = reader.GetString("TITLE");
-            res.Name = reader.GetString("NAME");
-            res.Key = reader.GetString("KY");
 
             return res;
         }
@@ -54,11 +51,8 @@ namespace LolStatistics.DataAccess.Dao
         /// <returns>La liste des champions connus</returns>
         public List<Champion> GetAllChampions()
         {
-            using (MySqlCommand cmd = new MySqlCommand())
-            {
-                cmd.CommandText = "SELECT * FROM CHAMPION";
-                return ExecuteReader(cmd, null, null);
-            }
+            const string cmd = "SELECT * FROM CHAMPION";
+            return ExecuteReader(cmd);
         }
 
         /// <summary>
@@ -66,7 +60,7 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="cmd">La commande à laquelle on ajoute les paramètres</param>
         /// <param name="obj">L'objet servant à ajouter les paramètres</param>
-        public void addParameters(MySqlCommand cmd, Object obj)
+        private void AddParameters(MySqlCommand cmd, Object obj)
         {
             Champion champion = obj as Champion;
 

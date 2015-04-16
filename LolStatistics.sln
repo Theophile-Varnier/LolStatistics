@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LolStatistics", "LolStatistics\LolStatistics.csproj", "{7F43D559-6881-46F7-A18D-44E8A4DF0B38}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LolStatistics.WebServiceConsumers", "LolStatistics.WebServiceConsumers\LolStatistics.WebServiceConsumers.csproj", "{50AD1C37-8408-49F6-87B8-D05AB9282D3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LolStatistics.Logger", "LolStatistics.Logger\LolStatistics.Logger.csproj", "{89E66974-BB0E-4E07-957F-0789501D4451}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LolStatistics.Log", "LolStatistics.Logger\LolStatistics.Log.csproj", "{89E66974-BB0E-4E07-957F-0789501D4451}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "LolStatisticsInstaller", "Installer\Installer.vdproj", "{31923FB9-70D3-4A42-A0E0-9345065C3D1B}"
 EndProject
@@ -18,6 +18,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LolStatistics.Web", "LolStatistics.Web\LolStatistics.Web.csproj", "{2A10744F-B760-4A1D-8B1F-12CE9E545707}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{6F2B2722-76A7-4DC6-9B3D-B4698673E0E7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CF37A442-3EC8-4975-89CA-7C3E349E1684}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,5 +1,6 @@
 ﻿using log4net;
 using LolStatistics.Jobs;
+using LolStatistics.Log;
 using Quartz;
 using Quartz.Impl;
 using System.ServiceProcess;
@@ -19,10 +20,12 @@ namespace LolStatistics
 
         protected override void OnStart(string[] args)
         {
+            logger.Info("Démarrage du service LolStatistics.");
+
             scheduler = StdSchedulerFactory.GetDefaultScheduler();
 
             // Initialisation du job de récupération des champions
-            CreateChampionsJob();
+            CreateStaticDataJob();
 
             // Initialisation du job de récupération des historiques
             CreateGamesJob();
@@ -30,20 +33,20 @@ namespace LolStatistics
             scheduler.Start();
         }
 
-        private void CreateChampionsJob()
+        private void CreateStaticDataJob()
         {
             logger.Info("Démarrage du service LolStatistics.");
-            IJobDetail championJob = JobBuilder.Create<ChampionsJob>()
-                .WithIdentity("championJob", "group 1")
+            IJobDetail championJob = JobBuilder.Create<StaticDataJob>()
+                .WithIdentity("staticDataJob", "group 1")
                 .Build();
 
             ITrigger championTrigger = TriggerBuilder.Create()
-                .WithIdentity("championTrigger", "group 1")
+                .WithIdentity("staticDataTrigger", "group 1")
                 .StartNow()
-                .WithSimpleSchedule(x => x
-                .WithIntervalInHours(2)
-                //.WithIntervalInMinutes(1)
-                .RepeatForever())
+                //.WithSimpleSchedule(x => x
+                //.WithIntervalInHours(2)
+                //.RepeatForever())
+                .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(01, 00))
                 .Build();
 
             scheduler.ScheduleJob(championJob, championTrigger);
@@ -51,7 +54,6 @@ namespace LolStatistics
 
         private void CreateGamesJob()
         {
-            logger.Info("Démarrage du service LolStatistics.");
             IJobDetail historyJob = JobBuilder.Create<HistoryJob>()
                 .WithIdentity("historyJob", "group 2")
                 .Build();

@@ -1,27 +1,35 @@
-﻿using LolStatistics.Model;
+﻿using LolStatistics.Model.App;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 
 namespace LolStatistics.DataAccess.Dao
 {
+    /// <summary>
+    /// Dao associée aux invocateurs (membres)
+    /// </summary>
     public class SummonerDao : BaseDao<Summoner>
     {
+        /// <summary>
+        /// Insert un invocateur en base
+        /// </summary>
+        /// <param name="summoner">L'invocateur à insérer</param>
         public void Insert(Summoner summoner)
         {
-
-            // Création de la requête
-            using (MySqlCommand cmd = new MySqlCommand())
-            {
-                cmd.CommandText = "INSERT INTO SUMMONER("
+            const string cmd = "INSERT INTO SUMMONER("
             + "ID, NAME, PROFILE_ICON_ID, REVISION_DATE) VALUES("
             + "@id, @name, @profileIconId, @revisionDate)";
 
-                // Exécution de la requête
-                ExecuteNonQuery(cmd, summoner, addParameters);
-            }
+            // Exécution de la requête
+            ExecuteNonQuery(cmd, summoner, addParameters);
 
         }
+
+        /// <summary>
+        /// Map un objet depuis un enregistrement
+        /// </summary>
+        /// <param name="reader">L'enregistrement à mapper</param>
+        /// <returns>L'objet mappé</returns>
         public override Summoner RecordToDto(MySqlDataReader reader)
         {
             Summoner res = new Summoner();
@@ -36,7 +44,12 @@ namespace LolStatistics.DataAccess.Dao
 
         }
 
-        public void addParameters(MySqlCommand cmd, Object obj)
+        /// <summary>
+        /// Méthode d'ajout des paramètres pour la requête d'insertion
+        /// </summary>
+        /// <param name="cmd">La commande à laquelle on ajoute les paramètres</param>
+        /// <param name="obj">L'objet qui contient les informations</param>
+        private void addParameters(MySqlCommand cmd, Object obj)
         {
             Summoner summoner = obj as Summoner;
 
@@ -48,13 +61,14 @@ namespace LolStatistics.DataAccess.Dao
 
         }
 
+        /// <summary>
+        /// Récupère l'ensemble des membres
+        /// </summary>
+        /// <returns>La liste des membres</returns>
         public IList<Summoner> Get()
         {
-            using (MySqlCommand cmd = new MySqlCommand())
-            {
-                cmd.CommandText = "SELECT * FROM SUMMONER";
-                return ExecuteReader(cmd, null, null);
-            }
+            const string cmd = "SELECT * FROM SUMMONER";
+            return ExecuteReader(cmd);
         }
     }
 }

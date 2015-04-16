@@ -1,201 +1,200 @@
-﻿using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
+﻿using Newtonsoft.Json;
 
-namespace LolStatistics.Model
+namespace LolStatistics.Model.Stats
 {
-    [DataContract]
+    [JsonObject]
     public class ParticipantStats
     {
-        [IgnoreDataMember]
+        [JsonIgnore]
         public string ParticipantId { get; set; }
 
-        [DataMember(Name = "assists")]
+        [JsonProperty("assists")]
         public long Assists { get; set; }
 
-        [DataMember(Name = "champLevel")]
+        [JsonProperty("champLevel")]
         public long ChampLevel { get; set; }
 
-        [DataMember(Name = "combatPlayerScore")]
+        [JsonProperty("combatPlayerScore")]
         public long CombatPlayerScore { get; set; }
 
-        [DataMember(Name = "deaths")]
+        [JsonProperty("deaths")]
         public long Deaths { get; set; }
 
-        [DataMember(Name = "doubleKills")]
+        [JsonProperty("doubleKills")]
         public long DoubleKills { get; set; }
 
-        [DataMember(Name = "firstBloodAssist")]
+        [JsonProperty("firstBloodAssist")]
         public bool FirstBloodAssist { get; set; }
 
-        [DataMember(Name = "firstBloodKill")]
+        [JsonProperty("firstBloodKill")]
         public bool FirstBloodKill { get; set; }
 
-        [DataMember(Name = "firstInhibitorAssist")]
+        [JsonProperty("firstInhibitorAssist")]
         public bool FirstInhibitorAssist { get; set; }
 
-        [DataMember(Name = "firstInhibitorKill")]
+        [JsonProperty("firstInhibitorKill")]
         public bool FirstInhibitorKill { get; set; }
 
-        [DataMember(Name = "firstTowerAssist")]
+        [JsonProperty("firstTowerAssist")]
         public bool FirstTowerAssist { get; set; }
 
-        [DataMember(Name = "firstTowerKill")]
+        [JsonProperty("firstTowerKill")]
         public bool FirstTowerKill { get; set; }
 
-        [DataMember(Name = "goldEarned")]
+        [JsonProperty("goldEarned")]
         public long GoldEarned { get; set; }
 
-        [DataMember(Name = "goldSpent")]
+        [JsonProperty("goldSpent")]
         public long GoldSpent { get; set; }
 
-        [DataMember(Name = "inhibitorKills")]
+        [JsonProperty("inhibitorKills")]
         public long InhibitorKills { get; set; }
 
-        [DataMember(Name = "item0")]
+        [JsonProperty("item0")]
         public long Item0 { get; set; }
 
-        [DataMember(Name = "item1")]
+        [JsonProperty("item1")]
         public long Item1 { get; set; }
 
-        [DataMember(Name = "item2")]
+        [JsonProperty("item2")]
         public long Item2 { get; set; }
 
-        [DataMember(Name = "item3")]
+        [JsonProperty("item3")]
         public long Item3 { get; set; }
 
-        [DataMember(Name = "item4")]
+        [JsonProperty("item4")]
         public long Item4 { get; set; }
 
-        [DataMember(Name = "item5")]
+        [JsonProperty("item5")]
         public long Item5 { get; set; }
 
-        [DataMember(Name = "item6")]
+        [JsonProperty("item6")]
         public long Item6 { get; set; }
 
-        [DataMember(Name = "killingSprees")]
+        [JsonProperty("killingSprees")]
         public long KillingSprees { get; set; }
 
-        [DataMember(Name = "kills")]
+        [JsonProperty("kills")]
         public long Kills { get; set; }
 
-        [DataMember(Name = "largestCriticalStrike")]
+        [JsonProperty("largestCriticalStrike")]
         public long LargestCriticalStrike { get; set; }
 
-        [DataMember(Name = "largestKillingSpree")]
+        [JsonProperty("largestKillingSpree")]
         public long LargestKillingSpree { get; set; }
 
-        [DataMember(Name = "largestMultiKill")]
+        [JsonProperty("largestMultiKill")]
         public long LargestMultiKill { get; set; }
 
-        [DataMember(Name = "magicDamageDealt")]
+        [JsonProperty("magicDamageDealt")]
         public long MagicDamageDealt { get; set; }
 
-        [DataMember(Name = "magicDamageDealtToChampions")]
+        [JsonProperty("magicDamageDealtToChampions")]
         public long MagicDamageDealtToChampions { get; set; }
 
-        [DataMember(Name = "magicDamageTaken")]
+        [JsonProperty("magicDamageTaken")]
         public long MagicDamageTaken { get; set; }
 
-        [DataMember(Name = "minionsKilled")]
+        [JsonProperty("minionsKilled")]
         public long MinionsKilled { get; set; }
 
-        [DataMember(Name = "neutralMinionsKilled")]
+        [JsonProperty("neutralMinionsKilled")]
         public long NeutralMinionsKilled { get; set; }
 
-        [DataMember(Name = "neutralMinionsKilledEnemyJungle")]
+        [JsonProperty("neutralMinionsKilledEnemyJungle")]
         public long NeutralMinionsKilledEnemyJungle { get; set; }
 
-        [DataMember(Name = "neutralMinionsKilledTeamJungle")]
+        [JsonProperty("neutralMinionsKilledTeamJungle")]
         public long NeutralMinionsKilledTeamJungle { get; set; }
 
-        [DataMember(Name = "nodeCapture")]
+        [JsonProperty("nodeCapture")]
         public long NodeCapture { get; set; }
 
-        [DataMember(Name = "nodeCaptureAssist")]
+        [JsonProperty("nodeCaptureAssist")]
         public long NodeCaptureAssist { get; set; }
 
-        [DataMember(Name = "nodeNeutralize")]
+        [JsonProperty("nodeNeutralize")]
         public long NodeNeutralize { get; set; }
 
-        [DataMember(Name = "nodeNeutralizeAssist")]
+        [JsonProperty("nodeNeutralizeAssist")]
         public long NodeNeutralizeAssist { get; set; }
 
-        [DataMember(Name = "objectivePlayerScore")]
+        [JsonProperty("objectivePlayerScore")]
         public long ObjectivePlayerScore { get; set; }
 
-        [DataMember(Name = "pentaKills")]
+        [JsonProperty("pentaKills")]
         public long PentaKills { get; set; }
 
-        [DataMember(Name = "physicalDamageDealt")]
+        [JsonProperty("physicalDamageDealt")]
         public long PhysicalDamageDealt { get; set; }
 
-        [DataMember(Name = "physicalDamageDealtToChampions")]
+        [JsonProperty("physicalDamageDealtToChampions")]
         public long PhysicalDamageDealtToChampions { get; set; }
 
-        [DataMember(Name = "physicalDamageTaken")]
+        [JsonProperty("physicalDamageTaken")]
         public long PhysicalDamageTaken { get; set; }
 
-        [DataMember(Name = "quadraKills")]
+        [JsonProperty("quadraKills")]
         public long QuadraKills { get; set; }
 
-        [DataMember(Name = "sightWardsBoughtInGame")]
+        [JsonProperty("sightWardsBoughtInGame")]
         public long SightWardsBoughtInGame { get; set; }
 
-        [DataMember(Name = "teamObjective")]
+        [JsonProperty("teamObjective")]
         public long TeamObjective { get; set; }
 
-        [DataMember(Name = "totalDamageDealt")]
+        [JsonProperty("totalDamageDealt")]
         public long TotalDamageDealt { get; set; }
 
-        [DataMember(Name = "totalDamageDealtToChampions")]
+        [JsonProperty("totalDamageDealtToChampions")]
         public long TotalDamageDealtToChampions { get; set; }
 
-        [DataMember(Name = "totalDamageTaken")]
+        [JsonProperty("totalDamageTaken")]
         public long TotalDamageTaken { get; set; }
 
-        [DataMember(Name = "totalHeal")]
+        [JsonProperty("totalHeal")]
         public long TotalHeal { get; set; }
 
-        [DataMember(Name = "totalPlayerScore")]
+        [JsonProperty("totalPlayerScore")]
         public long TotalPlayerScore { get; set; }
 
-        [DataMember(Name = "totalScoreRank")]
+        [JsonProperty("totalScoreRank")]
         public long TotalScoreRank { get; set; }
 
-        [DataMember(Name = "totalTimeCrowdControlDealt")]
+        [JsonProperty("totalTimeCrowdControlDealt")]
         public long TotalTimeCrowdControlDealt { get; set; }
 
-        [DataMember(Name = "totalUnitsHealed")]
+        [JsonProperty("totalUnitsHealed")]
         public long TotalUnitsHealed { get; set; }
 
-        [DataMember(Name = "towerKills")]
+        [JsonProperty("towerKills")]
         public long TowerKills { get; set; }
 
-        [DataMember(Name = "tripleKills")]
+        [JsonProperty("tripleKills")]
         public long TripleKills { get; set; }
 
-        [DataMember(Name = "trueDamageDealt")]
+        [JsonProperty("trueDamageDealt")]
         public long TrueDamageDealt { get; set; }
 
-        [DataMember(Name = "trueDamageDealtToChampions")]
+        [JsonProperty("trueDamageDealtToChampions")]
         public long TrueDamageDealtToChampions { get; set; }
 
-        [DataMember(Name = "trueDamageTaken")]
+        [JsonProperty("trueDamageTaken")]
         public long TrueDamageTaken { get; set; }
 
-        [DataMember(Name = "unrealKills")]
+        [JsonProperty("unrealKills")]
         public long UnrealKills { get; set; }
 
-        [DataMember(Name = "visionWardsBoughtInGame")]
+        [JsonProperty("visionWardsBoughtInGame")]
         public long VisionWardsBoughtInGame { get; set; }
 
-        [DataMember(Name = "wardsKilled")]
+        [JsonProperty("wardsKilled")]
         public long WardsKilled { get; set; }
 
-        [DataMember(Name = "wardsPlaced")]
+        [JsonProperty("wardsPlaced")]
         public long WardsPlaced { get; set; }
 
-        [DataMember(Name = "winner")]
+        [JsonProperty("winner")]
         public bool Winner { get; set; }
 
     }

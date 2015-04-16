@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
-namespace LolStatistics.Model
+namespace LolStatistics.Model.Game
 {
-    [DataContract]
+    [JsonObject]
     public class MatchHistory
     {
-        [DataMember(Name = "matches")]
+        [JsonProperty("matches")]
         public List<RankedGame> Matches { get; set; }
     }
 }

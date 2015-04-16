@@ -1,21 +1,20 @@
-﻿using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
+﻿using Newtonsoft.Json;
 
-namespace LolStatistics.Model
+namespace LolStatistics.Model.App
 {
-    [DataContract]
+    [JsonObject]
     public class Summoner
     {
-        [DataMember(Name = "id")]
+        [JsonProperty("id")]
         public long Id { get; set; }
 
-        [DataMember(Name = "name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
-        [DataMember(Name = "profileIconId")]
+        [JsonProperty("profileIconId")]
         public int ProfileIconId { get; set; }
 
-        [DataMember(Name = "revisionDate")]
+        [JsonProperty("revisionDate")]
         public long RevisionDate { get; set; }
 
     }

@@ -1,10 +1,10 @@
 ﻿using LolStatistics.DataAccess.Dao;
 using LolStatistics.DataAccess.Repositories;
-using LolStatistics.Model;
+using LolStatistics.Model.Game;
 using LolStatistics.Web.Models;
 using LolStatistics.Web.Models.Mapper;
-using System.Web.Mvc;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace LolStatistics.Web.Controllers
 {
@@ -16,7 +16,7 @@ namespace LolStatistics.Web.Controllers
             GameHistoryViewModel model = new GameHistoryViewModel();
             GameDao gameDao = new GameDao();
             string summonerId = "25954150";
-            GameHistory gh = dbMapper.UnMap(summonerId);
+            GameHistory gh = dbMapper.GetById(summonerId);
             gh.Games = gh.Games.OrderBy(g => g.CreateDate).Reverse().ToList();
             model = GameHistoryMapper.MapToModel(gh);
             return View(model);

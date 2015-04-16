@@ -1,5 +1,6 @@
 ﻿using log4net;
 using LolStatistics.DataAccess.Exceptions;
+using LolStatistics.Log;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -20,28 +21,31 @@ namespace LolStatistics.DataAccess.Dao
         /// <summary>
         /// Requête ne retournant pas de résultat
         /// </summary>
-        /// <param name="cmd">la commande à exécuter</param>
+        /// <param name="cmdText">la commande à exécuter</param>
         /// <param name="dto">L'objet à partir duquel on ajoute les paramètres</param>
         /// <param name="addParams">La méthode servant à ajouter les paramètres</param>
-        protected void ExecuteNonQuery(MySqlCommand cmd, object dto, Action<MySqlCommand, object> addParams)
+        protected void ExecuteNonQuery(string cmdText, object dto = null, Action<MySqlCommand, object> addParams = null)
         {
             try
             {
                 // Préparation de la requête
                 conn.Open();
-                cmd.Connection = conn;
-
-                cmd.Prepare();
-
-                // Ajout des paramètres
-                if (addParams != null)
+                using (MySqlCommand cmd = new MySqlCommand(cmdText))
                 {
-                    addParams(cmd, dto);
-                }
+                    cmd.Connection = conn;
 
-                // Exécution
-                cmd.ExecuteNonQuery();
-                logger.Info("Données enregistrées.");
+                    cmd.Prepare();
+
+                    // Ajout des paramètres
+                    if (addParams != null && dto != null)
+                    {
+                        addParams(cmd, dto);
+                    }
+
+                    // Exécution
+                    cmd.ExecuteNonQuery();
+                    logger.Info("Données enregistrées.");
+                }
             }
             catch (MySqlException e)
             {
@@ -52,7 +56,7 @@ namespace LolStatistics.DataAccess.Dao
                         break;
                     default:
                         logger.Error(e.Message);
-                        throw new BaseDaoException("Erreur dans l'insertion en BD", e);
+                        throw new DaoException("Erreur dans l'insertion en BD : ", e);
                 }
             }
             finally
@@ -64,38 +68,41 @@ namespace LolStatistics.DataAccess.Dao
         /// <summary>
         /// Récupère des données en base
         /// </summary>
-        /// <param name="cmd">la commande à exécuter</param>
+        /// <param name="cmdText">la commande à exécuter</param>
         /// <param name="dto">L'objet à partir duquel on ajoute les paramètres</param>
         /// <param name="addParams">La méthode servant à ajouter les paramètres</param>
         /// <returns></returns>
-        protected List<T> ExecuteReader(MySqlCommand cmd, object dto, Action<MySqlCommand, object> addParams)
+        protected List<T> ExecuteReader(string cmdText, object dto = null, Action<MySqlCommand, object> addParams = null)
         {
             List<T> res = new List<T>();
             try
             {
                 // Préparation de la requête
                 conn.Open();
-                cmd.Connection = conn;
-
-                // Ajout des paramètres
-                if (addParams != null)
+                using (MySqlCommand cmd = new MySqlCommand(cmdText))
                 {
-                    addParams(cmd, dto);
-                }
+                    cmd.Connection = conn;
 
-                // Exécution
-                MySqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    res.Add(RecordToDto(reader));
-                }
+                    // Ajout des paramètres
+                    if (addParams != null && dto != null)
+                    {
+                        addParams(cmd, dto);
+                    }
 
-                return res;
+                    // Exécution
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        res.Add(RecordToDto(reader));
+                    }
+
+                    return res;
+                }
             }
             catch (MySqlException e)
             {
                 logger.Error(e.Message);
-                throw new BaseDaoException("Erreur dans l'insertion en BD", e);
+                throw new DaoException("Erreur dans l'insertion en BD", e);
             }
             finally
             {

@@ -1,95 +1,94 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
+using Newtonsoft.Json;
 
-namespace LolStatistics.Model
+namespace LolStatistics.Model.Participant
 {
-    [DataContract]
+    [JsonObject]
     public class ParticipantTimeline
     {
-        [IgnoreDataMember]
+        [JsonIgnore]
         public string ParticipantId { get; set; }
 
-        [DataMember(Name = "ancientGolemAssistsPerMinCounts")]
+        [JsonProperty("ancientGolemAssistsPerMinCounts")]
         public ParticipantTimelineData AncientGolemAssistsPerMinCounts { get; set; }
 
-        [DataMember(Name = "ancientGolemKillsPerMinCounts")]
+        [JsonProperty("ancientGolemKillsPerMinCounts")]
         public ParticipantTimelineData AncientGolemKillsPerMinCounts { get; set; }
 
-        [DataMember(Name = "assistedLaneDeathsPerMinDeltas")]
+        [JsonProperty("assistedLaneDeathsPerMinDeltas")]
         public ParticipantTimelineData AssistedLaneDeathsPerMinDeltas { get; set; }
 
-        [DataMember(Name = "assistedLaneKillsPerMinDeltas")]
+        [JsonProperty("assistedLaneKillsPerMinDeltas")]
         public ParticipantTimelineData AssistedLaneKillsPerMinDeltas { get; set; }
 
-        [DataMember(Name = "baronAssistsPerMinCounts")]
+        [JsonProperty("baronAssistsPerMinCounts")]
         public ParticipantTimelineData BaronAssistsPerMinCounts { get; set; }
 
-        [DataMember(Name = "baronKillsPerMinCounts")]
+        [JsonProperty("baronKillsPerMinCounts")]
         public ParticipantTimelineData BaronKillsPerMinCounts { get; set; }
 
-        [DataMember(Name = "creepsPerMinDeltas")]
+        [JsonProperty("creepsPerMinDeltas")]
         public ParticipantTimelineData CreepsPerMinDeltas { get; set; }
 
-        [DataMember(Name = "csDiffPerMinDeltas")]
+        [JsonProperty("csDiffPerMinDeltas")]
         public ParticipantTimelineData CsDiffPerMinDeltas { get; set; }
 
-        [DataMember(Name = "damageTakenDiffPerMinDeltas")]
+        [JsonProperty("damageTakenDiffPerMinDeltas")]
         public ParticipantTimelineData DamageTakenDiffPerMinDeltas { get; set; }
 
-        [DataMember(Name = "damageTakenPerMinDeltas")]
+        [JsonProperty("damageTakenPerMinDeltas")]
         public ParticipantTimelineData DamageTakenPerMinDeltas { get; set; }
 
-        [DataMember(Name = "dragonAssistsPerMinCounts")]
+        [JsonProperty("dragonAssistsPerMinCounts")]
         public ParticipantTimelineData DragonAssistsPerMinCounts { get; set; }
 
-        [DataMember(Name = "dragonKillsPerMinCounts")]
+        [JsonProperty("dragonKillsPerMinCounts")]
         public ParticipantTimelineData DragonKillsPerMinCounts { get; set; }
 
-        [DataMember(Name = "elderLizardAssistsPerMinCounts")]
+        [JsonProperty("elderLizardAssistsPerMinCounts")]
         public ParticipantTimelineData ElderLizardAssistsPerMinCounts { get; set; }
 
-        [DataMember(Name = "elderLizardKillsPerMinCounts")]
+        [JsonProperty("elderLizardKillsPerMinCounts")]
         public ParticipantTimelineData ElderLizardKillsPerMinCounts { get; set; }
 
-        [DataMember(Name = "goldPerMinDeltas")]
+        [JsonProperty("goldPerMinDeltas")]
         public ParticipantTimelineData GoldPerMinDeltas { get; set; }
 
-        [DataMember(Name = "inhibitorAssistsPerMinCounts")]
+        [JsonProperty("inhibitorAssistsPerMinCounts")]
         public ParticipantTimelineData InhibitorAssistsPerMinCounts { get; set; }
 
-        [DataMember(Name = "inhibitorKillsPerMinCounts")]
+        [JsonProperty("inhibitorKillsPerMinCounts")]
         public ParticipantTimelineData InhibitorKillsPerMinCounts { get; set; }
 
-        [DataMember(Name = "lane")]
+        [JsonProperty("lane")]
         public string Lane { get; set; }
 
-        [DataMember(Name = "role")]
+        [JsonProperty("role")]
         public string Role { get; set; }
 
-        [DataMember(Name = "towerAssistsPerMinCounts")]
+        [JsonProperty("towerAssistsPerMinCounts")]
         public ParticipantTimelineData TowerAssistsPerMinCounts { get; set; }
 
-        [DataMember(Name = "towerKillsPerMinCounts")]
+        [JsonProperty("towerKillsPerMinCounts")]
         public ParticipantTimelineData TowerKillsPerMinCounts { get; set; }
 
-        [DataMember(Name = "towerKillsPerMinDeltas")]
+        [JsonProperty("towerKillsPerMinDeltas")]
         public ParticipantTimelineData TowerKillsPerMinDeltas { get; set; }
 
-        [DataMember(Name = "vilemawAssistsPerMinCounts")]
+        [JsonProperty("vilemawAssistsPerMinCounts")]
         public ParticipantTimelineData VilemawAssistsPerMinCounts { get; set; }
 
-        [DataMember(Name = "vilemawKillsPerMinCounts")]
+        [JsonProperty("vilemawKillsPerMinCounts")]
         public ParticipantTimelineData VilemawKillsPerMinCounts { get; set; }
 
-        [DataMember(Name = "wardsPerMinDeltas")]
+        [JsonProperty("wardsPerMinDeltas")]
         public ParticipantTimelineData WardsPerMinDeltas { get; set; }
 
-        [DataMember(Name = "xpDiffPerMinDeltas")]
+        [JsonProperty("xpDiffPerMinDeltas")]
         public ParticipantTimelineData XpDiffPerMinDeltas { get; set; }
 
-        [DataMember(Name = "xpPerMinDeltas")]
+        [JsonProperty("xpPerMinDeltas")]
         public ParticipantTimelineData XpPerMinDeltas { get; set; }
 
         public IList<PropertyInfo> TimelineDatas

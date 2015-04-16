@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
-namespace LolStatistics.Model
+namespace LolStatistics.Model.Game
 {
-    [DataContract]
+    [JsonObject]
     public class GameHistory
     {
-        [DataMember(Name="summonerId")]
+        [JsonProperty("summonerId")]
         public long SummonerId { get; set; }
 
-        [DataMember(Name="games")]
+        [JsonProperty("games")]
         public List<Game> Games { get; set; }
     }
 }

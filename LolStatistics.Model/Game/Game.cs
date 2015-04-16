@@ -1,57 +1,59 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
+﻿using LolStatistics.Model.Participant;
+using LolStatistics.Model.Stats;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
-namespace LolStatistics.Model
+namespace LolStatistics.Model.Game
 {
-    [DataContract]
+    [JsonObject]
     public class Game
     {
-        [DataMember(Name = "championId")]
+        [JsonProperty("championId")]
         public int ChampionId { get; set; }
 
-        [DataMember(Name = "createDate")]
+        [JsonProperty("createDate")]
         public long CreateDate { get; set; }
 
-        [DataMember(Name = "fellowPlayers")]
+        [JsonProperty("fellowPlayers")]
         public IList<Player> FellowPlayers { get; set; }
 
-        [DataMember(Name = "gameId")]
+        [JsonProperty("gameId")]
         public long GameId { get; set; }
 
-        [DataMember(Name = "gameMode")]
+        [JsonProperty("gameMode")]
         public string GameMode { get; set; }
 
-        [DataMember(Name = "gameType")]
+        [JsonProperty("gameType")]
         public string GameType { get; set; }
 
-        [DataMember(Name = "invalid")]
+        [JsonProperty("invalid")]
         public bool Invalid { get; set; }
 
-        [DataMember(Name = "ipEarned")]
+        [JsonProperty("ipEarned")]
         public int IpEarned { get; set; }
 
-        [DataMember(Name = "level")]
+        [JsonProperty("level")]
         public int Level { get; set; }
 
-        [DataMember(Name = "mapId")]
+        [JsonProperty("mapId")]
         public int MapId { get; set; }
 
-        [DataMember(Name = "spell1")]
+        [JsonProperty("spell1")]
         public int Spell1 { get; set; }
 
-        [DataMember(Name = "spell2")]
+        [JsonProperty("spell2")]
         public int Spell2 { get; set; }
 
-        [DataMember(Name = "stats")]
+        [JsonProperty("stats")]
         public RawStats Stats { get; set; }
 
-        [DataMember(Name = "subType")]
+        [JsonProperty("subType")]
         public string SubType { get; set; }
 
-        [DataMember(Name = "teamId")]
+        [JsonProperty("teamId")]
         public int TeamId { get; set; }
 
-        [IgnoreDataMember]
+        [JsonIgnore]
         public long SummonerId { get; set; }
 
     }

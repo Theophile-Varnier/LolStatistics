@@ -4,9 +4,9 @@ using System.Collections.Generic;
 namespace LolStatistics.Model.Static
 {
     [JsonObject]
-    public class ListOfChampions
+    public class ListOfItems
     {
         [JsonProperty("data")]
-        public Dictionary<string, Champion> Champions { get; set; }
+        public List<Item> Items { get; set; } 
     }
 }
