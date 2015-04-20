@@ -40,6 +40,8 @@
   <ItemGroup>
     <Compile Include="App\Summoner.cs" />
     <Compile Include="Dto\ParticipantDto.cs" />
+    <Compile Include="Dto\StatsDto.cs" />
+    <Compile Include="Dto\TeamMemberDto.cs" />
     <Compile Include="Game\Game.cs" />
     <Compile Include="Game\GameHistory.cs" />
     <Compile Include="Game\MatchHistory.cs" />
@@ -56,6 +58,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Game\RankedGame.cs" />
     <Compile Include="Stats\RawStats.cs" />
+    <Compile Include="Teams\RankedTeam.cs" />
+    <Compile Include="Teams\RankedTeamHistory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

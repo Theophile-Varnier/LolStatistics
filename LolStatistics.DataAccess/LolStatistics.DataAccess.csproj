@@ -50,6 +50,7 @@
     <Compile Include="Dao\ParticipantTimelineDataDao.cs" />
     <Compile Include="Dao\PlayerDao.cs" />
     <Compile Include="Dao\RankedGameDao.cs" />
+    <Compile Include="Dao\RankedTeamDao.cs" />
     <Compile Include="Dao\RawStatsDao.cs" />
     <Compile Include="Dao\SummonerDao.cs" />
     <Compile Include="Extensions\Command.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Repositories\RankedGameRepository.cs" />
     <Compile Include="Exceptions\DaoException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\RankedTeamRepository.cs" />
     <Compile Include="Repositories\SummonerRepository.cs" />
   </ItemGroup>
   <ItemGroup>

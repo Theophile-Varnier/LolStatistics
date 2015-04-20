@@ -1,8 +1,9 @@
-﻿using System.Data.Common;
+﻿using System.Collections;
+using System.Collections.Generic;
 using LolStatistics.DataAccess.Extensions;
 using LolStatistics.Model.Game;
-using MySql.Data.MySqlClient;
 using System;
+using System.Data.Common;
 
 namespace LolStatistics.DataAccess.Dao
 {
@@ -30,6 +31,13 @@ namespace LolStatistics.DataAccess.Dao
             // Exécution de la requête
             ExecuteNonQuery(cmd, conn, rankedGame, addParameters, tran);
 
+        }
+
+        public IList<RankedGame> GetMatchStatistics(long matchId, DbConnection conn)
+        {
+            const string cmd = "SELECT * FROM RANKED_GAME WHERE MATCH_ID = @matchId";
+
+            return ExecuteReader(cmd, conn, matchId, (c, o) => c.AddWithValue("@matchId", o));
         }
 
         /// <summary>

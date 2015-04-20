@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Data.Common;
-using LolStatistics.DataAccess.Dao;
-using LolStatistics.DataAccess.Repositories;
+﻿using LolStatistics.DataAccess.Repositories;
 using LolStatistics.Model.Static;
-using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 
 namespace LolStatistics.Web
 {

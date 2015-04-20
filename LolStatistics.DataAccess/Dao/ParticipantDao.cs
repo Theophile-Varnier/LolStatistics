@@ -1,7 +1,10 @@
-﻿using LolStatistics.DataAccess.Extensions;
+﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using LolStatistics.DataAccess.Extensions;
 using LolStatistics.Model.Dto;
 using System;
 using System.Data.Common;
+using LolStatistics.Model.Participant;
 
 namespace LolStatistics.DataAccess.Dao
 {
@@ -25,6 +28,13 @@ namespace LolStatistics.DataAccess.Dao
             // Exécution de la requête
             ExecuteNonQuery(cmd, conn, participant, addParameters, tran);
 
+        }
+
+        public IList<ParticipantDto> GetGameParticipants(long matchId, DbConnection conn)
+        {
+            const string cmd = "SELECT * FROM PARTICIPANT WHERE MATCH_ID = @matchId";
+
+            return ExecuteReader(cmd, conn, matchId, (c, o) => c.AddWithValue("@matchId", o));
         }
 
         /// <summary>
