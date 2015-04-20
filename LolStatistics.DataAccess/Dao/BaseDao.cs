@@ -1,10 +1,10 @@
 ﻿using log4net;
 using LolStatistics.DataAccess.Exceptions;
+using LolStatistics.DataAccess.Extensions;
 using LolStatistics.Log;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
+using System.Data.Common;
 
 namespace LolStatistics.DataAccess.Dao
 {
@@ -14,7 +14,7 @@ namespace LolStatistics.DataAccess.Dao
     /// <typeparam name="T">Type de données à insérer</typeparam>
     public abstract class BaseDao<T> where T : class
     {
-        protected MySqlConnection conn = new MySqlConnection(ConfigurationManager.AppSettings["DbConnectionString"]);
+        // protected MySqlConnection conn = new MySqlConnection(ConfigurationManager.AppSettings["DbConnectionString"]);
 
         private static readonly ILog logger = Logger.GetLogger(typeof(BaseDao<T>));
 
@@ -22,17 +22,78 @@ namespace LolStatistics.DataAccess.Dao
         /// Requête ne retournant pas de résultat
         /// </summary>
         /// <param name="cmdText">la commande à exécuter</param>
+        /// <param name="tran">La transaction à utiliser</param>
         /// <param name="dto">L'objet à partir duquel on ajoute les paramètres</param>
         /// <param name="addParams">La méthode servant à ajouter les paramètres</param>
-        protected void ExecuteNonQuery(string cmdText, object dto = null, Action<MySqlCommand, object> addParams = null)
+        /// <param name="conn">La connection à utiliser</param>
+        protected void ExecuteNonQuery(string cmdText, DbConnection conn, object dto = null, Action<Command, object> addParams = null, DbTransaction tran = null)
         {
+            if (addParams != null && dto == null)
+            {
+                throw new ArgumentException("L'objet ne peut être null s'il existe une méthode d'ajout de paramètres");
+            }
             try
             {
                 // Préparation de la requête
-                conn.Open();
-                using (MySqlCommand cmd = new MySqlCommand(cmdText))
+                using (Command cmd = new Command(cmdText))
                 {
                     cmd.Connection = conn;
+
+                    if (tran != null)
+                    {
+                        cmd.Transaction = tran;
+                    }
+
+                    cmd.Prepare();
+
+                    // Ajout des paramètres
+                    if (addParams != null)
+                    {
+                        addParams(cmd, dto);
+                    }
+
+                    // Exécution
+                    cmd.ExecuteNonQuery();
+                    logger.Info("Données enregistrées.");
+                }
+            }
+            catch (DbException e)
+            {
+                switch (e.ErrorCode)
+                {
+                        // La donnée existe déjà, tant pis...
+                    case 1062:
+                        break;
+                    default:
+                        logger.Error(e.Message);
+                        throw new DaoException("Erreur dans l'insertion en BD : ", e);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Récupère des données en base
+        /// </summary>
+        /// <param name="cmdText">la commande à exécuter</param>
+        /// <param name="conn">La connexion à utiliser</param>
+        /// <param name="dto">L'objet à partir duquel on ajoute les paramètres</param>
+        /// <param name="addParams">La méthode servant à ajouter les paramètres</param>
+        /// <returns></returns>
+        protected List<T> ExecuteReader(string cmdText, DbConnection conn, object dto = null, Action<Command, object> addParams = null, DbTransaction tran = null)
+        {
+            List<T> res = new List<T>();
+            try
+            {
+                // Préparation de la requête
+                // conn.Open();
+                using (Command cmd = new Command(cmdText))
+                {
+                    cmd.Connection = conn;
+
+                    if (tran != null)
+                    {
+                        cmd.Transaction = tran;
+                    }
 
                     cmd.Prepare();
 
@@ -43,70 +104,24 @@ namespace LolStatistics.DataAccess.Dao
                     }
 
                     // Exécution
-                    cmd.ExecuteNonQuery();
-                    logger.Info("Données enregistrées.");
-                }
-            }
-            catch (MySqlException e)
-            {
-                switch (e.Number)
-                {
-                        // La donnée existe déjà, tant pis...
-                    case 1062:
-                        break;
-                    default:
-                        logger.Error(e.Message);
-                        throw new DaoException("Erreur dans l'insertion en BD : ", e);
-                }
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
-
-        /// <summary>
-        /// Récupère des données en base
-        /// </summary>
-        /// <param name="cmdText">la commande à exécuter</param>
-        /// <param name="dto">L'objet à partir duquel on ajoute les paramètres</param>
-        /// <param name="addParams">La méthode servant à ajouter les paramètres</param>
-        /// <returns></returns>
-        protected List<T> ExecuteReader(string cmdText, object dto = null, Action<MySqlCommand, object> addParams = null)
-        {
-            List<T> res = new List<T>();
-            try
-            {
-                // Préparation de la requête
-                conn.Open();
-                using (MySqlCommand cmd = new MySqlCommand(cmdText))
-                {
-                    cmd.Connection = conn;
-
-                    // Ajout des paramètres
-                    if (addParams != null && dto != null)
+                    using (DbDataReader reader = cmd.ExecuteReader())
                     {
-                        addParams(cmd, dto);
-                    }
-
-                    // Exécution
-                    MySqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        res.Add(RecordToDto(reader));
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                res.Add(RecordToDto(reader));
+                            }
+                        }
                     }
 
                     return res;
                 }
             }
-            catch (MySqlException e)
+            catch (DbException e)
             {
                 logger.Error(e.Message);
                 throw new DaoException("Erreur dans l'insertion en BD", e);
-            }
-            finally
-            {
-                conn.Close();
             }
         }
 
@@ -115,7 +130,7 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="reader">Le reader duquel tirer les infos</param>
         /// <returns></returns>
-        public abstract T RecordToDto(MySqlDataReader reader);
+        public abstract T RecordToDto(DbDataReader reader);
 
     }
 }

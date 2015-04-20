@@ -1,4 +1,6 @@
-﻿using LolStatistics.Model.Participant;
+﻿using System.Data.Common;
+using LolStatistics.DataAccess.Extensions;
+using LolStatistics.Model.Participant;
 using MySql.Data.MySqlClient;
 using System;
 
@@ -13,7 +15,7 @@ namespace LolStatistics.DataAccess.Dao
         /// Insert une timeline en base
         /// </summary>
         /// <param name="participantTimelineData">La timeline à insérer</param>
-        public void Insert(ParticipantTimelineData participantTimelineData)
+        public void Insert(ParticipantTimelineData participantTimelineData, DbConnection conn, DbTransaction tran)
         {
 
             const string cmd = "INSERT INTO PARTICIPANT_TIMELINE_DATA("
@@ -21,7 +23,7 @@ namespace LolStatistics.DataAccess.Dao
             + "@participantId, @name, @tenToTwenty, @thirtyToEnd, @twentyToThirty, @zeroToTen)";
 
                 // Exécution de la requête
-                ExecuteNonQuery(cmd, participantTimelineData, addParameters);
+                ExecuteNonQuery(cmd, conn, participantTimelineData, addParameters, tran);
 
         }
 
@@ -30,7 +32,7 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="reader">L'enregistrement à mapper</param>
         /// <returns>L'objet mappé</returns>
-        public override ParticipantTimelineData RecordToDto(MySqlDataReader reader)
+        public override ParticipantTimelineData RecordToDto(DbDataReader reader)
         {
             ParticipantTimelineData res = new ParticipantTimelineData();
 
@@ -50,17 +52,17 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="cmd">La commande à laquelle on ajoute les paramètres</param>
         /// <param name="obj">L'objet qui contient les informations</param>
-        private void addParameters(MySqlCommand cmd, Object obj)
+        private void addParameters(Command cmd, Object obj)
         {
             ParticipantTimelineData participantTimelineData = obj as ParticipantTimelineData;
 
             // Ajout des paramètres
-            cmd.Parameters.AddWithValue("@participantId", participantTimelineData.ParticipantId);
-            cmd.Parameters.AddWithValue("@name", participantTimelineData.Name);
-            cmd.Parameters.AddWithValue("@tenToTwenty", participantTimelineData.TenToTwenty);
-            cmd.Parameters.AddWithValue("@thirtyToEnd", participantTimelineData.ThirtyToEnd);
-            cmd.Parameters.AddWithValue("@twentyToThirty", participantTimelineData.TwentyToThirty);
-            cmd.Parameters.AddWithValue("@zeroToTen", participantTimelineData.ZeroToTen);
+            cmd.AddWithValue("@participantId", participantTimelineData.ParticipantId);
+            cmd.AddWithValue("@name", participantTimelineData.Name);
+            cmd.AddWithValue("@tenToTwenty", participantTimelineData.TenToTwenty);
+            cmd.AddWithValue("@thirtyToEnd", participantTimelineData.ThirtyToEnd);
+            cmd.AddWithValue("@twentyToThirty", participantTimelineData.TwentyToThirty);
+            cmd.AddWithValue("@zeroToTen", participantTimelineData.ZeroToTen);
 
         }
     }

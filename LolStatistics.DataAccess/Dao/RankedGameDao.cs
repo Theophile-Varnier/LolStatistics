@@ -1,6 +1,9 @@
-﻿using LolStatistics.Model.Game;
-using MySql.Data.MySqlClient;
+﻿using System.Collections;
+using System.Collections.Generic;
+using LolStatistics.DataAccess.Extensions;
+using LolStatistics.Model.Game;
 using System;
+using System.Data.Common;
 
 namespace LolStatistics.DataAccess.Dao
 {
@@ -13,7 +16,9 @@ namespace LolStatistics.DataAccess.Dao
         /// Insert une partie classée en base
         /// </summary>
         /// <param name="rankedGame">La partie à insérer</param>
-        public void Insert(RankedGame rankedGame)
+        /// <param name="conn">La connexion à utiliser</param>
+        /// <param name="tran">La transaction à utiliser</param>
+        public void Insert(RankedGame rankedGame, DbConnection conn, DbTransaction tran)
         {
             const string cmd = "INSERT INTO RANKED_GAME("
         + "SUMMONER_ID, MAP_ID, MATCH_CREATION, MATCH_DURATION, MATCH_ID, MATCH_MODE, "
@@ -24,8 +29,15 @@ namespace LolStatistics.DataAccess.Dao
         + "@season)";
 
             // Exécution de la requête
-            ExecuteNonQuery(cmd, rankedGame, addParameters);
+            ExecuteNonQuery(cmd, conn, rankedGame, addParameters, tran);
 
+        }
+
+        public IList<RankedGame> GetMatchStatistics(long matchId, DbConnection conn)
+        {
+            const string cmd = "SELECT * FROM RANKED_GAME WHERE MATCH_ID = @matchId";
+
+            return ExecuteReader(cmd, conn, matchId, (c, o) => c.AddWithValue("@matchId", o));
         }
 
         /// <summary>
@@ -33,7 +45,7 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="reader">L'enregistrement à mapper</param>
         /// <returns>L'objet mappé</returns>
-        public override RankedGame RecordToDto(MySqlDataReader reader)
+        public override RankedGame RecordToDto(DbDataReader reader)
         {
             RankedGame res = new RankedGame();
 
@@ -60,23 +72,23 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="cmd">La commande à laquelle on ajoute les paramètres</param>
         /// <param name="obj">L'objet qui contient les informations</param>
-        private void addParameters(MySqlCommand cmd, Object obj)
+        private void addParameters(Command cmd, Object obj)
         {
             RankedGame rankedGame = obj as RankedGame;
 
             // Ajout des paramètres
-            cmd.Parameters.AddWithValue("@summonerId", rankedGame.SummonerId);
-            cmd.Parameters.AddWithValue("@mapId", rankedGame.MapId);
-            cmd.Parameters.AddWithValue("@matchCreation", rankedGame.MatchCreation);
-            cmd.Parameters.AddWithValue("@matchDuration", rankedGame.MatchDuration);
-            cmd.Parameters.AddWithValue("@matchId", rankedGame.MatchId.ToString());
-            cmd.Parameters.AddWithValue("@matchMode", rankedGame.MatchMode);
-            cmd.Parameters.AddWithValue("@matchType", rankedGame.MatchType);
-            cmd.Parameters.AddWithValue("@matchVersion", rankedGame.MatchVersion);
-            cmd.Parameters.AddWithValue("@platformId", rankedGame.PlatformId);
-            cmd.Parameters.AddWithValue("@queueType", rankedGame.QueueType);
-            cmd.Parameters.AddWithValue("@region", rankedGame.Region);
-            cmd.Parameters.AddWithValue("@season", rankedGame.Season);
+            cmd.AddWithValue("@summonerId", rankedGame.SummonerId);
+            cmd.AddWithValue("@mapId", rankedGame.MapId);
+            cmd.AddWithValue("@matchCreation", rankedGame.MatchCreation);
+            cmd.AddWithValue("@matchDuration", rankedGame.MatchDuration);
+            cmd.AddWithValue("@matchId", rankedGame.MatchId.ToString());
+            cmd.AddWithValue("@matchMode", rankedGame.MatchMode);
+            cmd.AddWithValue("@matchType", rankedGame.MatchType);
+            cmd.AddWithValue("@matchVersion", rankedGame.MatchVersion);
+            cmd.AddWithValue("@platformId", rankedGame.PlatformId);
+            cmd.AddWithValue("@queueType", rankedGame.QueueType);
+            cmd.AddWithValue("@region", rankedGame.Region);
+            cmd.AddWithValue("@season", rankedGame.Season);
 
         }
     }
