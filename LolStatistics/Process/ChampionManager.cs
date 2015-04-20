@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LolStatistics.DataAccess.Dao;
+using LolStatistics.DataAccess.Repositories;
 using LolStatistics.Model.Static;
 using LolStatistics.WebServiceConsumers;
 
@@ -14,7 +15,7 @@ namespace LolStatistics.Process
     {
 
         private readonly WebServiceConsumer<ListOfChampions> webServiceConsummer = new WebServiceConsumer<ListOfChampions>(ConfigurationManager.AppSettings["GlobalApiUrl"], ConfigurationManager.AppSettings["ChampionsUri"]);
-        private readonly ChampionDao championDao = new ChampionDao();
+        private readonly ChampionRepository championRepository = new ChampionRepository();
 
         public void Execute()
         {
@@ -24,7 +25,7 @@ namespace LolStatistics.Process
             // Insertion en base
             foreach (string key in champions.Champions.Keys)
             {
-                championDao.Insert(champions.Champions[key]);
+                championRepository.Insert(champions.Champions[key]);
             }
         }
     }

@@ -8,6 +8,9 @@ namespace LolStatistics.Model.Stats
         [JsonIgnore]
         public string GameId { get; set; }
 
+        [JsonIgnore]
+        public long SummonerId { get; set; }
+
         [JsonProperty("assists")]
         public int Assists { get; set; }
 
@@ -235,6 +238,5 @@ namespace LolStatistics.Model.Stats
 
         [JsonProperty("win")]
         public bool Win { get; set; }
-
     }
 }

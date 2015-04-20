@@ -1,6 +1,10 @@
-﻿using LolStatistics.Model.Dto;
-using MySql.Data.MySqlClient;
+﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using LolStatistics.DataAccess.Extensions;
+using LolStatistics.Model.Dto;
 using System;
+using System.Data.Common;
+using LolStatistics.Model.Participant;
 
 namespace LolStatistics.DataAccess.Dao
 {
@@ -13,7 +17,7 @@ namespace LolStatistics.DataAccess.Dao
         /// Insertion d'un participant
         /// </summary>
         /// <param name="participant">Le participant à insérer</param>
-        public void Insert(ParticipantDto participant)
+        public void Insert(ParticipantDto participant, DbConnection conn, DbTransaction tran)
         {
             const string cmd = "INSERT INTO PARTICIPANT("
             + "MATCH_ID, CHAMPION_ID, HIGHEST_ACHIEVED_SEASON_TIER, PARTICIPANT_ID, SPELL1_ID, "
@@ -22,8 +26,15 @@ namespace LolStatistics.DataAccess.Dao
             + "@spell2Id, @teamId, @lane, @role)";
 
             // Exécution de la requête
-            ExecuteNonQuery(cmd, participant, addParameters);
+            ExecuteNonQuery(cmd, conn, participant, addParameters, tran);
 
+        }
+
+        public IList<ParticipantDto> GetGameParticipants(long matchId, DbConnection conn)
+        {
+            const string cmd = "SELECT * FROM PARTICIPANT WHERE MATCH_ID = @matchId";
+
+            return ExecuteReader(cmd, conn, matchId, (c, o) => c.AddWithValue("@matchId", o));
         }
 
         /// <summary>
@@ -31,7 +42,7 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="reader">L'enregistrement à mapper</param>
         /// <returns></returns>
-        public override ParticipantDto RecordToDto(MySqlDataReader reader)
+        public override ParticipantDto RecordToDto(DbDataReader reader)
         {
             ParticipantDto res = new ParticipantDto
             {
@@ -57,20 +68,20 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="cmd">La commande à laquelle on ajoute les paramètres</param>
         /// <param name="obj">L'objet qui contient les informations</param>
-        public void addParameters(MySqlCommand cmd, Object obj)
+        public void addParameters(Command cmd, Object obj)
         {
             ParticipantDto participant = obj as ParticipantDto;
 
             // Ajout des paramètres
-            cmd.Parameters.AddWithValue("@matchId", participant.MatchId);
-            cmd.Parameters.AddWithValue("@championId", participant.ChampionId);
-            cmd.Parameters.AddWithValue("@highestAchievedSeasonTier", participant.HighestAchievedSeasonTier);
-            cmd.Parameters.AddWithValue("@participantId", participant.ParticipantId.ToString());
-            cmd.Parameters.AddWithValue("@spell1Id", participant.Spell1Id);
-            cmd.Parameters.AddWithValue("@spell2Id", participant.Spell2Id);
-            cmd.Parameters.AddWithValue("@teamId", participant.TeamId);
-            cmd.Parameters.AddWithValue("@lane", participant.Lane);
-            cmd.Parameters.AddWithValue("@role", participant.Role);
+            cmd.AddWithValue("@matchId", participant.MatchId);
+            cmd.AddWithValue("@championId", participant.ChampionId);
+            cmd.AddWithValue("@highestAchievedSeasonTier", participant.HighestAchievedSeasonTier);
+            cmd.AddWithValue("@participantId", participant.ParticipantId.ToString());
+            cmd.AddWithValue("@spell1Id", participant.Spell1Id);
+            cmd.AddWithValue("@spell2Id", participant.Spell2Id);
+            cmd.AddWithValue("@teamId", participant.TeamId);
+            cmd.AddWithValue("@lane", participant.Lane);
+            cmd.AddWithValue("@role", participant.Role);
 
         }
     }

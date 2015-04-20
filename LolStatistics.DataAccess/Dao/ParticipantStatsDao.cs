@@ -1,6 +1,11 @@
-﻿using LolStatistics.Model.Stats;
-using MySql.Data.MySqlClient;
+﻿using LolStatistics.DataAccess.Exceptions;
+using LolStatistics.DataAccess.Extensions;
+using LolStatistics.Model.Dto;
+using LolStatistics.Model.Stats;
 using System;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
 
 namespace LolStatistics.DataAccess.Dao
 {
@@ -13,7 +18,7 @@ namespace LolStatistics.DataAccess.Dao
         /// Insert une série de statistiques en base
         /// </summary>
         /// <param name="participantStats">Les statistiques à insérer</param>
-        public void Insert(ParticipantStats participantStats)
+        public void Insert(ParticipantStats participantStats, DbConnection conn, DbTransaction tran)
         {
             const string cmd = "INSERT INTO PARTICIPANT_STATS("
             + "PARTICIPANT_ID, ASSISTS, CHAMP_LEVEL, COMBAT_PLAYER_SCORE, DEATHS, "
@@ -44,7 +49,28 @@ namespace LolStatistics.DataAccess.Dao
             + "@visionWardsBoughtInGame, @wardsKilled, @wardsPlaced, @winner)";
 
                 // Exécution de la requête
-                ExecuteNonQuery(cmd, participantStats, addParameters);
+                ExecuteNonQuery(cmd, conn, participantStats, addParameters, tran);
+        }
+
+        public ParticipantStats GetStats(long matchId, long participantId, DbConnection conn)
+        {
+            StatsDto dto = new StatsDto
+            {
+                GameId = matchId,
+                ParticipantId = participantId
+            };
+            const string cmd = "SELECT * FROM PARTICIPANT_STATS WHERE MATCH_ID = @matchId AND PARTICIPANT_ID = @participantId";
+            IList<ParticipantStats> res = ExecuteReader(cmd, conn, dto, (c, o) =>
+            {
+                c.AddWithValue("@matchId", dto.GameId);
+                c.AddWithValue("@participantId", dto.ParticipantId);
+            });
+
+            if (res.Count != 1)
+            {
+                throw new DaoException("Etrange");
+            }
+            return res.First();
         }
 
         /// <summary>
@@ -52,7 +78,7 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="reader">L'enregistrement à mapper</param>
         /// <returns></returns>
-        public override ParticipantStats RecordToDto(MySqlDataReader reader)
+        public override ParticipantStats RecordToDto(DbDataReader reader)
         {
             ParticipantStats res = new ParticipantStats
             {
@@ -133,75 +159,75 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="cmd">La commande à laquelle on ajoute les paramètres</param>
         /// <param name="obj">L'objet qui contient les informations</param>
-        private void addParameters(MySqlCommand cmd, Object obj)
+        private void addParameters(Command cmd, Object obj)
         {
             ParticipantStats participantStats = obj as ParticipantStats;
 
             // Ajout des paramètres
-            cmd.Parameters.AddWithValue("@participantId", participantStats.ParticipantId);
-            cmd.Parameters.AddWithValue("@assists", participantStats.Assists);
-            cmd.Parameters.AddWithValue("@champLevel", participantStats.ChampLevel);
-            cmd.Parameters.AddWithValue("@combatPlayerScore", participantStats.CombatPlayerScore);
-            cmd.Parameters.AddWithValue("@deaths", participantStats.Deaths);
-            cmd.Parameters.AddWithValue("@doubleKills", participantStats.DoubleKills);
-            cmd.Parameters.AddWithValue("@firstBloodAssist", participantStats.FirstBloodAssist);
-            cmd.Parameters.AddWithValue("@firstBloodKill", participantStats.FirstBloodKill);
-            cmd.Parameters.AddWithValue("@firstInhibitorAssist", participantStats.FirstInhibitorAssist);
-            cmd.Parameters.AddWithValue("@firstInhibitorKill", participantStats.FirstInhibitorKill);
-            cmd.Parameters.AddWithValue("@firstTowerAssist", participantStats.FirstTowerAssist);
-            cmd.Parameters.AddWithValue("@firstTowerKill", participantStats.FirstTowerKill);
-            cmd.Parameters.AddWithValue("@goldEarned", participantStats.GoldEarned);
-            cmd.Parameters.AddWithValue("@goldSpent", participantStats.GoldSpent);
-            cmd.Parameters.AddWithValue("@inhibitorKills", participantStats.InhibitorKills);
-            cmd.Parameters.AddWithValue("@item0", participantStats.Item0);
-            cmd.Parameters.AddWithValue("@item1", participantStats.Item1);
-            cmd.Parameters.AddWithValue("@item2", participantStats.Item2);
-            cmd.Parameters.AddWithValue("@item3", participantStats.Item3);
-            cmd.Parameters.AddWithValue("@item4", participantStats.Item4);
-            cmd.Parameters.AddWithValue("@item5", participantStats.Item5);
-            cmd.Parameters.AddWithValue("@item6", participantStats.Item6);
-            cmd.Parameters.AddWithValue("@killingSprees", participantStats.KillingSprees);
-            cmd.Parameters.AddWithValue("@kills", participantStats.Kills);
-            cmd.Parameters.AddWithValue("@largestCriticalStrike", participantStats.LargestCriticalStrike);
-            cmd.Parameters.AddWithValue("@largestKillingSpree", participantStats.LargestKillingSpree);
-            cmd.Parameters.AddWithValue("@largestMultiKill", participantStats.LargestMultiKill);
-            cmd.Parameters.AddWithValue("@magicDamageDealt", participantStats.MagicDamageDealt);
-            cmd.Parameters.AddWithValue("@magicDamageDealtToChampions", participantStats.MagicDamageDealtToChampions);
-            cmd.Parameters.AddWithValue("@magicDamageTaken", participantStats.MagicDamageTaken);
-            cmd.Parameters.AddWithValue("@minionsKilled", participantStats.MinionsKilled);
-            cmd.Parameters.AddWithValue("@neutralMinionsKilled", participantStats.NeutralMinionsKilled);
-            cmd.Parameters.AddWithValue("@neutralMinionsKilledEnemyJungle", participantStats.NeutralMinionsKilledEnemyJungle);
-            cmd.Parameters.AddWithValue("@neutralMinionsKilledTeamJungle", participantStats.NeutralMinionsKilledTeamJungle);
-            cmd.Parameters.AddWithValue("@nodeCapture", participantStats.NodeCapture);
-            cmd.Parameters.AddWithValue("@nodeCaptureAssist", participantStats.NodeCaptureAssist);
-            cmd.Parameters.AddWithValue("@nodeNeutralize", participantStats.NodeNeutralize);
-            cmd.Parameters.AddWithValue("@nodeNeutralizeAssist", participantStats.NodeNeutralizeAssist);
-            cmd.Parameters.AddWithValue("@objectivePlayerScore", participantStats.ObjectivePlayerScore);
-            cmd.Parameters.AddWithValue("@pentaKills", participantStats.PentaKills);
-            cmd.Parameters.AddWithValue("@physicalDamageDealt", participantStats.PhysicalDamageDealt);
-            cmd.Parameters.AddWithValue("@physicalDamageDealtToChampions", participantStats.PhysicalDamageDealtToChampions);
-            cmd.Parameters.AddWithValue("@physicalDamageTaken", participantStats.PhysicalDamageTaken);
-            cmd.Parameters.AddWithValue("@quadraKills", participantStats.QuadraKills);
-            cmd.Parameters.AddWithValue("@sightWardsBoughtInGame", participantStats.SightWardsBoughtInGame);
-            cmd.Parameters.AddWithValue("@teamObjective", participantStats.TeamObjective);
-            cmd.Parameters.AddWithValue("@totalDamageDealt", participantStats.TotalDamageDealt);
-            cmd.Parameters.AddWithValue("@totalDamageDealtToChampions", participantStats.TotalDamageDealtToChampions);
-            cmd.Parameters.AddWithValue("@totalDamageTaken", participantStats.TotalDamageTaken);
-            cmd.Parameters.AddWithValue("@totalHeal", participantStats.TotalHeal);
-            cmd.Parameters.AddWithValue("@totalPlayerScore", participantStats.TotalPlayerScore);
-            cmd.Parameters.AddWithValue("@totalScoreRank", participantStats.TotalScoreRank);
-            cmd.Parameters.AddWithValue("@totalTimeCrowdControlDealt", participantStats.TotalTimeCrowdControlDealt);
-            cmd.Parameters.AddWithValue("@totalUnitsHealed", participantStats.TotalUnitsHealed);
-            cmd.Parameters.AddWithValue("@towerKills", participantStats.TowerKills);
-            cmd.Parameters.AddWithValue("@tripleKills", participantStats.TripleKills);
-            cmd.Parameters.AddWithValue("@trueDamageDealt", participantStats.TrueDamageDealt);
-            cmd.Parameters.AddWithValue("@trueDamageDealtToChampions", participantStats.TrueDamageDealtToChampions);
-            cmd.Parameters.AddWithValue("@trueDamageTaken", participantStats.TrueDamageTaken);
-            cmd.Parameters.AddWithValue("@unrealKills", participantStats.UnrealKills);
-            cmd.Parameters.AddWithValue("@visionWardsBoughtInGame", participantStats.VisionWardsBoughtInGame);
-            cmd.Parameters.AddWithValue("@wardsKilled", participantStats.WardsKilled);
-            cmd.Parameters.AddWithValue("@wardsPlaced", participantStats.WardsPlaced);
-            cmd.Parameters.AddWithValue("@winner", participantStats.Winner);
+            cmd.AddWithValue("@participantId", participantStats.ParticipantId);
+            cmd.AddWithValue("@assists", participantStats.Assists);
+            cmd.AddWithValue("@champLevel", participantStats.ChampLevel);
+            cmd.AddWithValue("@combatPlayerScore", participantStats.CombatPlayerScore);
+            cmd.AddWithValue("@deaths", participantStats.Deaths);
+            cmd.AddWithValue("@doubleKills", participantStats.DoubleKills);
+            cmd.AddWithValue("@firstBloodAssist", participantStats.FirstBloodAssist);
+            cmd.AddWithValue("@firstBloodKill", participantStats.FirstBloodKill);
+            cmd.AddWithValue("@firstInhibitorAssist", participantStats.FirstInhibitorAssist);
+            cmd.AddWithValue("@firstInhibitorKill", participantStats.FirstInhibitorKill);
+            cmd.AddWithValue("@firstTowerAssist", participantStats.FirstTowerAssist);
+            cmd.AddWithValue("@firstTowerKill", participantStats.FirstTowerKill);
+            cmd.AddWithValue("@goldEarned", participantStats.GoldEarned);
+            cmd.AddWithValue("@goldSpent", participantStats.GoldSpent);
+            cmd.AddWithValue("@inhibitorKills", participantStats.InhibitorKills);
+            cmd.AddWithValue("@item0", participantStats.Item0);
+            cmd.AddWithValue("@item1", participantStats.Item1);
+            cmd.AddWithValue("@item2", participantStats.Item2);
+            cmd.AddWithValue("@item3", participantStats.Item3);
+            cmd.AddWithValue("@item4", participantStats.Item4);
+            cmd.AddWithValue("@item5", participantStats.Item5);
+            cmd.AddWithValue("@item6", participantStats.Item6);
+            cmd.AddWithValue("@killingSprees", participantStats.KillingSprees);
+            cmd.AddWithValue("@kills", participantStats.Kills);
+            cmd.AddWithValue("@largestCriticalStrike", participantStats.LargestCriticalStrike);
+            cmd.AddWithValue("@largestKillingSpree", participantStats.LargestKillingSpree);
+            cmd.AddWithValue("@largestMultiKill", participantStats.LargestMultiKill);
+            cmd.AddWithValue("@magicDamageDealt", participantStats.MagicDamageDealt);
+            cmd.AddWithValue("@magicDamageDealtToChampions", participantStats.MagicDamageDealtToChampions);
+            cmd.AddWithValue("@magicDamageTaken", participantStats.MagicDamageTaken);
+            cmd.AddWithValue("@minionsKilled", participantStats.MinionsKilled);
+            cmd.AddWithValue("@neutralMinionsKilled", participantStats.NeutralMinionsKilled);
+            cmd.AddWithValue("@neutralMinionsKilledEnemyJungle", participantStats.NeutralMinionsKilledEnemyJungle);
+            cmd.AddWithValue("@neutralMinionsKilledTeamJungle", participantStats.NeutralMinionsKilledTeamJungle);
+            cmd.AddWithValue("@nodeCapture", participantStats.NodeCapture);
+            cmd.AddWithValue("@nodeCaptureAssist", participantStats.NodeCaptureAssist);
+            cmd.AddWithValue("@nodeNeutralize", participantStats.NodeNeutralize);
+            cmd.AddWithValue("@nodeNeutralizeAssist", participantStats.NodeNeutralizeAssist);
+            cmd.AddWithValue("@objectivePlayerScore", participantStats.ObjectivePlayerScore);
+            cmd.AddWithValue("@pentaKills", participantStats.PentaKills);
+            cmd.AddWithValue("@physicalDamageDealt", participantStats.PhysicalDamageDealt);
+            cmd.AddWithValue("@physicalDamageDealtToChampions", participantStats.PhysicalDamageDealtToChampions);
+            cmd.AddWithValue("@physicalDamageTaken", participantStats.PhysicalDamageTaken);
+            cmd.AddWithValue("@quadraKills", participantStats.QuadraKills);
+            cmd.AddWithValue("@sightWardsBoughtInGame", participantStats.SightWardsBoughtInGame);
+            cmd.AddWithValue("@teamObjective", participantStats.TeamObjective);
+            cmd.AddWithValue("@totalDamageDealt", participantStats.TotalDamageDealt);
+            cmd.AddWithValue("@totalDamageDealtToChampions", participantStats.TotalDamageDealtToChampions);
+            cmd.AddWithValue("@totalDamageTaken", participantStats.TotalDamageTaken);
+            cmd.AddWithValue("@totalHeal", participantStats.TotalHeal);
+            cmd.AddWithValue("@totalPlayerScore", participantStats.TotalPlayerScore);
+            cmd.AddWithValue("@totalScoreRank", participantStats.TotalScoreRank);
+            cmd.AddWithValue("@totalTimeCrowdControlDealt", participantStats.TotalTimeCrowdControlDealt);
+            cmd.AddWithValue("@totalUnitsHealed", participantStats.TotalUnitsHealed);
+            cmd.AddWithValue("@towerKills", participantStats.TowerKills);
+            cmd.AddWithValue("@tripleKills", participantStats.TripleKills);
+            cmd.AddWithValue("@trueDamageDealt", participantStats.TrueDamageDealt);
+            cmd.AddWithValue("@trueDamageDealtToChampions", participantStats.TrueDamageDealtToChampions);
+            cmd.AddWithValue("@trueDamageTaken", participantStats.TrueDamageTaken);
+            cmd.AddWithValue("@unrealKills", participantStats.UnrealKills);
+            cmd.AddWithValue("@visionWardsBoughtInGame", participantStats.VisionWardsBoughtInGame);
+            cmd.AddWithValue("@wardsKilled", participantStats.WardsKilled);
+            cmd.AddWithValue("@wardsPlaced", participantStats.WardsPlaced);
+            cmd.AddWithValue("@winner", participantStats.Winner);
 
         }
     }

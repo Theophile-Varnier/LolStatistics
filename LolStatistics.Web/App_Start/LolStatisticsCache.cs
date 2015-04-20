@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using LolStatistics.DataAccess.Dao;
+﻿using LolStatistics.DataAccess.Repositories;
 using LolStatistics.Model.Static;
+using System.Collections.Generic;
 
 namespace LolStatistics.Web
 {
@@ -14,8 +14,8 @@ namespace LolStatistics.Web
         public static void Init()
         {
             Champions = new Dictionary<int, Champion>();
-            ChampionDao championDao = new ChampionDao();
-            List<Champion> temp = championDao.GetAllChampions();
+            ChampionRepository championRepository = new ChampionRepository();
+            List<Champion> temp = championRepository.GetAllChampions();
 
             foreach (Champion champion in temp)
             {

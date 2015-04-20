@@ -1,4 +1,6 @@
-﻿using LolStatistics.Model.Participant;
+﻿using System.Data.Common;
+using LolStatistics.DataAccess.Extensions;
+using LolStatistics.Model.Participant;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 
@@ -14,14 +16,14 @@ namespace LolStatistics.DataAccess.Dao
         /// Insert un joueur en base
         /// </summary>
         /// <param name="player">Le joueur à insérer</param>
-        public void Insert(Player player)
+        public void Insert(Player player, DbConnection conn, DbTransaction tran)
         {
             const string cmd = "INSERT INTO PLAYER("
                                + "GAME_ID, CHAMPION_ID, SUMMONER_ID, TEAM_ID) VALUES("
                                + "@gameId, @championId, @summonerId, @teamId)";
 
             // Exécution de la requête
-            ExecuteNonQuery(cmd, player, addParameters);
+            ExecuteNonQuery(cmd, conn, player, addParameters, tran);
         }
 
         /// <summary>
@@ -29,11 +31,11 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="id">L'id de la partie</param>
         /// <returns></returns>
-        public IList<Player> GetByGameId(string id)
+        public IList<Player> GetByGameId(string id, DbConnection conn)
         {
             const string cmd = "SELECT * FROM PLAYER WHERE GAME_ID = @gameId";
 
-            return ExecuteReader(cmd, id, ((c, o) => c.Parameters.AddWithValue("@gameId", o)));
+            return ExecuteReader(cmd, conn, id, ((c, o) => c.AddWithValue("@gameId", o)));
         }
 
         /// <summary>
@@ -41,15 +43,18 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="cmd">La commande à laquelle on ajoute les paramètres</param>
         /// <param name="obj">L'objet qui contient les informations</param>
-        private void addParameters(MySqlCommand cmd, object obj)
+        private void addParameters(Command cmd, object obj)
         {
             Player player = obj as Player;
 
-            // Ajout des paramètres
-            cmd.Parameters.AddWithValue("@gameId", player.GameId);
-            cmd.Parameters.AddWithValue("@championId", player.ChampionId);
-            cmd.Parameters.AddWithValue("@summonerId", player.SummonerId);
-            cmd.Parameters.AddWithValue("@teamId", player.TeamId);
+            if (player != null)
+            {
+                // Ajout des paramètres
+                cmd.AddWithValue("@gameId", player.GameId);
+                cmd.AddWithValue("@championId", player.ChampionId);
+                cmd.AddWithValue("@summonerId", player.SummonerId);
+                cmd.AddWithValue("@teamId", player.TeamId);
+            }
         }
 
         /// <summary>
@@ -57,7 +62,7 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="reader">L'enregistrement à mapper</param>
         /// <returns>L'objet mappé</returns>
-        public override Player RecordToDto(MySqlDataReader reader)
+        public override Player RecordToDto(DbDataReader reader)
         {
             Player res = new Player();
             res.ChampionId = reader.GetInt32("CHAMPION_ID");
