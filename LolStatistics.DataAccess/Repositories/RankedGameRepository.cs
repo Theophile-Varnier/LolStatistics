@@ -46,7 +46,7 @@ namespace LolStatistics.DataAccess.Repositories
                         {
                             // Code à déplacer dans un mapper ?
                             participant.MatchId = t.MatchId.ToString(CultureInfo.InvariantCulture);
-                            participant.ParticipantId = Guid.NewGuid().ToString();
+                            participant.ParticipantId = t.SummonerId;
 
                             // Récupération du dto
                             ParticipantDto participantDto = ParticipantMapper.Map(participant);

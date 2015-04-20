@@ -2,6 +2,7 @@
 using LolStatistics.DataAccess.Extensions;
 using LolStatistics.Model.Stats;
 using MySql.Data.MySqlClient;
+using LolStatistics.Model.Dto;
 
 namespace LolStatistics.DataAccess.Dao
 {
@@ -18,7 +19,7 @@ namespace LolStatistics.DataAccess.Dao
         public void Insert(RawStats rawStats, DbConnection conn, DbTransaction tran)
         {
             const string cmd = "INSERT INTO RAW_STATS("
-        + "GAME_ID, ASSISTS, BARRACKS_KILLED, CHAMPIONS_KILLED, COMBAT_PLAYER_SCORE, CONSUMABLES_PURCHASED, "
+        + "GAME_ID, SUMMONER_ID, ASSISTS, BARRACKS_KILLED, CHAMPIONS_KILLED, COMBAT_PLAYER_SCORE, CONSUMABLES_PURCHASED, "
         + "DAMAGE_DEALT_PLAYER, DOUBLE_KILLS, FIRST_BLOOD, GOLD, GOLD_EARNED, "
         + "GOLD_SPENT, ITEM0, ITEM1, ITEM2, ITEM3, "
         + "ITEM4, ITEM5, ITEM6, ITEMS_PURCHASED, KILLING_SPREES, "
@@ -34,7 +35,7 @@ namespace LolStatistics.DataAccess.Dao
         + "TRIPLE_KILLS, TRUE_DAMAGE_DEALT_PLAYER, TRUE_DAMAGE_DEALT_TO_CHAMPIONS, TRUE_DAMAGE_TAKEN, TURRETS_KILLED, "
         + "UNREAL_KILLS, VICTORY_POINT_TOTAL, VISION_WARDS_BOUGHT, WARD_KILLED, WARD_PLACED, "
         + "WIN) VALUES("
-        + "@gameId, @assists, @barracksKilled, @championsKilled, @combatPlayerScore, @consumablesPurchased, "
+        + "@gameId, @summonerId, @assists, @barracksKilled, @championsKilled, @combatPlayerScore, @consumablesPurchased, "
         + "@damageDealtPlayer, @doubleKills, @firstBlood, @gold, @goldEarned, "
         + "@goldSpent, @item0, @item1, @item2, @item3, "
         + "@item4, @item5, @item6, @itemsPurchased, @killingSprees, "
@@ -71,6 +72,33 @@ namespace LolStatistics.DataAccess.Dao
         }
 
         /// <summary>
+        /// Récupère les statistiques d'une partie
+        /// </summary>
+        /// <param name="id">L'id de la partie</param>
+        /// <returns></returns>
+        public RawStats GetByGameAndSummonerId(string gameId, long summonerId, DbConnection conn)
+        {
+            GameSummonerDto dto = new GameSummonerDto
+            {
+                GameId = gameId,
+                SummonerId = summonerId
+            };
+
+            const string cmd = "SELECT * FROM RAW_STATS WHERE GAME_ID = @gameId AND SUMMONER_ID = @summonerId";
+
+            return ExecuteReader(cmd, conn, dto, addGameSummoner)[0];
+        }
+
+        private void addGameSummoner(Command cmd, object obj)
+        {
+            GameSummonerDto dto = obj as GameSummonerDto;
+            if (dto == null) return;
+
+            cmd.AddWithValue("@gameId", dto.GameId);
+            cmd.AddWithValue("@summonerId", dto.SummonerId);
+        }
+
+        /// <summary>
         /// Méthode d'ajout des paramètres pour la requête d'insertion
         /// </summary>
         /// <param name="cmd">La commande à laquelle on ajoute les paramètres</param>
@@ -82,6 +110,7 @@ namespace LolStatistics.DataAccess.Dao
             if (rawStats == null) return;
 
             cmd.AddWithValue("@gameId", rawStats.GameId);
+            cmd.AddWithValue("@summonerId", rawStats.SummonerId);
             cmd.AddWithValue("@assists", rawStats.Assists);
             cmd.AddWithValue("@barracksKilled", rawStats.BarracksKilled);
             cmd.AddWithValue("@championsKilled", rawStats.ChampionsKilled);
@@ -169,6 +198,8 @@ namespace LolStatistics.DataAccess.Dao
         {
             RawStats res = new RawStats
             {
+                GameId = reader.GetInt64("GAME_ID").ToString(),
+                SummonerId = reader.GetInt64("SUMMONER_ID"),
                 Assists = reader.GetInt32("ASSISTS"),
                 BarracksKilled = reader.GetInt32("BARRACKS_KILLED"),
                 ChampionsKilled = reader.GetInt32("CHAMPIONS_KILLED"),

@@ -52,7 +52,7 @@ namespace LolStatistics.DataAccess.Repositories
                     foreach (Game game in games)
                     {
                         // Récupération des statistiques
-                        game.Stats = rawStatsDao.GetByGameId(game.GameId.ToString(CultureInfo.InvariantCulture), conn);
+                        game.Stats = rawStatsDao.GetByGameAndSummonerId(game.GameId.ToString(CultureInfo.InvariantCulture), res.SummonerId, conn);
 
                         // Récupération des autres joueurs
                         game.FellowPlayers = playerDao.GetByGameId(game.GameId.ToString(CultureInfo.InvariantCulture), conn);

@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App\Summoner.cs" />
+    <Compile Include="Dto\GameSummonerDto.cs" />
     <Compile Include="Dto\ParticipantDto.cs" />
     <Compile Include="Game\Game.cs" />
     <Compile Include="Game\GameHistory.cs" />

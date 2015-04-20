@@ -27,6 +27,7 @@ namespace LolStatistics.Model.Mappers
                 Lane = source.Timeline.Lane,
                 Role = source.Timeline.Role,
                 HighestAchievedSeasonTier = source.HighestAchievedSeasonTier,
+                TeamId = source.TeamId,
                 ParticipantId = source.ParticipantId
             };
 

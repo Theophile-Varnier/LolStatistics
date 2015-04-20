@@ -102,7 +102,7 @@ namespace LolStatistics.DataAccess.Extensions
             MatchCollection matches = regex.Matches(internCommand.CommandText);
             foreach (Match match in matches.Cast<Match>().OrderBy(m => m.Index))
             {
-                internCommand.Parameters.Add(parameters[match.Value]);
+                internCommand.Parameters.Add(new MySqlParameter(match.Value, parameters[match.Value]));
 
             }
         }

@@ -61,6 +61,7 @@ namespace LolStatistics.Process
                     foreach (Game game in gh.Games)
                     {
                         game.SummonerId = gh.SummonerId;
+                        game.Stats.SummonerId = gh.SummonerId;
                         gameDbMapper.Insert(game);
                     }
                 }

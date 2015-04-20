@@ -123,10 +123,6 @@ namespace LolStatistics.DataAccess.Dao
                 logger.Error(e.Message);
                 throw new DaoException("Erreur dans l'insertion en BD", e);
             }
-            finally
-            {
-                conn.Close();
-            }
         }
 
         /// <summary>
