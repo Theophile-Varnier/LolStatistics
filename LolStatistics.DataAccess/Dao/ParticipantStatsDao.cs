@@ -1,8 +1,11 @@
-﻿using System.Data.Common;
+﻿using LolStatistics.DataAccess.Exceptions;
 using LolStatistics.DataAccess.Extensions;
+using LolStatistics.Model.Dto;
 using LolStatistics.Model.Stats;
-using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
 
 namespace LolStatistics.DataAccess.Dao
 {
@@ -47,6 +50,27 @@ namespace LolStatistics.DataAccess.Dao
 
                 // Exécution de la requête
                 ExecuteNonQuery(cmd, conn, participantStats, addParameters, tran);
+        }
+
+        public ParticipantStats GetStats(long matchId, long participantId, DbConnection conn)
+        {
+            StatsDto dto = new StatsDto
+            {
+                GameId = matchId,
+                ParticipantId = participantId
+            };
+            const string cmd = "SELECT * FROM PARTICIPANT_STATS WHERE MATCH_ID = @matchId AND PARTICIPANT_ID = @participantId";
+            IList<ParticipantStats> res = ExecuteReader(cmd, conn, dto, (c, o) =>
+            {
+                c.AddWithValue("@matchId", dto.GameId);
+                c.AddWithValue("@participantId", dto.ParticipantId);
+            });
+
+            if (res.Count != 1)
+            {
+                throw new DaoException("Etrange");
+            }
+            return res.First();
         }
 
         /// <summary>

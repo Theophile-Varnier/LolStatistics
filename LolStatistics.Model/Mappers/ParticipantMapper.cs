@@ -55,5 +55,10 @@ namespace LolStatistics.Model.Mappers
 
             return res;
         }
+
+        public static Participant.Participant UnMap(ParticipantDto source)
+        {
+            return new Participant.Participant();
+        }
     }
 }
