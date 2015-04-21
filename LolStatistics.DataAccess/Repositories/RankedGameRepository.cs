@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using System.Linq;
+using log4net;
 using LolStatistics.DataAccess.Dao;
 using LolStatistics.DataAccess.Exceptions;
 using LolStatistics.DataAccess.Extensions;
@@ -46,7 +47,7 @@ namespace LolStatistics.DataAccess.Repositories
                         {
                             // Code à déplacer dans un mapper ?
                             participant.MatchId = t.MatchId.ToString(CultureInfo.InvariantCulture);
-                            participant.ParticipantId = t.SummonerId;
+                            participant.ParticipantId = t.ParticipantIdentities.First(pi => pi.ParticipantId == participant.ParticipantId).Player.Id;
 
                             // Récupération du dto
                             ParticipantDto participantDto = ParticipantMapper.Map(participant);

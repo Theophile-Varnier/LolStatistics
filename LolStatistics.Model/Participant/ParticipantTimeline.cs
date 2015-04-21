@@ -8,7 +8,7 @@ namespace LolStatistics.Model.Participant
     public class ParticipantTimeline
     {
         [JsonIgnore]
-        public string ParticipantId { get; set; }
+        public long ParticipantId { get; set; }
 
         [JsonProperty("ancientGolemAssistsPerMinCounts")]
         public ParticipantTimelineData AncientGolemAssistsPerMinCounts { get; set; }

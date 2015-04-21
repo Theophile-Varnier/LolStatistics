@@ -6,7 +6,7 @@ namespace LolStatistics.Model.Stats
     public class ParticipantStats
     {
         [JsonIgnore]
-        public string ParticipantId { get; set; }
+        public long ParticipantId { get; set; }
 
         [JsonProperty("assists")]
         public long Assists { get; set; }

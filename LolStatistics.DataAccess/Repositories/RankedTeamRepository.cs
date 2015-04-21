@@ -48,9 +48,9 @@ namespace LolStatistics.DataAccess.Repositories
                     foreach (ParticipantDto participant in participants)
                     {
                         Participant finalParticipant = ParticipantMapper.UnMap(participant);
-                        finalParticipant.Stats = participantStatsDao.GetStats(gameId, long.Parse(participant.ParticipantId), conn);
+                        finalParticipant.Stats = participantStatsDao.GetStats(gameId, participant.ParticipantId, conn);
                         // On ne récupère que les stats des membres de la team
-                        if (res.Membres.Select(m => m.Id.ToString(CultureInfo.InvariantCulture)).Contains(participant.ParticipantId))
+                        if (res.Membres.Select(m => m.Id).Contains(participant.ParticipantId))
                         {
                             history.Participants.Add(finalParticipant);
                         }

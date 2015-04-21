@@ -37,7 +37,7 @@ namespace LolStatistics.DataAccess.Dao
             ParticipantTimelineData res = new ParticipantTimelineData();
 
             // Renseignement des champs
-            res.ParticipantId = reader.GetString("PARTICIPANT_ID");
+            res.ParticipantId = reader.GetInt64("PARTICIPANT_ID");
             res.TenToTwenty = reader.GetDouble("TEN_TO_TWENTY");
             res.ThirtyToEnd = reader.GetDouble("THIRTY_TO_END");
             res.TwentyToThirty = reader.GetDouble("TWENTY_TO_THIRTY");

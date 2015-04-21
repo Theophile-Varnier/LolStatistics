@@ -49,7 +49,7 @@ namespace LolStatistics.DataAccess.Dao
                 MatchId = reader.GetString("MATCH_ID"), 
                 ChampionId = reader.GetInt32("CHAMPION_ID"), 
                 HighestAchievedSeasonTier = reader.GetString("HIGHEST_ACHIEVED_SEASON_TIER"), 
-                ParticipantId = reader.GetString("PARTICIPANT_ID"), 
+                ParticipantId = reader.GetInt64("PARTICIPANT_ID"), 
                 Spell1Id = reader.GetInt32("SPELL1_ID"), 
                 Spell2Id = reader.GetInt32("SPELL2_ID"), 
                 TeamId = reader.GetInt32("TEAM_ID"), 

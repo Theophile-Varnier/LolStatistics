@@ -6,7 +6,7 @@ namespace LolStatistics.Model.Participant
     public class ParticipantTimelineData
     {
         [JsonIgnore]
-        public string ParticipantId { get; set; }
+        public long ParticipantId { get; set; }
 
         [JsonIgnore]
         public string Name { get; set; }

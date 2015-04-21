@@ -11,7 +11,7 @@ namespace LolStatistics.Model.Dto
 
         public string HighestAchievedSeasonTier { get; set; }
 
-        public string ParticipantId { get; set; }
+        public long ParticipantId { get; set; }
 
         public int Spell1Id { get; set; }
 

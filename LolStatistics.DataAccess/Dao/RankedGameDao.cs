@@ -21,10 +21,10 @@ namespace LolStatistics.DataAccess.Dao
         public void Insert(RankedGame rankedGame, DbConnection conn, DbTransaction tran)
         {
             const string cmd = "INSERT INTO RANKED_GAME("
-        + "SUMMONER_ID, MAP_ID, MATCH_CREATION, MATCH_DURATION, MATCH_ID, MATCH_MODE, "
+        + "MAP_ID, MATCH_CREATION, MATCH_DURATION, MATCH_ID, MATCH_MODE, "
         + "MATCH_TYPE, MATCH_VERSION, PLATFORM_ID, QUEUE_TYPE, REGION, "
         + "SEASON) VALUES("
-        + "@summonerId, @mapId, @matchCreation, @matchDuration, @matchId, @matchMode, "
+        + "@mapId, @matchCreation, @matchDuration, @matchId, @matchMode, "
         + "@matchType, @matchVersion, @platformId, @queueType, @region, "
         + "@season)";
 
@@ -50,7 +50,6 @@ namespace LolStatistics.DataAccess.Dao
             RankedGame res = new RankedGame();
 
             // Renseignement des champs
-            res.SummonerId = reader.GetString("SUMMONER_ID");
             res.MapId = reader.GetInt32("MAP_ID");
             res.MatchCreation = reader.GetInt64("MATCH_CREATION");
             res.MatchDuration = reader.GetInt64("MATCH_DURATION");
@@ -77,7 +76,6 @@ namespace LolStatistics.DataAccess.Dao
             RankedGame rankedGame = obj as RankedGame;
 
             // Ajout des paramètres
-            cmd.AddWithValue("@summonerId", rankedGame.SummonerId);
             cmd.AddWithValue("@mapId", rankedGame.MapId);
             cmd.AddWithValue("@matchCreation", rankedGame.MatchCreation);
             cmd.AddWithValue("@matchDuration", rankedGame.MatchDuration);
