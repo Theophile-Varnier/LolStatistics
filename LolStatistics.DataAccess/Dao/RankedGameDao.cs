@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using LolStatistics.DataAccess.Exceptions;
 using LolStatistics.DataAccess.Extensions;
 using LolStatistics.Model.Game;
 using System;
@@ -33,12 +35,23 @@ namespace LolStatistics.DataAccess.Dao
 
         }
 
-        public IList<RankedGame> GetMatchStatistics(long matchId, DbConnection conn)
+        public RankedGame GetMatchStatistics(long matchId, DbConnection conn)
         {
             const string cmd = "SELECT * FROM RANKED_GAME WHERE MATCH_ID = @matchId";
-
-            return ExecuteReader(cmd, conn, matchId, (c, o) => c.AddWithValue("@matchId", o));
+            IList<RankedGame> games = ExecuteReader(cmd, conn, matchId, (c, o) => c.AddWithValue("@matchId", o));
+            if (games.Count != 1)
+            {
+                throw new DaoException("Etrange");
+            }
+            return games.First();
         }
+
+        public IList<RankedGame> GetAllMatches(DbConnection conn)
+        {
+            const string cmd = "SELECT * FROM RANKED_GAME";
+
+            return ExecuteReader(cmd, conn);
+        } 
 
         /// <summary>
         /// Map un objet depuis un enregistrement

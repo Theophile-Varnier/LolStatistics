@@ -80,7 +80,7 @@ namespace LolStatistics.DataAccess.Dao
         /// <param name="id">L'id du champion à récupérer</param>
         /// <param name="conn">La connexion à utiliser</param>
         /// <returns></returns>
-        internal Champion GetById(string id, DbConnection conn)
+        internal Champion GetById(long id, DbConnection conn)
         {
             const string cmd = "SELECT * FROM CHAMPION WHERE CHAMPION_ID = @championId";
             List<Champion> champions = ExecuteReader(cmd, conn, id, (command, o) => command.AddWithValue("@championId", o));

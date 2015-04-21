@@ -30,12 +30,25 @@ namespace LolStatistics.DataAccess.Dao
 
         }
 
+        /// <summary>
+        /// Récupère tous les participants d'une partie
+        /// </summary>
+        /// <param name="matchId">L'id de la game</param>
+        /// <param name="conn"></param>
+        /// <returns></returns>
         public IList<ParticipantDto> GetGameParticipants(long matchId, DbConnection conn)
         {
             const string cmd = "SELECT * FROM PARTICIPANT WHERE MATCH_ID = @matchId";
 
             return ExecuteReader(cmd, conn, matchId, (c, o) => c.AddWithValue("@matchId", o));
         }
+
+        public IList<ParticipantDto> GetAllParticipants(DbConnection conn)
+        {
+            const string cmd = "SELECT * FROM PARTICIPANT";
+
+            return ExecuteReader(cmd, conn);
+        } 
 
         /// <summary>
         /// Map un objet depuis un enregistrement
@@ -46,7 +59,7 @@ namespace LolStatistics.DataAccess.Dao
         {
             ParticipantDto res = new ParticipantDto
             {
-                MatchId = reader.GetString("MATCH_ID"), 
+                MatchId = reader.GetInt64("MATCH_ID"), 
                 ChampionId = reader.GetInt32("CHAMPION_ID"), 
                 HighestAchievedSeasonTier = reader.GetString("HIGHEST_ACHIEVED_SEASON_TIER"), 
                 ParticipantId = reader.GetInt64("PARTICIPANT_ID"), 

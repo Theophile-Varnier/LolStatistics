@@ -33,7 +33,7 @@ namespace LolStatistics.DataAccess.Repositories
         /// </summary>
         /// <param name="id">L'id du membre</param>
         /// <returns>L'historique du membre</returns>
-        public GameHistory GetById(string id)
+        public GameHistory GetById(long id)
         {
             using (DbConnection conn = Command.GetConnexion())
             {
@@ -43,7 +43,7 @@ namespace LolStatistics.DataAccess.Repositories
                     GameHistory res = new GameHistory
                     {
                         Games = new List<Game>(),
-                        SummonerId = long.Parse(id)
+                        SummonerId = id
                     };
 
                     // Récupération de toutes les parties du membre

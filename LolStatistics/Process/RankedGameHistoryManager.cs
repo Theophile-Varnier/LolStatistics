@@ -52,7 +52,7 @@ namespace LolStatistics.Process
                     // Insertion des parties classées
                     foreach (RankedGame rg in mh.Matches)
                     {
-                        rankedGameRepository.Insert(rg);
+                            rankedGameRepository.Insert(rg);
                     }
                 }
             }

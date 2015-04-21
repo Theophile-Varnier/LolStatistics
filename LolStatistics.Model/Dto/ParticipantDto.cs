@@ -5,7 +5,7 @@ namespace LolStatistics.Model.Dto
 {
     public class ParticipantDto
     {
-        public string MatchId { get; set; }
+        public long MatchId { get; set; }
 
         public int ChampionId { get; set; }
 

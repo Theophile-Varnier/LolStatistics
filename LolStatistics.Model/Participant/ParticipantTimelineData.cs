@@ -9,6 +9,9 @@ namespace LolStatistics.Model.Participant
         public long ParticipantId { get; set; }
 
         [JsonIgnore]
+        public long MatchId { get; set; }
+
+        [JsonIgnore]
         public string Name { get; set; }
 
         [JsonProperty("tenToTwenty")]

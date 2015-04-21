@@ -28,7 +28,7 @@ namespace LolStatistics.DataAccess.Repositories
         /// </summary>
         /// <param name="id">l'id de l'invocateur à récupérer</param>
         /// <returns></returns>
-        public Summoner GetById(string id)
+        public Summoner GetById(long id)
         {
             throw new NotImplementedException();
         }

@@ -60,7 +60,7 @@ namespace LolStatistics.DataAccess.Repositories
         /// </summary>
         /// <param name="id">L'id de la partie à récupérer</param>
         /// <returns></returns>
-        public Game GetById(string id)
+        public Game GetById(long id)
         {
             throw new NotImplementedException();
         }

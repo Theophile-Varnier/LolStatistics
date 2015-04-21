@@ -19,6 +19,6 @@ namespace LolStatistics.DataAccess.Repositories
         /// </summary>
         /// <param name="id">L'id de l'objet à récupérer</param>
         /// <returns></returns>
-        T GetById(string id);
+        T GetById(long id);
     }
 }
