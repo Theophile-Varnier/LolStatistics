@@ -14,7 +14,7 @@ namespace LolStatistics.Web.Controllers
         {
             GameHistoryRepository gameHistoryRepository = new GameHistoryRepository();
             GameHistoryViewModel model = new GameHistoryViewModel();
-            string summonerId = "25954150";
+            long summonerId = 25954150;
             GameHistory gh = gameHistoryRepository.GetById(summonerId);
             gh.Games = gh.Games.OrderBy(g => g.CreateDate).Reverse().ToList();
             model = GameHistoryMapper.MapToModel(gh);

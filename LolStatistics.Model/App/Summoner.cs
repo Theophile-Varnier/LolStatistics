@@ -5,13 +5,13 @@ namespace LolStatistics.Model.App
     [JsonObject]
     public class Summoner
     {
-        [JsonProperty("id")]
+        [JsonProperty("summonerId")]
         public long Id { get; set; }
 
-        [JsonProperty("name")]
+        [JsonProperty("summonerName")]
         public string Name { get; set; }
 
-        [JsonProperty("profileIconId")]
+        [JsonProperty("profileIcon")]
         public int ProfileIconId { get; set; }
 
         [JsonProperty("revisionDate")]

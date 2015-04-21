@@ -52,8 +52,7 @@ namespace LolStatistics.Process
                     // Insertion des parties classées
                     foreach (RankedGame rg in mh.Matches)
                     {
-                        rg.SummonerId = summoner.Id.ToString(CultureInfo.InvariantCulture);
-                        rankedGameRepository.Insert(rg);
+                            rankedGameRepository.Insert(rg);
                     }
                 }
             }

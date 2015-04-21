@@ -28,13 +28,13 @@ namespace LolStatistics.Model.Mappers
                 Role = source.Timeline.Role,
                 HighestAchievedSeasonTier = source.HighestAchievedSeasonTier,
                 TeamId = source.TeamId,
-                ParticipantId = source.ParticipantId
+                ParticipantId = source.ParticipantId,
+                TimelineDatas = new List<ParticipantTimelineData>()
             };
 
             // Le web service renvoie les timelines sous forme d'objets séparés
             // Mais la persistance en base se fait sous forme de liste pour éviter d'enregistrer trop de null
             // D'où cette conversion
-            res.TimelineDatas = new List<ParticipantTimelineData>();
             IList<PropertyInfo> properties = source.Timeline.TimelineDatas;
             foreach (PropertyInfo property in properties)
             {
@@ -44,6 +44,7 @@ namespace LolStatistics.Model.Mappers
                     res.TimelineDatas.Add(new ParticipantTimelineData
                     {
                         ParticipantId = source.ParticipantId,
+                        MatchId = source.MatchId,
                         Name = property.Name,
                         ZeroToTen = baseData.ZeroToTen,
                         TenToTwenty = baseData.TenToTwenty,

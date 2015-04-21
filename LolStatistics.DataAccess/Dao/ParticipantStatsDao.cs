@@ -82,7 +82,7 @@ namespace LolStatistics.DataAccess.Dao
         {
             ParticipantStats res = new ParticipantStats
             {
-                ParticipantId = reader.GetString("PARTICIPANT_ID"),
+                ParticipantId = reader.GetInt64("PARTICIPANT_ID"),
                 Assists = reader.GetInt64("ASSISTS"),
                 ChampLevel = reader.GetInt64("CHAMP_LEVEL"),
                 CombatPlayerScore = reader.GetInt64("COMBAT_PLAYER_SCORE"),

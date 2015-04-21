@@ -1,10 +1,7 @@
-﻿using System.Globalization;
-using System.Linq;
-using log4net;
+﻿using log4net;
 using LolStatistics.DataAccess.Dao;
 using LolStatistics.DataAccess.Extensions;
 using LolStatistics.Log;
-using LolStatistics.Model.App;
 using LolStatistics.Model.Dto;
 using LolStatistics.Model.Mappers;
 using LolStatistics.Model.Participant;
@@ -12,6 +9,7 @@ using LolStatistics.Model.Teams;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Linq;
 
 namespace LolStatistics.DataAccess.Repositories
 {
@@ -29,13 +27,18 @@ namespace LolStatistics.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
-        public RankedTeam GetById(string id)
+        public RankedTeam GetById(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RankedTeam GetByName(string name)
         {
             RankedTeam res;
             using (DbConnection conn = Command.GetConnexion())
             {
                 logger.Info("Récupération du nom de la team");
-                res = rankedTeamDao.GetByName(id, conn);
+                res = rankedTeamDao.GetByName(name, conn);
                 res.Historique = new Dictionary<long, RankedTeamHistory>();
                 logger.Info("Récupération des membres de la team");
                 res.Membres = summonerDao.GetTeamMembers(res.Id, conn);
@@ -48,9 +51,9 @@ namespace LolStatistics.DataAccess.Repositories
                     foreach (ParticipantDto participant in participants)
                     {
                         Participant finalParticipant = ParticipantMapper.UnMap(participant);
-                        finalParticipant.Stats = participantStatsDao.GetStats(gameId, long.Parse(participant.ParticipantId), conn);
+                        finalParticipant.Stats = participantStatsDao.GetStats(gameId, participant.ParticipantId, conn);
                         // On ne récupère que les stats des membres de la team
-                        if (res.Membres.Select(m => m.Id.ToString(CultureInfo.InvariantCulture)).Contains(participant.ParticipantId))
+                        if (res.Membres.Select(m => m.Id).Contains(participant.ParticipantId))
                         {
                             history.Participants.Add(finalParticipant);
                         }

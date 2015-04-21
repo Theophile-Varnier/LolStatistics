@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using LolStatistics.Model.Participant;
 using Newtonsoft.Json;
 
 namespace LolStatistics.Model.Game
@@ -6,9 +7,6 @@ namespace LolStatistics.Model.Game
     [JsonObject]
     public class RankedGame
     {
-        [JsonIgnore]
-        public string SummonerId { get; set; }
-
         [JsonProperty("mapId")]
         public int MapId { get; set; }
 
@@ -33,6 +31,9 @@ namespace LolStatistics.Model.Game
         [JsonProperty("participants")]
         public List<Participant.Participant> Participants { get; set; }
 
+        [JsonProperty("participantIdentities")]
+        public List<ParticipantIdentity> ParticipantIdentities { get; set; }
+        
         [JsonProperty("platformId")]
         public string PlatformId { get; set; }
 

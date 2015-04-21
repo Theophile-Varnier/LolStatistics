@@ -7,7 +7,7 @@ namespace LolStatistics.Model.Participant
     public class Participant
     {
         [JsonIgnore]
-        public string MatchId { get; set; }
+        public long MatchId { get; set; }
 
         [JsonProperty("championId")]
         public int ChampionId { get; set; }
@@ -16,7 +16,7 @@ namespace LolStatistics.Model.Participant
         public string HighestAchievedSeasonTier { get; set; }
 
         [JsonIgnore]
-        public string ParticipantId { get; set; }
+        public long ParticipantId { get; set; }
 
         [JsonProperty("spell1Id")]
         public int Spell1Id { get; set; }

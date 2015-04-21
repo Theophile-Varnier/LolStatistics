@@ -47,7 +47,7 @@ namespace LolStatistics.DataAccess.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Champion GetById(string id)
+        public Champion GetById(long id)
         {
             using (DbConnection conn = Command.GetConnexion())
             {

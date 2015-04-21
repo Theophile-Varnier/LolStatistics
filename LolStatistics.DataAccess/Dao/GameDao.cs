@@ -36,7 +36,7 @@ namespace LolStatistics.DataAccess.Dao
         /// </summary>
         /// <param name="summonerId">L'id de l'utilisateur</param>
         /// <returns>La liste des parties associées au joueur</returns>
-        public List<Game> GetBySummonerId(string summonerId, DbConnection conn)
+        public List<Game> GetBySummonerId(long summonerId, DbConnection conn)
         {
             const string cmd = "SELECT * FROM GAME WHERE SUMMONER_ID = @summonerId";
             return ExecuteReader(cmd, conn, summonerId, ((c, o) => c.AddWithValue("@summonerId", o)));
