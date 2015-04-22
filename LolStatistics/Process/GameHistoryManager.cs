@@ -51,7 +51,11 @@ namespace LolStatistics.Process
             foreach (Summoner summoner in summoners)
             {
                 // Paramètres du web service
-                Dictionary<string, string> uriParams = new Dictionary<string, string> {{"SummonerId", summoner.Id.ToString(CultureInfo.InvariantCulture)}};
+                Dictionary<string, string> uriParams = new Dictionary<string, string>
+                {
+                    {"SummonerId", summoner.Id.ToString(CultureInfo.InvariantCulture)}
+                
+                };
                 logger.Info("Récupération de l'historique des parties pour l'invocateur " + summoner.Name);
                 GameHistory gh = gameHistoryWebServiceConsumer.Consume(uriParams);
 

@@ -21,7 +21,7 @@ namespace LolStatistics.DataAccess.Dao
         public void Insert(ParticipantStats participantStats, DbConnection conn, DbTransaction tran)
         {
             const string cmd = "INSERT INTO PARTICIPANT_STATS("
-            + "PARTICIPANT_ID, ASSISTS, CHAMP_LEVEL, COMBAT_PLAYER_SCORE, DEATHS, "
+            + "PARTICIPANT_ID, MATCH_ID, ASSISTS, CHAMP_LEVEL, COMBAT_PLAYER_SCORE, DEATHS, "
             + "DOUBLE_KILLS, FIRST_BLOOD_ASSIST, FIRST_BLOOD_KILL, FIRST_INHIBITOR_ASSIST, FIRST_INHIBITOR_KILL, "
             + "FIRST_TOWER_ASSIST, FIRST_TOWER_KILL, GOLD_EARNED, GOLD_SPENT, INHIBITOR_KILLS, "
             + "ITEM0, ITEM1, ITEM2, ITEM3, ITEM4, "
@@ -34,7 +34,7 @@ namespace LolStatistics.DataAccess.Dao
             + "TOTAL_PLAYER_SCORE, TOTAL_SCORE_RANK, TOTAL_TIME_CROWD_CONTROL_DEALT, TOTAL_UNITS_HEALED, TOWER_KILLS, "
             + "TRIPLE_KILLS, TRUE_DAMAGE_DEALT, TRUE_DAMAGE_DEALT_TO_CHAMPIONS, TRUE_DAMAGE_TAKEN, UNREAL_KILLS, "
             + "VISION_WARDS_BOUGHT_IN_GAME, WARDS_KILLED, WARDS_PLACED, WINNER) VALUES("
-            + "@participantId, @assists, @champLevel, @combatPlayerScore, @deaths, "
+            + "@participantId, @matchId, @assists, @champLevel, @combatPlayerScore, @deaths, "
             + "@doubleKills, @firstBloodAssist, @firstBloodKill, @firstInhibitorAssist, @firstInhibitorKill, "
             + "@firstTowerAssist, @firstTowerKill, @goldEarned, @goldSpent, @inhibitorKills, "
             + "@item0, @item1, @item2, @item3, @item4, "
@@ -83,6 +83,7 @@ namespace LolStatistics.DataAccess.Dao
             ParticipantStats res = new ParticipantStats
             {
                 ParticipantId = reader.GetInt64("PARTICIPANT_ID"),
+                MatchId = reader.GetInt64("MATCH_ID"),
                 Assists = reader.GetInt64("ASSISTS"),
                 ChampLevel = reader.GetInt64("CHAMP_LEVEL"),
                 CombatPlayerScore = reader.GetInt64("COMBAT_PLAYER_SCORE"),
@@ -164,7 +165,10 @@ namespace LolStatistics.DataAccess.Dao
             ParticipantStats participantStats = obj as ParticipantStats;
 
             // Ajout des paramètres
+            if (participantStats == null) return;
+
             cmd.AddWithValue("@participantId", participantStats.ParticipantId);
+            cmd.AddWithValue("@matchId", participantStats.MatchId);
             cmd.AddWithValue("@assists", participantStats.Assists);
             cmd.AddWithValue("@champLevel", participantStats.ChampLevel);
             cmd.AddWithValue("@combatPlayerScore", participantStats.CombatPlayerScore);
@@ -228,7 +232,6 @@ namespace LolStatistics.DataAccess.Dao
             cmd.AddWithValue("@wardsKilled", participantStats.WardsKilled);
             cmd.AddWithValue("@wardsPlaced", participantStats.WardsPlaced);
             cmd.AddWithValue("@winner", participantStats.Winner);
-
         }
     }
 }

@@ -21,6 +21,7 @@ namespace LolStatistics.Model.Mappers
             ParticipantDto res = new ParticipantDto
             {
                 MatchId = source.MatchId,
+                ParticipantId = source.ParticipantId,
                 ChampionId = source.ChampionId,
                 Spell1Id = source.Spell1Id,
                 Spell2Id = source.Spell2Id,
@@ -28,7 +29,6 @@ namespace LolStatistics.Model.Mappers
                 Role = source.Timeline.Role,
                 HighestAchievedSeasonTier = source.HighestAchievedSeasonTier,
                 TeamId = source.TeamId,
-                ParticipantId = source.ParticipantId,
                 TimelineDatas = new List<ParticipantTimelineData>()
             };
 

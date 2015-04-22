@@ -42,7 +42,7 @@ namespace LolStatistics.DataAccess.Repositories
                     {
                         if (LolCache.RegisteredGames.Contains(t.MatchId))
                         {
-                            logger.Info("Partie déjà enregistrée -> ignorée");
+                            logger.Info(string.Format("Partie {0} déjà enregistrée -> ignorée", t.MatchId));
                         }
                         else
                         {
@@ -62,13 +62,14 @@ namespace LolStatistics.DataAccess.Repositories
 
                             if (LolCache.RegisteredStats.Any( s => s.Equals(new Tuple<long, long>(participantDto.MatchId, participantDto.ParticipantId))))
                             {
-                                logger.Info("Participant déjà enregistré -> ignoré");
+                                logger.Info(string.Format("Participant {0}/{1} déjà enregistré -> ignoré", participantDto.MatchId, participantDto.ParticipantId));
                             }
                             else
                             {
                                 // Insertion en base
                                 participantDao.Insert(participantDto, conn, tran);
                                 participant.Stats.ParticipantId = participant.ParticipantId;
+                                participant.Stats.MatchId = participant.MatchId;
                                 participantStatsDao.Insert(participant.Stats, conn, tran);
 
                                 // On insert les timeline data
