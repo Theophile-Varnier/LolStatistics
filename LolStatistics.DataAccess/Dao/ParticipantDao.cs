@@ -89,7 +89,7 @@ namespace LolStatistics.DataAccess.Dao
             cmd.AddWithValue("@matchId", participant.MatchId);
             cmd.AddWithValue("@championId", participant.ChampionId);
             cmd.AddWithValue("@highestAchievedSeasonTier", participant.HighestAchievedSeasonTier);
-            cmd.AddWithValue("@participantId", participant.ParticipantId.ToString());
+            cmd.AddWithValue("@participantId", participant.ParticipantId);
             cmd.AddWithValue("@spell1Id", participant.Spell1Id);
             cmd.AddWithValue("@spell2Id", participant.Spell2Id);
             cmd.AddWithValue("@teamId", participant.TeamId);

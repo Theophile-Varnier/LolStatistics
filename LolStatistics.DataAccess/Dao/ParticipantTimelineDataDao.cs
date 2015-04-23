@@ -19,8 +19,8 @@ namespace LolStatistics.DataAccess.Dao
         {
 
             const string cmd = "INSERT INTO PARTICIPANT_TIMELINE_DATA("
-            + "PARTICIPANT_ID, NAME, TEN_TO_TWENTY, THIRTY_TO_END, TWENTY_TO_THIRTY, ZERO_TO_TEN) VALUES("
-            + "@participantId, @name, @tenToTwenty, @thirtyToEnd, @twentyToThirty, @zeroToTen)";
+            + "MATCH_ID, PARTICIPANT_ID, NAME, TEN_TO_TWENTY, THIRTY_TO_END, TWENTY_TO_THIRTY, ZERO_TO_TEN) VALUES("
+            + "@matchId, @participantId, @name, @tenToTwenty, @thirtyToEnd, @twentyToThirty, @zeroToTen)";
 
                 // Exécution de la requête
                 ExecuteNonQuery(cmd, conn, participantTimelineData, addParameters, tran);
@@ -38,6 +38,7 @@ namespace LolStatistics.DataAccess.Dao
 
             // Renseignement des champs
             res.ParticipantId = reader.GetInt64("PARTICIPANT_ID");
+            res.MatchId = reader.GetInt64("MATCH_ID");
             res.TenToTwenty = reader.GetDouble("TEN_TO_TWENTY");
             res.ThirtyToEnd = reader.GetDouble("THIRTY_TO_END");
             res.TwentyToThirty = reader.GetDouble("TWENTY_TO_THIRTY");
@@ -58,6 +59,7 @@ namespace LolStatistics.DataAccess.Dao
 
             // Ajout des paramètres
             cmd.AddWithValue("@participantId", participantTimelineData.ParticipantId);
+            cmd.AddWithValue("@matchId", participantTimelineData.MatchId);
             cmd.AddWithValue("@name", participantTimelineData.Name);
             cmd.AddWithValue("@tenToTwenty", participantTimelineData.TenToTwenty);
             cmd.AddWithValue("@thirtyToEnd", participantTimelineData.ThirtyToEnd);

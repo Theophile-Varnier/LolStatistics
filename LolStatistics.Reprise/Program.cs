@@ -1,4 +1,5 @@
-﻿using LolStatistics.DataAccess.Repositories;
+﻿using LolStatistics.DataAccess.Cache;
+using LolStatistics.DataAccess.Repositories;
 using LolStatistics.Model.App;
 using LolStatistics.Model.Game;
 using LolStatistics.Model.Participant;
@@ -20,6 +21,7 @@ namespace LolStatistics.Reprise
 
         static void Main(string[] args)
         {
+            LolCache.Init();
             IList<Summoner> summoners = summonerRepository.Get();
             using (StreamReader sr = new StreamReader(ConfigurationManager.AppSettings["CheminFichierRattrapage"]))
             {
@@ -30,16 +32,16 @@ namespace LolStatistics.Reprise
                     parameters.Clear();
                     parameters.Add("matchId", currentLine);
                     RankedGame game = rankedGameWebServiceConsumer.Consume(parameters);
-                    foreach (ParticipantIdentity pi in game.ParticipantIdentities)
+                    if (game.Season == "SEASON2015")
                     {
-                        if (!summoners.Select(sm => sm.Id).Contains(pi.Player.Id))
+                        foreach (ParticipantIdentity pi in game.ParticipantIdentities)
                         {
-                            game.Participants.Remove(game.Participants.First(p => p.ParticipantId == pi.ParticipantId));
+                            if (!summoners.Select(sm => sm.Id).Contains(pi.Player.Id))
+                            {
+                                game.Participants.Remove(game.Participants.First(p => p.ParticipantId == pi.ParticipantId));
+                            }
                         }
-                        else
-                        {
-                            rankedGameRepository.Insert(game);
-                        }
+                        rankedGameRepository.Insert(game);
                     }
                 }
             }

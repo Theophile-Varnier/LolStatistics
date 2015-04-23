@@ -28,7 +28,7 @@ namespace LolStatistics.DataAccess.Repositories
         private readonly ParticipantTimelineDataDao participantTimelineDataDao = new ParticipantTimelineDataDao();
 
         /// <summary>
-        /// Insertion d'une partie classée
+        /// Insertion d'une partie classée 
         /// </summary>
         /// <param name="t">La partie classée à insérer</param>
         public void Insert(RankedGame t)
@@ -87,6 +87,10 @@ namespace LolStatistics.DataAccess.Repositories
                     catch (DaoException e)
                     {
                         tran.Rollback();
+                    }
+                    finally
+                    {
+                        conn.Close();
                     }
                 }
             }
