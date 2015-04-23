@@ -40,7 +40,7 @@ namespace LolStatistics.DataAccess.Repositories
                 {
                     try
                     {
-                        if (LolCache.RegisteredGames.Contains(t.MatchId))
+                        if (LolCache.UseCache && LolCache.RegisteredGames.Contains(t.MatchId))
                         {
                             logger.Info(string.Format("Partie {0} déjà enregistrée -> ignorée", t.MatchId));
                         }
@@ -60,7 +60,7 @@ namespace LolStatistics.DataAccess.Repositories
                             // Récupération du dto
                             ParticipantDto participantDto = ParticipantMapper.Map(participant);
 
-                            if (LolCache.RegisteredStats.Any( s => s.Equals(new Tuple<long, long>(participantDto.MatchId, participantDto.ParticipantId))))
+                            if (LolCache.UseCache && LolCache.RegisteredStats.Any( s => s.Equals(new Tuple<long, long>(participantDto.MatchId, participantDto.ParticipantId))))
                             {
                                 logger.Info(string.Format("Participant {0}/{1} déjà enregistré -> ignoré", participantDto.MatchId, participantDto.ParticipantId));
                             }
