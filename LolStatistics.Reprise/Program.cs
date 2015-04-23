@@ -60,7 +60,7 @@ namespace LolStatistics.Reprise
                 parameters.Add("summonerId", summoner.Id.ToString(CultureInfo.InvariantCulture));
                 int beginIndex = 0;
                 parameters.Add("beginIndex", beginIndex.ToString(CultureInfo.InvariantCulture));
-                parameters.Add("endIndex", (beginIndex + 15).ToString(CultureInfo.InvariantCulture));
+                parameters.Add("endIndex", (beginIndex + 14).ToString(CultureInfo.InvariantCulture));
                 while ((games = rankedGameWebServiceConsumer.Consume(parameters)).Matches != null)
                 {
                     foreach (RankedGame game in games.Matches)
@@ -76,11 +76,10 @@ namespace LolStatistics.Reprise
                             }
                             rankedGameRepository.Insert(game);
                         }
-                        rankedGameRepository.Insert(game);
                     }
-                    beginIndex += 16;
+                    beginIndex += 15;
                     parameters["beginIndex"] = (beginIndex).ToString(CultureInfo.InvariantCulture);
-                    parameters["endIndex"] = (beginIndex + 15).ToString(CultureInfo.InvariantCulture);
+                    parameters["endIndex"] = (beginIndex + 14).ToString(CultureInfo.InvariantCulture);
                 }
             }
         }
