@@ -48,7 +48,14 @@ namespace LolStatistics.DataAccess.Dao
             const string cmd = "SELECT * FROM PARTICIPANT";
 
             return ExecuteReader(cmd, conn);
-        } 
+        }
+
+        public IList<ParticipantDto> GetSummonerParticipations(long summonerId, DbConnection conn)
+        {
+            const string cmd = "SELECT * FROM PARTICIPANT WHERE PARTICIPANT_ID = @participantId";
+
+            return ExecuteReader(cmd, conn, summonerId, (c, o) => c.AddWithValue("@participantId", o));
+        }
 
         /// <summary>
         /// Map un objet depuis un enregistrement

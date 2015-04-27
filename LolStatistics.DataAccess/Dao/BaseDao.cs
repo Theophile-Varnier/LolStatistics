@@ -28,10 +28,6 @@ namespace LolStatistics.DataAccess.Dao
         /// <param name="conn">La connection à utiliser</param>
         protected void ExecuteNonQuery(string cmdText, DbConnection conn, object dto = null, Action<Command, object> addParams = null, DbTransaction tran = null)
         {
-            if (addParams != null && dto == null)
-            {
-                throw new ArgumentException("L'objet ne peut être null s'il existe une méthode d'ajout de paramètres");
-            }
             try
             {
                 // Préparation de la requête

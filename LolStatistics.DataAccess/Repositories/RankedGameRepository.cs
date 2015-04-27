@@ -156,5 +156,26 @@ namespace LolStatistics.DataAccess.Repositories
                 }
             }
         }
+
+        public IList<RankedGame> GetStatsForSummoner(long summonerId)
+        {
+            IList<ParticipantDto> participations;
+            IList<RankedGame> res = null;
+            using (DbConnection conn = Command.GetConnexion())
+            {
+                try
+                {
+                    conn.Open();
+                    participations = participantDao.GetSummonerParticipations(summonerId, conn);
+
+
+                    return res;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+        }
     }
 }

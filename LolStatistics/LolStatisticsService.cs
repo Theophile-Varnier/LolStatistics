@@ -1,4 +1,5 @@
 ﻿using log4net;
+using LolStatistics.DataAccess.Cache;
 using LolStatistics.Jobs;
 using LolStatistics.Log;
 using Quartz;
@@ -21,6 +22,8 @@ namespace LolStatistics
         protected override void OnStart(string[] args)
         {
             logger.Info("Démarrage du service LolStatistics.");
+
+            LolCache.Init();
 
             scheduler = StdSchedulerFactory.GetDefaultScheduler();
 

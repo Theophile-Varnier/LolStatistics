@@ -3,6 +3,7 @@ using LolStatistics.DataAccess.Extensions;
 using LolStatistics.Model.Participant;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 
 namespace LolStatistics.DataAccess.Dao
 {
@@ -24,6 +25,17 @@ namespace LolStatistics.DataAccess.Dao
 
                 // Exécution de la requête
                 ExecuteNonQuery(cmd, conn, participantTimelineData, addParameters, tran);
+
+        }
+
+        public List<ParticipantTimelineData> GetFromParticipant(long matchId, long summonerId, DbConnection conn)
+        {
+            const string cmd = "SELECT * FROM PARTICIPANT_TIMELINE_DATA WHERE MATCH_ID = @matchId AND PARTICIPANT_ID = @participantId";
+            return ExecuteReader(cmd, conn, null, (c, o) =>
+            {
+                c.AddWithValue("@matchId", matchId);
+                c.AddWithValue("@participantId", summonerId);
+            });
 
         }
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 using LolStatistics.Model.Dto;
 using LolStatistics.Model.Participant;
 
@@ -25,32 +26,35 @@ namespace LolStatistics.Model.Mappers
                 ChampionId = source.ChampionId,
                 Spell1Id = source.Spell1Id,
                 Spell2Id = source.Spell2Id,
-                Lane = source.Timeline.Lane,
-                Role = source.Timeline.Role,
                 HighestAchievedSeasonTier = source.HighestAchievedSeasonTier,
                 TeamId = source.TeamId,
                 TimelineDatas = new List<ParticipantTimelineData>()
             };
-
-            // Le web service renvoie les timelines sous forme d'objets séparés
-            // Mais la persistance en base se fait sous forme de liste pour éviter d'enregistrer trop de null
-            // D'où cette conversion
-            IList<PropertyInfo> properties = source.Timeline.TimelineDatas;
-            foreach (PropertyInfo property in properties)
+            if (source.Timeline != null)
             {
-                ParticipantTimelineData baseData = source.Timeline.GetType().GetProperty(property.Name).GetValue(source.Timeline) as ParticipantTimelineData;
-                if (baseData != null)
+                res.Lane = source.Timeline.Lane;
+                res.Role = source.Timeline.Role;
+
+                // Le web service renvoie les timelines sous forme d'objets séparés
+                // Mais la persistance en base se fait sous forme de liste pour éviter d'enregistrer trop de null
+                // D'où cette conversion
+                IList<PropertyInfo> properties = source.Timeline.TimelineDatas;
+                foreach (PropertyInfo property in properties)
                 {
-                    res.TimelineDatas.Add(new ParticipantTimelineData
+                    ParticipantTimelineData baseData = source.Timeline.GetType().GetProperty(property.Name).GetValue(source.Timeline) as ParticipantTimelineData;
+                    if (baseData != null)
                     {
-                        ParticipantId = source.ParticipantId,
-                        MatchId = source.MatchId,
-                        Name = property.Name,
-                        ZeroToTen = baseData.ZeroToTen,
-                        TenToTwenty = baseData.TenToTwenty,
-                        TwentyToThirty = baseData.TwentyToThirty,
-                        ThirtyToEnd = baseData.ThirtyToEnd
-                    });
+                        res.TimelineDatas.Add(new ParticipantTimelineData
+                        {
+                            ParticipantId = source.ParticipantId,
+                            MatchId = source.MatchId,
+                            Name = property.Name,
+                            ZeroToTen = baseData.ZeroToTen,
+                            TenToTwenty = baseData.TenToTwenty,
+                            TwentyToThirty = baseData.TwentyToThirty,
+                            ThirtyToEnd = baseData.ThirtyToEnd
+                        });
+                    }
                 }
             }
 
@@ -59,7 +63,29 @@ namespace LolStatistics.Model.Mappers
 
         public static Participant.Participant UnMap(ParticipantDto source)
         {
-            return new Participant.Participant();
+            Participant.Participant res = new Participant.Participant
+            {
+                MatchId = source.MatchId,
+                ParticipantId = source.ParticipantId,
+                ChampionId = source.ChampionId,
+                Spell1Id = source.Spell1Id,
+                Spell2Id = source.Spell2Id,
+                HighestAchievedSeasonTier = source.HighestAchievedSeasonTier,
+                TeamId = source.TeamId,
+                Timeline = new ParticipantTimeline
+                {
+                    Lane = source.Lane,
+                    Role = source.Role
+                }
+            };
+
+            IList<PropertyInfo> properties = res.Timeline.TimelineDatas;
+            foreach (PropertyInfo property in properties)
+            {
+                res.Timeline.GetType().GetProperty(property.Name).SetValue(res.Timeline, source.TimelineDatas.FirstOrDefault(t => t.Name == property.Name));
+            }
+
+            return res;
         }
     }
 }
