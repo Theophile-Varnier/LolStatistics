@@ -7,17 +7,19 @@
 }
 
 <div class="col-xs-8">
-    <ul class="list-group champion-list-group">
+    <div class="match-history">
         @foreach (LolStatistics.Web.Models.GameViewModel game in Model.Games)
         {
             string className = game.Win ? "success" : "danger";
             string victoire = game.Win ? "Victoire" : "Défaite";
             Champion currentChampion = LolStatisticsCache.Champion(@game.ChampionId);
             string imgPath = string.Concat(Request.ApplicationPath, @"/medias/img/", @currentChampion.Key, "_Square_0.png");
-            <li class="list-group-item list-group-item-@className">
-                <div class="champion-thumbnail" style="background-image:url(@imgPath);"></div>
-                <span class="result @className">@victoire</span>
-            </li>
+            <div class="list-group-item-@className">
+                <div class="champion-thumbnail-container">
+                    <div class="champion-thumbnail" style="background-image:url(@imgPath);"></div>
+                </div>
+                <div class="result @className">@victoire</div>
+            </div>
         }
-    </ul>
+    </div>
 </div>
