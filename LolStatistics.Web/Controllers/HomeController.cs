@@ -1,8 +1,8 @@
-﻿using LolStatistics.DataAccess.Dao;
-using LolStatistics.DataAccess.Repositories;
-using LolStatistics.Model.Game;
+﻿using LolStatistics.DataAccess.Repositories;
+using LolStatistics.Model.Participant;
 using LolStatistics.Web.Models;
 using LolStatistics.Web.Models.Mapper;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -12,11 +12,10 @@ namespace LolStatistics.Web.Controllers
     {
         public ActionResult Index()
         {
-            GameHistoryRepository gameHistoryRepository = new GameHistoryRepository();
+            RankedGameRepository gameHistoryRepository = new RankedGameRepository();
             GameHistoryViewModel model = new GameHistoryViewModel();
             long summonerId = 25954150;
-            GameHistory gh = gameHistoryRepository.GetById(summonerId);
-            gh.Games = gh.Games.OrderBy(g => g.CreateDate).Reverse().ToList();
+            IList<Participant> gh = gameHistoryRepository.GetStatsForSummoner(summonerId).OrderByDescending(p => p.MatchId).ToList();
             model = GameHistoryMapper.MapToModel(gh);
             return View(model);
         }

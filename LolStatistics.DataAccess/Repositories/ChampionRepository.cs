@@ -10,7 +10,7 @@ namespace LolStatistics.DataAccess.Repositories
     /// <summary>
     /// Repository associé aux champions
     /// </summary>
-    public class ChampionRepository: IRepository<Champion>
+    public class ChampionRepository : IRepository<Champion>
     {
         ChampionDao championDao = new ChampionDao();
 
@@ -22,11 +22,11 @@ namespace LolStatistics.DataAccess.Repositories
         {
             using (DbConnection conn = Command.GetConnexion())
             {
+                conn.Open();
                 using (DbTransaction tran = conn.BeginTransaction())
                 {
                     try
                     {
-                        conn.Open();
                         championDao.Insert(t, conn, tran);
                         tran.Commit();
                     }

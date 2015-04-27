@@ -14,7 +14,7 @@ namespace LolStatistics.DataAccess.Cache
 
         public static bool UseCache { get; set; }
 
-        private static RankedGameRepository rankedGameRepository = new RankedGameRepository();
+        private static readonly RankedGameRepository rankedGameRepository = new RankedGameRepository();
 
         /// <summary>
         /// Initialisation du cache

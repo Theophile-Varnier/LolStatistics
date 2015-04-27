@@ -1,21 +1,21 @@
-﻿using LolStatistics.Model.Game;
+﻿using LolStatistics.Model.Participant;
 
 namespace LolStatistics.Web.Models.Mapper
 {
     public static class GameMapper
     {
-        public static GameViewModel MapToModel(Game g)
+        public static GameViewModel MapToModel(Participant g)
         {
             GameViewModel res = new GameViewModel
             {
-                ChampionId = g.ChampionId, 
-                Win = g.Stats.Win,
-                Spell1 = g.Spell1,
-                Spell2 = g.Spell2,
-                Kills = g.Stats.ChampionsKilled,
+                ChampionId = g.ChampionId,
+                Win = g.Stats.Winner,
+                Spell1 = g.Spell1Id,
+                Spell2 = g.Spell2Id,
+                Kills = g.Stats.Kills,
                 Assists = g.Stats.Assists,
-                Deaths = g.Stats.NumDeaths,
-                Items = new int[]
+                Deaths = g.Stats.Deaths,
+                Items = new long[]
                 {
                     g.Stats.Item0,
                     g.Stats.Item1,
@@ -25,7 +25,6 @@ namespace LolStatistics.Web.Models.Mapper
                     g.Stats.Item5,
                     g.Stats.Item6
                 },
-                GameDuration = g.Stats.TimePlayed
             };
             return res;
         }

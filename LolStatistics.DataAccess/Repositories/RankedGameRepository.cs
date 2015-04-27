@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using log4net;
+﻿using log4net;
 using LolStatistics.DataAccess.Cache;
 using LolStatistics.DataAccess.Dao;
 using LolStatistics.DataAccess.Exceptions;
@@ -10,6 +8,8 @@ using LolStatistics.Model.Dto;
 using LolStatistics.Model.Game;
 using LolStatistics.Model.Mappers;
 using LolStatistics.Model.Participant;
+using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 
@@ -157,17 +157,22 @@ namespace LolStatistics.DataAccess.Repositories
             }
         }
 
-        public IList<RankedGame> GetStatsForSummoner(long summonerId)
+        public IList<Participant> GetStatsForSummoner(long summonerId)
         {
-            IList<ParticipantDto> participations;
-            IList<RankedGame> res = null;
+            IList<Participant> res = new List<Participant>();
             using (DbConnection conn = Command.GetConnexion())
             {
                 try
                 {
                     conn.Open();
-                    participations = participantDao.GetSummonerParticipations(summonerId, conn);
+                    IList<ParticipantDto> participations = participantDao.GetSummonerParticipations(summonerId, conn);
 
+                    foreach (ParticipantDto participation in participations)
+                    {
+                        Participant participant = ParticipantMapper.UnMap(participation);
+                        participant.Stats = participantStatsDao.GetStats(participation.MatchId, participation.ParticipantId, conn);
+                        res.Add(participant);
+                    }
 
                     return res;
                 }

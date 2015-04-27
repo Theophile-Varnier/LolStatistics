@@ -8,7 +8,6 @@ namespace LolStatistics.Web.Models
         {
             Games = new List<GameViewModel>();
         }
-        public long SummonerId { get; set; }
 
         public List<GameViewModel> Games { get; set; }
     }
