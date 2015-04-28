@@ -7,6 +7,11 @@
 html {
 }
 
+#top {
+    position: absolute;
+    top: 0;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -30,65 +35,76 @@ textarea {
 .match-history {
     display: table;
     width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
 }
 
-.match-history > div {
-    margin: 11px;
-    display: table-row;
-    height: 75px;
-}
+    .match-history > div {
+        margin-top: 10px;
+        display: table-row;
+        height: 75px;
+    }
 
-.match-history > div:first-child > div:first-child {
-    border-radius: 10px 0 0 0;
-}
+        .match-history > div > div {
+            max-width: 75px;
+            padding-left: 10px;
+            display: table-cell;
+            vertical-align: middle;
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+        }
 
-.match-history > div:first-child > div:last-child {
-    border-radius: 0 10px 0 0;
-}
+            .match-history > div > div:first-child {
+                border-left: 1px solid black;
+                /*border-radius: 10px 0 0 10px;*/
+            }
 
-.match-history > div:last-child > div:first-child {
-    border-radius: 0 0 0 10px;
-}
+            .match-history > div > div:last-child {
+                border-right: 1px solid black;
+                /*border-radius: 0 10px 10px 0;*/
+            }
 
-.match-history > div:last-child > div:last-child {
-    border-radius: 0 0 10px 0;
-}
-
-.match-history > div:first-child > div {
-    border-top: 1px solid black;
-}
-
-.match-history > div > div {
-    padding-left: 10px;
-    display: table-cell;
-    vertical-align: middle;
-    border-bottom: 1px solid black;
-}
-
-.match-history > div > div:first-child {
-    border-left: 1px solid black;
-}
-
-.match-history > div > div:last-child {
-    border-right: 1px solid black;
-}
-
-.champion-thumbnail-container {
-    
-}
 .champion-thumbnail-container > .champion-thumbnail {
     display: inline-block;
     background-repeat: no-repeat;
-    background-size:contain;
+    background-size: contain;
     height: 53px;
     width: 53px;
 }
 
 .result {
-    padding-left: 10px;
     font-weight: bold;
-    color:black;
+    color: black;
 }
 
-.result.success{
+.item-list {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+}
+
+    .item-list .item-container {
+        display: table-row;
+        background: transparent;
+    }
+
+        .item-list .item-container .item {
+            margin: 2px;
+            display: table-cell;
+            width: 10px;
+            height: 10px;
+            vertical-align: middle;
+            border: 1px solid black;
+            border-radius: 5px;
+            background: transparent;
+        }
+
+.success div {
+    background-color: #006400;
+    background-color: rgba(0, 100, 0, 0.5);
+}
+
+.danger div {
+    background-color: #640000;
+    background-color: rgba(100, 0, 0, 0.5);
 }

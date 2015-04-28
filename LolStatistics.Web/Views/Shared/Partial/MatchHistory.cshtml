@@ -1,0 +1,31 @@
+﻿@using LolStatistics.Model.Static
+@model LolStatistics.Web.Models.GameHistoryViewModel
+
+@foreach (LolStatistics.Web.Models.GameViewModel game in Model.Games)
+{
+    string className = game.Win ? "success" : "danger";
+    string victoire = game.Win ? "Victoire" : "Défaite";
+    Champion currentChampion = LolStatisticsCache.Champion(@game.ChampionId);
+    string imgPath = string.Concat(Request.ApplicationPath, @"/medias/img/", @currentChampion.Key, "_Square_0.png");
+    string bgPath = string.Concat(Request.ApplicationPath, @"/medias/img/", @currentChampion.Key, "_Splash_0.jpg");
+    <div class="@className result" style="background: url(@bgPath)">
+        <div class="champion-thumbnail-container">
+            <div class="champion-thumbnail" style="background-image:url(@imgPath);"></div>
+        </div>
+        <div>@victoire</div>
+        <div>@game.Kills / @game.Deaths / @game.Assists</div>
+        <div class="item-list">
+            <div class="item-container">
+                @Html.Partial("Partial/Item", game.Items[0])
+                @Html.Partial("Partial/Item", game.Items[1])
+                @Html.Partial("Partial/Item", game.Items[2])
+            </div>
+            <div class="item-container">
+                @Html.Partial("Partial/Item", game.Items[4])
+                @Html.Partial("Partial/Item", game.Items[5])
+                @Html.Partial("Partial/Item", game.Items[6])
+            </div>
+        </div>
+    </div>
+}
+

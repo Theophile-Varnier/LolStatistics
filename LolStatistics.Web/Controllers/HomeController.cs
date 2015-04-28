@@ -10,6 +10,7 @@ namespace LolStatistics.Web.Controllers
 {
     public class HomeController : Controller
     {
+        [HttpGet]
         public ActionResult Index()
         {
             RankedGameRepository gameHistoryRepository = new RankedGameRepository();
@@ -17,7 +18,20 @@ namespace LolStatistics.Web.Controllers
             long summonerId = 25954150;
             IList<Participant> gh = gameHistoryRepository.GetStatsForSummoner(summonerId).OrderByDescending(p => p.MatchId).ToList();
             model = GameHistoryMapper.MapToModel(gh);
+            model.Games = model.Games.Take(10).ToList();
             return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult HistoryPage(int Page)
+        {
+            RankedGameRepository gameHistoryRepository = new RankedGameRepository();
+            GameHistoryViewModel model = new GameHistoryViewModel();
+            long summonerId = 25954150;
+            IList<Participant> gh = gameHistoryRepository.GetStatsForSummoner(summonerId).OrderByDescending(p => p.MatchId).ToList();
+            model = GameHistoryMapper.MapToModel(gh);
+            model.Games = model.Games.Skip(10 * Page).Take(10).ToList();
+            return PartialView("Partial/MatchHistory", model);
         }
 
         public ActionResult About()

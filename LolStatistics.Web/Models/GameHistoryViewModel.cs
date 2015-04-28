@@ -10,5 +10,7 @@ namespace LolStatistics.Web.Models
         }
 
         public List<GameViewModel> Games { get; set; }
+
+        public int PageNumber { get; set; }
     }
 }

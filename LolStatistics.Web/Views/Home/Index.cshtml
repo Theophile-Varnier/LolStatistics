@@ -5,21 +5,45 @@
 @{
     ViewBag.Title = "Home Page";
 }
-
-<div class="col-xs-8">
-    <div class="match-history">
-        @foreach (LolStatistics.Web.Models.GameViewModel game in Model.Games)
+<nav class="text-center">
+    <ul class="pagination">
+        <li>
+            <a aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @for (int i = 0; i < Model.PageNumber; i++)
         {
-            string className = game.Win ? "success" : "danger";
-            string victoire = game.Win ? "Victoire" : "Défaite";
-            Champion currentChampion = LolStatisticsCache.Champion(@game.ChampionId);
-            string imgPath = string.Concat(Request.ApplicationPath, @"/medias/img/", @currentChampion.Key, "_Square_0.png");
-            <div class="list-group-item-@className">
-                <div class="champion-thumbnail-container">
-                    <div class="champion-thumbnail" style="background-image:url(@imgPath);"></div>
-                </div>
-                <div class="result @className">@victoire</div>
-            </div>
+            <li><a page="@(i)" href="#top">@(i + 1)</a></li>
         }
-    </div>
+        <li>
+            <a aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<div class="match-history">
+    @Html.Partial("Partial/MatchHistory", Model)
 </div>
+<nav class="text-center">
+    <ul class="pagination">
+        <li>
+            <a page="previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @for (int i = 0; i < Model.PageNumber; i++)
+        {
+            <li><a page="@(i)" href="#top">@(i + 1)</a></li>
+        }
+        <li>
+            <a page="next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+@section scripts{
+    @Scripts.Render("~/Scripts/Index.js")
+}
