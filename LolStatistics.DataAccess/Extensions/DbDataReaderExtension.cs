@@ -77,7 +77,7 @@ namespace LolStatistics.DataAccess.Extensions
             int i = 0;
             while (i < reader.FieldCount)
             {
-                if (reader.GetName(i) == paramName)
+                if (reader.GetName(i) == paramName && !reader.IsDBNull(i))
                 {
                     return returnFunction(i);
                 }

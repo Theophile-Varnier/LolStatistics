@@ -80,10 +80,6 @@ namespace LolStatistics.DataAccess.Repositories
                     conn.Open();
                     return championDao.GetAllChampions(conn);
                 }
-                catch (DaoException e)
-                {
-                    return new List<Champion>();
-                }
                 finally
                 {
                     conn.Close();

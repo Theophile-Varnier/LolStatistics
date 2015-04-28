@@ -30,7 +30,7 @@ namespace LolStatistics.Web
         /// <returns></returns>
         public static Champion Champion(int id)
         {
-            return Champions[id];
+            return Champions.ContainsKey(id)? Champions[id] : null;
         }
     }
 }
