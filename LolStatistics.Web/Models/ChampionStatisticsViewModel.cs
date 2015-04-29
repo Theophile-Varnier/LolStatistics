@@ -16,6 +16,11 @@ namespace LolStatistics.Web.Models
             get { return Wins + Loses; }
         }
 
+        public double WinRate
+        {
+            get { return Math.Round((100.0 * Wins) / TotalGames, 2); }
+        }
+
         public long Kills { get; set; }
 
         public long Deaths { get; set; }
