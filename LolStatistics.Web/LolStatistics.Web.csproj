@@ -177,16 +177,20 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ChampionStatisticsViewModel.cs" />
     <Compile Include="Models\GameHistoryViewModel.cs" />
     <Compile Include="Models\GameViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Mapper\GameHistoryMapper.cs" />
     <Compile Include="Models\Mapper\GameMapper.cs" />
+    <Compile Include="Models\Mapper\StatisticsMapper.cs" />
+    <Compile Include="Models\StatisticsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -4907,6 +4911,16 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\HighCharts\dark-blue.js" />
+    <Content Include="Scripts\HighCharts\dark-green.js" />
+    <Content Include="Scripts\HighCharts\dark-unica.js" />
+    <Content Include="Scripts\HighCharts\gray.js" />
+    <Content Include="Scripts\HighCharts\grid-light.js" />
+    <Content Include="Scripts\HighCharts\grid.js" />
+    <Content Include="Scripts\HighCharts\highcharts-more.js" />
+    <Content Include="Scripts\HighCharts\highcharts.js" />
+    <Content Include="Scripts\HighCharts\sand-signika.js" />
+    <Content Include="Scripts\HighCharts\skies.js" />
     <Content Include="Scripts\Index.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -4915,9 +4929,11 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\lodash.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Statistics.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Medias\sounds\Sejuani.mp3" />
     <Content Include="Medias\sounds\Shaco.mp3" />
@@ -4988,9 +5004,13 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\Partial\Item.cshtml" />
     <Content Include="Views\Shared\Partial\MatchHistory.cshtml" />
+    <Content Include="Views\Statistics\Index.cshtml" />
+    <Content Include="Views\Statistics\Tableau.cshtml" />
+    <Content Include="Views\Statistics\Graphe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
