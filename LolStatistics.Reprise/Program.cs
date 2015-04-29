@@ -19,34 +19,6 @@ namespace LolStatistics.Reprise
 
         private static WebServiceConsumer<MatchHistory> rankedGameWebServiceConsumer = new WebServiceConsumer<MatchHistory>(ConfigurationManager.AppSettings["BaseApiUrl"], ConfigurationManager.AppSettings["SummonerHistoryUrl"]);
 
-        //static void Main(string[] args)
-        //{
-        //    LolCache.Init();
-        //    IList<Summoner> summoners = summonerRepository.Get();
-        //    using (StreamReader sr = new StreamReader(ConfigurationManager.AppSettings["CheminFichierRattrapage"]))
-        //    {
-        //        string currentLine = sr.ReadLine();
-        //        Dictionary<string, string> parameters = new Dictionary<string, string>();
-        //        while ((currentLine = sr.ReadLine()) != null)
-        //        {
-        //            parameters.Clear();
-        //            parameters.Add("matchId", currentLine);
-        //            RankedGame game = rankedGameWebServiceConsumer.Consume(parameters);
-        //            if (game.Season == "SEASON2015")
-        //            {
-        //                foreach (ParticipantIdentity pi in game.ParticipantIdentities)
-        //                {
-        //                    if (!summoners.Select(sm => sm.Id).Contains(pi.Player.Id))
-        //                    {
-        //                        game.Participants.Remove(game.Participants.First(p => p.ParticipantId == pi.ParticipantId));
-        //                    }
-        //                }
-        //                rankedGameRepository.Insert(game);
-        //            }
-        //        }
-        //    }
-        //}
-
         static void Main(string[] args)
         {
             LolCache.Init();
