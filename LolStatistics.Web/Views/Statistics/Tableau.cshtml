@@ -1,0 +1,33 @@
+﻿@using LolStatistics.Web.Models
+@model StatisticsViewModel
+
+<div id="ArrayStats">
+    <table class="table">
+        <tr>
+            <th>Champion</th>
+            <th>Wins</th>
+            <th>Loses</th>
+            <th>Win rate</th>
+            <th>Kills</th>
+            <th>Deaths</th>
+            <th>Assists</th>
+            <th>KDA</th>
+            <th>CS</th>
+        </tr>
+        @foreach (string champion in Model.ChampionStatistics.Keys)
+        {
+            ChampionStatisticsViewModel subStats = Model.ChampionStatistics[champion];
+            <tr>
+                <td>@champion</td>
+                <td>@subStats.Wins</td>
+                <td>@subStats.Loses</td>
+                <td>@subStats.WinRate%</td>
+                <td>@Math.Round(1.0 * subStats.Kills / subStats.TotalGames, 2)/game</td>
+                <td>@Math.Round(1.0 * subStats.Deaths / subStats.TotalGames, 2)/game</td>
+                <td>@Math.Round(1.0 * subStats.Assists / subStats.TotalGames, 2)/game</td>
+                <td>@subStats.KDA</td>
+                <td>@subStats.CreepScore</td>
+            </tr>
+        }
+    </table>
+</div>

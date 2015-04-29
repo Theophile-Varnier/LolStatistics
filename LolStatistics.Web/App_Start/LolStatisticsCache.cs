@@ -8,6 +8,8 @@ namespace LolStatistics.Web
     {
         private static Dictionary<int, Champion> Champions;
 
+        public static bool IsInitialized { get; set; }
+
         /// <summary>
         /// Initialisation du cache
         /// </summary>
@@ -21,6 +23,7 @@ namespace LolStatistics.Web
             {
                 Champions.Add(champion.Id, champion);
             }
+            IsInitialized = true;
         }
 
         /// <summary>

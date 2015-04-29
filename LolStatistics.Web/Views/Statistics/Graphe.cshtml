@@ -1,0 +1,27 @@
+﻿@using LolStatistics.Web.Models
+@model StatisticsViewModel
+
+<div id="Graphe" class="hidden">
+    <div class="col-xs-6">
+        <div id="chart-container"></div>
+    </div>
+    <div class="col-xs-6">
+        <form>
+            <div class="form-group">
+                <label for="displayedData">Stats à afficher</label>
+                <select class="form-control" id="displayedData">
+                    <option>KDA</option>
+                    <option>Kills</option>
+                    <option>Deaths</option>
+                    <option>Assists</option>
+                    <option>Wins</option>
+                </select>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="average"/> Afficher la moyenne par partie
+                </label>
+            </div>
+        </form>
+    </div>
+</div>

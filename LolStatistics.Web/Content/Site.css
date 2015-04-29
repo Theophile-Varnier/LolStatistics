@@ -108,3 +108,16 @@ textarea {
     background-color: #640000;
     background-color: rgba(100, 0, 0, 0.5);
 }
+
+.statistics-container {
+    margin-top: 20px;
+    border-radius: 10px;
+    background-color: #000064;
+    background-color: rgba(0, 0, 50, 0.75);
+    padding: 20px;
+    color: white;
+}
+
+#Graphe {
+    width: 100%;
+}
