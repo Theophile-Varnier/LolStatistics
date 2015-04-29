@@ -8,6 +8,13 @@
     <div class="col-xs-6">
         <form>
             <div class="form-group">
+                <label for="type">Afficher par</label>
+                <select class="form-control" id="type">
+                    <option>Champions</option>
+                    <option>Rôles</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="displayedData">Stats à afficher</label>
                 <select class="form-control" id="displayedData">
                     <option>KDA</option>
@@ -15,11 +22,15 @@
                     <option>Deaths</option>
                     <option>Assists</option>
                     <option>Wins</option>
+                    <option>Loses</option>
+                    <option>TotalGames</option>
+                    <option>WinRate</option>
+                    <option>CreepScore</option>
                 </select>
             </div>
-            <div class="checkbox">
+            <div class="checkbox disabled">
                 <label>
-                    <input type="checkbox" name="average"/> Afficher la moyenne par partie
+                    <input type="checkbox" name="average" disabled/> Afficher la moyenne par partie
                 </label>
             </div>
         </form>

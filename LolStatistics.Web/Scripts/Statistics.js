@@ -24,6 +24,8 @@
         series.push(datas.ChampionStatistics[i].KDA);
     }
 
+    var currentDatas = datas.ChampionStatistics;
+
     var graph = {
         chart: {
             polar: true,
@@ -65,12 +67,13 @@
 
     $("#displayedData").change(function () {
         var field = this.value;
+        changeCheckBoxStatus(field);
         var newSerie = [];
         var chart = $("#chart-container").highcharts();
-        for (var i in datas.ChampionStatistics) {
-            var newVal = datas.ChampionStatistics[i][field];
-            if ($("input[name=average]").is(':checked')) {
-                newVal /= datas.ChampionStatistics[i].TotalGames;
+        for (var i in currentDatas) {
+            var newVal = currentDatas[i][field];
+            if ($("input[name=average]").is(':checked') && !$("input[name=average]").attr("disabled")) {
+                newVal /= currentDatas[i].TotalGames;
                 newVal = parseFloat(newVal.toFixed(2));
             }
 
@@ -84,14 +87,48 @@
         var chart = $("#chart-container").highcharts();
         var field = $("#displayedData").val();
         var newSerie = [];
-        for (var i in datas.ChampionStatistics) {
-            var newVal = datas.ChampionStatistics[i][field];
+        for (var i in currentDatas) {
+            var newVal = currentDatas[i][field];
             if ($(this).is(':checked')) {
-                newVal /= datas.ChampionStatistics[i].TotalGames;
+                newVal /= currentDatas[i].TotalGames;
                 newVal = parseFloat(newVal.toFixed(2));
             }
             newSerie.push(newVal);
         }
         chart.series[0].setData(newSerie);
     });
+
+    $("#type").change(function () {
+        var field = this.value;
+        var newSerie = [];
+        var chart = $("#chart-container").highcharts();
+        if (field == "Champions") {
+            currentDatas = datas.ChampionStatistics;
+        } else {
+            currentDatas = datas.RoleStatistics;
+        }
+        field = $("#displayedData").val();
+        for (var i in currentDatas) {
+            var newVal = currentDatas[i][field];
+            if ($("input[name=average]").is(':checked') && !$("input[name=average]").attr("disabled")) {
+                newVal /= currentDatas[i].TotalGames;
+                newVal = parseFloat(newVal.toFixed(2));
+            }
+
+            newSerie.push(newVal);
+        }
+        chart.xAxis[0].update({ 'categories': Object.keys(currentDatas) }, true);
+        chart.series[0].setData(newSerie);
+    });
+
+    function changeCheckBoxStatus(field) {
+        var denied = ["KDA", "Wins", "WinRate", "TotalGames"];
+        if (_.contains(denied, field)) {
+            $("input[name=average]").attr("disabled", true);
+            $("input[name=average]").parent().parent().addClass("disabled");
+        } else {
+            $("input[name=average]").removeAttr("disabled");
+            $("input[name=average]").parent().parent().removeClass("disabled");
+        }
+    }
 });

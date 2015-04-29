@@ -6,9 +6,12 @@ namespace LolStatistics.Web.Models
     {
         public Dictionary<string, ChampionStatisticsViewModel> ChampionStatistics { get; set; }
 
+        public Dictionary<string, ChampionStatisticsViewModel> RoleStatistics { get; set; }
+
         public StatisticsViewModel()
         {
             ChampionStatistics = new Dictionary<string, ChampionStatisticsViewModel>();
+            RoleStatistics = new Dictionary<string, ChampionStatisticsViewModel>();
         }
     }
 }

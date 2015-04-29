@@ -23,8 +23,6 @@ namespace LolStatistics.WebServiceConsumers
 
         private string BaseUri;
 
-        private int nbTentatives;
-
         /// <summary>
         /// Constructeur par défaut
         /// </summary>
@@ -34,7 +32,6 @@ namespace LolStatistics.WebServiceConsumers
         {
             BaseUri = baseUri;
             WebServiceUri = webUri;
-            nbTentatives = 0;
         }
 
         /// <summary>
@@ -42,7 +39,7 @@ namespace LolStatistics.WebServiceConsumers
         /// </summary>
         /// <param name="uriParameters">Les paramètres du web service</param>
         /// <returns>L'objet retourné mappé</returns>
-        public T Consume(Dictionary<string, string> uriParameters = null)
+        public T Consume(Dictionary<string, string> uriParameters = null, int nbTentatives = 0)
         {
             // Création de l'url à appeler
             string url = string.Concat(BaseUri, ReplaceParameters(WebServiceUri, uriParameters), WebServiceUri.Contains("?") ? "&" : "?", "api_key=", ConfigurationManager.AppSettings["ApiKey"]);
@@ -60,7 +57,7 @@ namespace LolStatistics.WebServiceConsumers
                     using (StreamReader sr = new StreamReader(s, Encoding.UTF8))
                     {
                         T castResponse = JsonConvert.DeserializeObject<T>(sr.ReadToEnd());
-                        nbTentatives = 0;
+                        Thread.Sleep(1000);
                         return castResponse;
                     }
                 }
@@ -78,7 +75,7 @@ namespace LolStatistics.WebServiceConsumers
                 logger.Info("Temporisation 10 secondes avant nouvel appel");
                 nbTentatives++;
                 Thread.Sleep(10000);
-                return Consume(uriParameters);
+                return Consume(uriParameters, nbTentatives + 1);
             }
         }
 
