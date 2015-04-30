@@ -21,7 +21,17 @@ namespace LolStatistics.Web.Controllers
             return View(model);
         }
 
+        // 
+        // GET: /Statistics/Graphe
         public ActionResult Graphe()
+        {
+            StatisticsViewModel model = GetStatisticsViewModelForSummoner(25954150);
+            return View(model);
+        }
+
+        // 
+        // GET : /Statistics/Pantheon
+        public ActionResult Pantheon()
         {
             StatisticsViewModel model = GetStatisticsViewModelForSummoner(25954150);
             return View(model);

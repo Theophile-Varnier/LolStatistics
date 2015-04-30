@@ -1,0 +1,40 @@
+﻿@using System.Reflection
+@using LolStatistics.Web.Models
+@model StatisticsViewModel
+
+@{
+    Layout = "~/Views/Statistics/Statistics.cshtml";
+}
+
+<div id="Graphe">
+    <div class="col-xs-6">
+        <div id="chart-container"></div>
+    </div>
+    <div class="col-xs-6">
+        <form>
+            <div class="form-group">
+                <label for="displayedData">Stats à afficher</label>
+                <select class="form-control" id="displayedData">
+
+                    @foreach (PropertyInfo property in typeof(ChampionStatisticsViewModel).GetProperties())
+                    {
+                        <option>@property.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="checkbox disabled">
+                <label>
+                    <input type="checkbox" name="average" disabled /> Afficher la moyenne par partie
+                </label>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/Scripts/lodash.js")
+    @Scripts.Render("~/Scripts/HighCharts/highcharts.js")
+    @Scripts.Render("~/Scripts/HighCharts/highcharts-more.js")
+    @Scripts.Render("~/Scripts/HighCharts/dark-unica.js")
+    @Scripts.Render("~/Scripts/Pantheon.js")
+}

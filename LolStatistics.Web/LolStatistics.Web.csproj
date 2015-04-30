@@ -4931,6 +4931,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\lodash.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\StatisticsIndex.js" />
+    <Content Include="Scripts\Pantheon.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Statistics.js" />
@@ -5007,6 +5009,7 @@
     <Content Include="Views\Statistics\Index.cshtml" />
     <Content Include="Views\Statistics\Graphe.cshtml" />
     <Content Include="Views\Statistics\Statistics.cshtml" />
+    <Content Include="Views\Statistics\Pantheon.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

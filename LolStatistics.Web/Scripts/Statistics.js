@@ -1,6 +1,6 @@
 ﻿$(function () {
 
-    $("#Tableau").removeClass("active");
+    $(".nav.nav-tabs li").removeClass("active");
     $("#Graphiques").addClass("active");
 
 
@@ -40,7 +40,11 @@
                     res = '<img src="../medias/img/' + champTitle + '_Square_0.png" width="42" height="42"/>';
                 }
                 res = res + '<span>' + this.x + '</span><br/>'
-                    + '<span style="color:' + this.points[0].series.color + ';">' + this.points[0].series.name + ': <b>' + this.y + '</b>';
+                    + '<span style="color:' + this.points[0].series.color + ';">' + this.points[0].series.name + ': <b>' + this.y
+                if ($("input[name=average]").is(':checked') && !$("input[name=average]").attr("disabled")) {
+                    res += '/game';
+                }
+                res += '</b>';
                 return res;
             }
         },
