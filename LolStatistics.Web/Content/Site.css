@@ -121,3 +121,7 @@ textarea {
 #Graphe {
     width: 100%;
 }
+
+.header-link {
+    cursor: pointer;
+}

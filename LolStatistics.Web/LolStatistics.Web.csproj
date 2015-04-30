@@ -195,6 +195,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\jquery.dataTables.css" />
+    <Content Include="Content\jquery.dataTables_themeroller.css" />
     <Content Include="Medias\img\Aatrox_0.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -4907,6 +4909,7 @@
     <Content Include="Medias\sounds\Ziggs.mp3" />
     <Content Include="Medias\sounds\Zilean.mp3" />
     <Content Include="Medias\sounds\Zyra.mp3" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -4925,6 +4928,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.dataTables.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />

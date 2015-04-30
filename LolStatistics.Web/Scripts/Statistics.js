@@ -60,7 +60,7 @@
     };
     $('#chart-container').highcharts(graph);
 
-    $(window).resize();
+    //$(window).resize();
 
     $("#displayedData").change(function () {
         var field = this.value;
@@ -99,6 +99,7 @@
         var field = this.value;
         var newSerie = [];
         var chart = $("#chart-container").highcharts();
+        chart.destroy();
         if (field == "Champions") {
             currentDatas = datas.ChampionStatistics;
         } else {
@@ -114,8 +115,9 @@
 
             newSerie.push(newVal);
         }
-        chart.xAxis[0].update({ 'categories': Object.keys(currentDatas) }, true);
-        chart.series[0].setData(newSerie);
+        graph.xAxis.categories = Object.keys(currentDatas);
+        graph.series[0].data = newSerie;
+        $('#chart-container').highcharts(graph);
     });
 
     function changeCheckBoxStatus(field) {

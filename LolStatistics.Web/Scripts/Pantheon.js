@@ -70,7 +70,7 @@
         updateValues(field);
         chartOptions.xAxis.categories = labels;
         chartOptions.series[0].name = field;
-        chartOptions.series[0].serie = series;
+        chartOptions.series[0].data = series;
         $("#chart-container").highcharts(chartOptions);
     });
 
@@ -80,7 +80,7 @@
         var field = $("#displayedData").val();
         updateValues(field);
         chartOptions.xAxis.categories = labels;
-        chartOptions.series[0].serie = series;
+        chartOptions.series[0].data = series;
         $("#chart-container").highcharts(chartOptions);
     });
 
