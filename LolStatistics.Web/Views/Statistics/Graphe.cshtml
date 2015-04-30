@@ -1,7 +1,12 @@
-﻿@using LolStatistics.Web.Models
+﻿@using System.Reflection
+@using LolStatistics.Web.Models
 @model StatisticsViewModel
 
-<div id="Graphe" class="hidden">
+@{
+    Layout = "~/Views/Statistics/Statistics.cshtml";
+}
+
+<div id="Graphe">
     <div class="col-xs-6">
         <div id="chart-container"></div>
     </div>
@@ -17,15 +22,11 @@
             <div class="form-group">
                 <label for="displayedData">Stats à afficher</label>
                 <select class="form-control" id="displayedData">
-                    <option>KDA</option>
-                    <option>Kills</option>
-                    <option>Deaths</option>
-                    <option>Assists</option>
-                    <option>Wins</option>
-                    <option>Loses</option>
-                    <option>TotalGames</option>
-                    <option>WinRate</option>
-                    <option>CreepScore</option>
+
+                    @foreach (PropertyInfo property in typeof(ChampionStatisticsViewModel).GetProperties())
+                    {
+                        <option>@property.Name</option>
+                    }
                 </select>
             </div>
             <div class="checkbox disabled">
@@ -36,3 +37,11 @@
         </form>
     </div>
 </div>
+
+@section scripts{
+    @Scripts.Render("~/Scripts/lodash.js")
+    @Scripts.Render("~/Scripts/HighCharts/highcharts.js")
+    @Scripts.Render("~/Scripts/HighCharts/highcharts-more.js")
+    @Scripts.Render("~/Scripts/HighCharts/dark-unica.js")
+    @Scripts.Render("~/Scripts/Statistics.js")
+}

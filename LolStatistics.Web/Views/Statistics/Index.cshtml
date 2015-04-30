@@ -2,43 +2,39 @@
 @model StatisticsViewModel
 
 @{
-    ViewBag.Title = "My Statistics";
+    Layout = "~/Views/Statistics/Statistics.cshtml";
 }
-<script type="text/javascript">
-    var datas = @Html.Raw(Json.Encode(Model))
-</script>
 
-<ul class="nav nav-tabs">
-    <li id="Tableau" role="presentation" class="active">
-        <a href="#">
-            Tableau
-        </a>
-    </li>
-    <li id="Graphiques" role="presentation">
-        <a href="#">
-            Graphiques
-        </a>
-    </li>
-</ul>
-<div class="container-fluid statistics-container">
-    <div class="page-header">
-        <h2>Statistiques</h2>
-    </div>
-    @Html.Partial("Tableau", Model)
-    @Html.Partial("Graphe", Model)
+<div id="ArrayStats">
+    <table class="table">
+        <tr>
+            <th>Champion</th>
+            <th>Wins</th>
+            <th>Loses</th>
+            <th>Win rate</th>
+            <th>Kills</th>
+            <th>Deaths</th>
+            <th>Assists</th>
+            <th>KDA</th>
+            <th>CS</th>
+        </tr>
+        @foreach (string champion in Model.ChampionStatistics.Keys)
+        {
+            ChampionStatisticsViewModel subStats = Model.ChampionStatistics[champion];
+            <tr>
+                <td>@champion</td>
+                <td>@subStats.Wins</td>
+                <td>@subStats.Loses</td>
+                <td>@subStats.WinRate%</td>
+                <td>@Math.Round(1.0 * subStats.Kills / subStats.TotalGames, 2)/game</td>
+                <td>@Math.Round(1.0 * subStats.Deaths / subStats.TotalGames, 2)/game</td>
+                <td>@Math.Round(1.0 * subStats.Assists / subStats.TotalGames, 2)/game</td>
+                <td>@subStats.KDA</td>
+                <td>@subStats.CreepScore</td>
+            </tr>
+        }
+    </table>
 </div>
 
-@section scripts{
-    @Scripts.Render("~/Scripts/lodash.js")
-    @Scripts.Render("~/Scripts/HighCharts/highcharts.js")
-    @Scripts.Render("~/Scripts/HighCharts/highcharts-more.js")
-    @*@Scripts.Render("~/Scripts/HighCharts/dark-blue.js")*@
-    @*@Scripts.Render("~/Scripts/HighCharts/dark-green.js")*@
-    @Scripts.Render("~/Scripts/HighCharts/dark-unica.js")
-    @*@Scripts.Render("~/Scripts/HighCharts/gray.js")*@
-    @*@Scripts.Render("~/Scripts/HighCharts/grid-light.js")*@
-    @*@Scripts.Render("~/Scripts/HighCharts/grid.js")*@
-    @*@Scripts.Render("~/Scripts/HighCharts/sand-signika.js")*@
-    @*@Scripts.Render("~/Scripts/HighCharts/skies.js")*@
-    @Scripts.Render("~/Scripts/Statistics.js")
-}
+@section scripts
+{}

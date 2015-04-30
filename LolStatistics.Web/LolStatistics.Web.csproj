@@ -5005,8 +5005,8 @@
     <Content Include="Views\Shared\Partial\Item.cshtml" />
     <Content Include="Views\Shared\Partial\MatchHistory.cshtml" />
     <Content Include="Views\Statistics\Index.cshtml" />
-    <Content Include="Views\Statistics\Tableau.cshtml" />
     <Content Include="Views\Statistics\Graphe.cshtml" />
+    <Content Include="Views\Statistics\Statistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

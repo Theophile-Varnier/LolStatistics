@@ -12,16 +12,25 @@ namespace LolStatistics.Web.Controllers
 {
     public class StatisticsController : Controller
     {
+        private RankedGameRepository gameHistoryRepository = new RankedGameRepository();
         //
         // GET: /Statistics/
         public ActionResult Index()
         {
-            RankedGameRepository gameHistoryRepository = new RankedGameRepository();
-            StatisticsViewModel model;
-            long summonerId = 25954150;
-            IList<Participant> gh = gameHistoryRepository.GetStatsForSummoner(summonerId);
-            model = StatisticsMapper.MapToModel(gh);
+            StatisticsViewModel model = GetStatisticsViewModelForSummoner(25954150);
             return View(model);
+        }
+
+        public ActionResult Graphe()
+        {
+            StatisticsViewModel model = GetStatisticsViewModelForSummoner(25954150);
+            return View(model);
+        }
+
+        private StatisticsViewModel GetStatisticsViewModelForSummoner(long summonerId)
+        {
+            IList<Participant> gh = gameHistoryRepository.GetStatsForSummoner(summonerId);
+            return StatisticsMapper.MapToModel(gh);
         }
     }
 }

@@ -43,7 +43,13 @@ namespace LolStatistics.Web.Models.Mapper
                     Kills = participant.Stats.Kills,
                     Loses = participant.Stats.Winner ? 0 : 1,
                     Wins = participant.Stats.Winner ? 1 : 0,
-                    TotalTimePlayed = 0
+                    TotalTimePlayed = 0,
+                    DoubleKills = participant.Stats.DoubleKills,
+                    TripleKills = participant.Stats.TripleKills,
+                    QuadraKills = participant.Stats.QuadraKills,
+                    PentaKills = participant.Stats.PentaKills,
+                    LargestKillingSpree = participant.Stats.LargestKillingSpree,
+                    KillingSprees = participant.Stats.KillingSprees
                 });
             }
             else
@@ -56,6 +62,12 @@ namespace LolStatistics.Web.Models.Mapper
                 stats.Loses += participant.Stats.Winner ? 0 : 1;
                 stats.Wins += participant.Stats.Winner ? 1 : 0;
                 stats.TotalTimePlayed += 0;
+                stats.DoubleKills += participant.Stats.DoubleKills;
+                stats.TripleKills += participant.Stats.TripleKills;
+                stats.QuadraKills += participant.Stats.QuadraKills;
+                stats.PentaKills += participant.Stats.PentaKills;
+                stats.LargestKillingSpree = Math.Max(participant.Stats.LargestKillingSpree, stats.LargestKillingSpree);
+                stats.KillingSprees += participant.Stats.KillingSprees;
             }
         }
 

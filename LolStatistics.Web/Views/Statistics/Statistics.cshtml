@@ -1,0 +1,30 @@
+﻿@using LolStatistics.Web.Models
+@model StatisticsViewModel
+
+@{
+    ViewBag.Title = "My Statistics";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var datas = @Html.Raw(Json.Encode(Model))
+</script>
+
+<ul class="nav nav-tabs">
+    <li id="Tableau" role="presentation" class="active">
+        @Html.ActionLink("Tableau", "Index", "Statistics")
+    </li>
+    <li id="Graphiques" role="presentation">
+        @Html.ActionLink("Graphique", "Graphe", "Statistics")
+    </li>
+</ul>
+<div class="container-fluid statistics-container">
+    <div class="page-header">
+        <h2>Statistiques</h2>
+    </div>
+    @RenderBody()
+</div>
+
+@section scripts
+{
+    @RenderSection("scripts", false)
+}
