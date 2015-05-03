@@ -1,2 +1,4 @@
-﻿
-<div class="item">@Model</div>
+﻿@{
+    string img = "http://ddragon.leagueoflegends.com/cdn/5.2.1/img/item/" + @Model + ".png";
+}
+<div class="item" style="background-image: url(@img)"><div></div></div>

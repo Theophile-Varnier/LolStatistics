@@ -27,7 +27,9 @@ namespace LolStatistics.Web
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-theme.css",
                       "~/Content/site.css",
-                      "~/Content/jquery.dataTables.css"));
+                      "~/Content/jquery.dataTables.css",
+                      "~/Content/jquery.dataTables_themeroller.css",
+                      "~/Content/font-awesome.min.css"));
         }
     }
 }

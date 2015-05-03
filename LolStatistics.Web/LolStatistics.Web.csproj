@@ -178,6 +178,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
+    <Compile Include="Controllers\TeamStalkerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -191,12 +192,23 @@
     <Compile Include="Models\Mapper\GameMapper.cs" />
     <Compile Include="Models\Mapper\StatisticsMapper.cs" />
     <Compile Include="Models\StatisticsViewModel.cs" />
+    <Compile Include="Models\TeamStalkerViewModel.cs" />
+    <Compile Include="Models\WebServices\RankedTeam.cs" />
+    <Compile Include="Models\WebServices\RankedTeamForSummoner.cs" />
+    <Compile Include="Models\WebServices\RosterDto.cs" />
+    <Compile Include="Models\WebServices\Summoner.cs" />
+    <Compile Include="Models\WebServices\Summoners.cs" />
+    <Compile Include="Models\WebServices\TeamMemberDto.cs" />
+    <Compile Include="Models\WebServices\TeamStats.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\RankedTeamService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\jquery.dataTables.css" />
     <Content Include="Content\jquery.dataTables_themeroller.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Medias\img\Aatrox_0.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -4910,6 +4922,11 @@
     <Content Include="Medias\sounds\Zilean.mp3" />
     <Content Include="Medias\sounds\Zyra.mp3" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -4940,6 +4957,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Statistics.js" />
+    <Content Include="Scripts\TeamStalker.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Medias\sounds\Sejuani.mp3" />
     <Content Include="Medias\sounds\Shaco.mp3" />
@@ -5014,10 +5032,12 @@
     <Content Include="Views\Statistics\Graphe.cshtml" />
     <Content Include="Views\Statistics\Statistics.cshtml" />
     <Content Include="Views\Statistics\Pantheon.cshtml" />
+    <Content Include="Views\TeamStalker\Index.cshtml" />
+    <Content Include="Views\Shared\Partial\TeamList.cshtml" />
+    <Content Include="Views\Shared\Partial\TeamStalk.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -5034,6 +5054,10 @@
     <ProjectReference Include="..\LolStatistics.Model\LolStatistics.Model.csproj">
       <Project>{1cb54c30-62d5-4a0d-869f-23c668d864f1}</Project>
       <Name>LolStatistics.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LolStatistics.WebServiceConsumers\LolStatistics.WebServiceConsumers.csproj">
+      <Project>{50ad1c37-8408-49f6-87b8-d05ab9282d3d}</Project>
+      <Name>LolStatistics.WebServiceConsumers</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

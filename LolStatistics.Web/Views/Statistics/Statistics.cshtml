@@ -9,24 +9,26 @@
     var datas = @Html.Raw(Json.Encode(Model))
 </script>
 
-<ul class="nav nav-tabs">
-    <li id="Tableau" role="presentation">
-        @Html.ActionLink("Tableau", "Index", "Statistics")
-    </li>
-    <li id="Graphiques" role="presentation">
-        @Html.ActionLink("Graphique", "Graphe", "Statistics")
-    </li>
-    <li id="Pantheon" role="presentation">
-        @Html.ActionLink("Panthéon", "Pantheon", "Statistics")
-    </li>
-</ul>
-<div class="container-fluid statistics-container">
-    <div class="page-header">
-        <h2>Statistiques</h2>
-    </div>
-    @RenderBody()
-</div>
 
+<div class="col-xs-10">
+    <ul class="nav nav-tabs">
+        <li id="Tableau" role="presentation">
+            @Html.ActionLink("Tableau", "Index", "Statistics")
+        </li>
+        <li id="Graphiques" role="presentation">
+            @Html.ActionLink("Graphique", "Graphe", "Statistics")
+        </li>
+        <li id="Pantheon" role="presentation">
+            @Html.ActionLink("Panthéon", "Pantheon", "Statistics")
+        </li>
+    </ul>
+    <div class="container-fluid statistics-container">
+        <div class="page-header">
+            <h2>Statistiques</h2>
+        </div>
+        @RenderBody()
+    </div>
+</div>
 @section scripts
 {
     @RenderSection("scripts", false)

@@ -1,0 +1,17 @@
+﻿@using LolStatistics.Web.Models.WebServices
+@model IList<RankedTeam>
+
+<div class="form-group">
+    <label for="team" class="control-label col-xs-4">Nom de la team :</label>
+    <div class="col-xs-4">
+        <select class="form-control" id="team">
+            @foreach (RankedTeam team in Model)
+            {
+                <option value="@team.Name">@team.Name</option>
+            }
+        </select>
+    </div>
+</div>
+<div class="col-xs-12 text-right">
+    <button type="button" class="btn btn-default" id="stalkTeam">Stalk!</button>
+</div>

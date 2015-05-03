@@ -75,6 +75,7 @@ textarea {
 .result {
     font-weight: bold;
     color: black;
+    background-size: 100% auto;
 }
 
 .item-list {
@@ -91,23 +92,23 @@ textarea {
         .item-list .item-container .item {
             margin: 2px;
             display: table-cell;
-            width: 10px;
-            height: 10px;
+            width: 40px;
+            height: 40px;
             vertical-align: middle;
             border: 1px solid black;
             border-radius: 5px;
-            background: transparent;
+            background-size: 100% auto;
         }
 
-.success div {
-    background-color: #006400;
-    background-color: rgba(0, 100, 0, 0.5);
-}
+    .success div {
+        background-color: #006400;
+        background-color: rgba(0, 100, 0, 0.5);
+    }
 
-.danger div {
-    background-color: #640000;
-    background-color: rgba(100, 0, 0, 0.5);
-}
+    .danger div {
+        background-color: #640000;
+        background-color: rgba(100, 0, 0, 0.5);
+    }
 
 .statistics-container {
     margin-top: 20px;
@@ -115,7 +116,19 @@ textarea {
     background-color: #000064;
     background-color: rgba(0, 0, 50, 0.75);
     padding: 20px;
+}
+
+.statistics-container h2{
     color: white;
+}
+
+.statistics-container label, .statistics-container a,
+.statistics-container th, .statistics-container .fa {
+    color: white;
+}
+
+.statistics-container label select, input {
+    color: black;
 }
 
 #Graphe {

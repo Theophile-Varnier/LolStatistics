@@ -5,45 +5,47 @@
 @{
     ViewBag.Title = "Home Page";
 }
-<nav class="text-center">
-    <ul class="pagination">
-        <li class="disabled">
-            <a href="#top" page="previous">
-                &laquo;
-            </a>
-        </li>
-        @for (int i = 0; i < Model.PageNumber; i++)
-        {
-            <li><a page="@(i)" href="#top">@(i + 1)</a></li>
-        }
-        <li>
-            <a href="#top" page="next">
-                &raquo;
-            </a>
-        </li>
-    </ul>
-</nav>
-<div class="match-history">
-    @Html.Partial("Partial/MatchHistory", Model)
+<div class="col-xs-8">
+    <nav class="text-center">
+        <ul class="pagination">
+            <li class="disabled">
+                <a href="#top" page="previous">
+                    &laquo;
+                </a>
+            </li>
+            @for (int i = 0; i < Model.PageNumber; i++)
+            {
+                <li><a page="@(i)" href="#top">@(i + 1)</a></li>
+            }
+            <li>
+                <a href="#top" page="next">
+                    &raquo;
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="match-history">
+        @Html.Partial("Partial/MatchHistory", Model)
+    </div>
+    <nav class="text-center">
+        <ul class="pagination">
+            <li class="disabled">
+                <a href="#top" page="previous">
+                    &laquo;
+                </a>
+            </li>
+            @for (int i = 0; i < Model.PageNumber; i++)
+            {
+                <li><a page="@(i)" href="#top">@(i + 1)</a></li>
+            }
+            <li>
+                <a href="#top" page="next">
+                    &raquo;
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
-<nav class="text-center">
-    <ul class="pagination">
-        <li class="disabled">
-            <a href="#top" page="previous">
-                &laquo;
-            </a>
-        </li>
-        @for (int i = 0; i < Model.PageNumber; i++)
-        {
-            <li><a page="@(i)" href="#top">@(i + 1)</a></li>
-        }
-        <li>
-            <a href="#top" page="next">
-                &raquo;
-            </a>
-        </li>
-    </ul>
-</nav>
 
 @section scripts{
     @Scripts.Render("~/Scripts/Index.js")

@@ -8,7 +8,7 @@
     Champion currentChampion = LolStatisticsCache.Champion(@game.ChampionId);
     string imgPath = string.Concat(Request.ApplicationPath, @"/medias/img/", @currentChampion.Key, "_Square_0.png");
     string bgPath = string.Concat(Request.ApplicationPath, @"/medias/img/", @currentChampion.Key, "_Splash_0.jpg");
-    <div class="@className result" style="background: url(@bgPath)">
+    <div class="@className result" style="background-image: url(@bgPath);">
         <div class="champion-thumbnail-container">
             <div class="champion-thumbnail" style="background-image:url(@imgPath);"></div>
         </div>
@@ -21,11 +21,16 @@
                 @Html.Partial("Partial/Item", game.Items[2])
             </div>
             <div class="item-container">
+                @Html.Partial("Partial/Item", game.Items[3])
                 @Html.Partial("Partial/Item", game.Items[4])
                 @Html.Partial("Partial/Item", game.Items[5])
+            </div>
+        </div>
+        <div class="item-list">
+            <div class="item-container">
                 @Html.Partial("Partial/Item", game.Items[6])
             </div>
         </div>
     </div>
-}
+    }
 
