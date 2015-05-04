@@ -15,19 +15,30 @@
         });
     });
 
-    $("#teamNames").on("click", "#stalkTeam" ,function () {
+    $("#teamNames").on("click", "#stalkTeam", function () {
+        $("#stalk").empty();
         $("#stalkerLoader").removeClass("hidden");
         $("#stalk").addClass("hidden");
         $.ajax({
-            url: "TeamStalker/StalkTeam",
+            url: "TeamStalker/TeamMembers",
             type: "POST",
             data: {
                 teamName: $("#team").val()
             }
         }).done(function (data) {
-            $("#stalk").html(data);
-            $("#stalkerLoader").addClass("hidden");
+            var array = JSON.parse(data);
             $("#stalk").removeClass("hidden");
+            for (var i in array) {
+                $.ajax({
+                        url: "TeamStalker/SummonerStats",
+                        type: "GET",
+                        data: "summonerId=" + array[i]
+                    })
+                    .done(function(response) {
+                        $("#stalk").append(response);
+                    });
+            }
+            $("#stalkerLoader").addClass("hidden");
         });
 
     });

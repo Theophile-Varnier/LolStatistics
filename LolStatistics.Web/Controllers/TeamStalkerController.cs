@@ -1,11 +1,9 @@
 ﻿using LolStatistics.Web.Models.WebServices;
 using LolStatistics.Web.Services;
 using LolStatistics.WebServiceConsumers;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace LolStatistics.Web.Controllers
@@ -30,11 +28,22 @@ namespace LolStatistics.Web.Controllers
             return PartialView("Partial/TeamList", rankedTeams);
         }
 
+        /// <summary>
+        /// Récupère la liste des ids des membres d'une team
+        /// </summary>
+        /// <param name="teamName">Le nom de la team</param>
+        /// <returns></returns>
         [HttpPost]
-        public ActionResult StalkTeam(string teamName)
+        public string TeamMembers(string teamName)
         {
             RankedTeam teamToStalk = LolStatisticsCache.GetTeam(teamName);
-            return PartialView("Partial/TeamStalk", teamToStalk);
+            return System.Web.Helpers.Json.Encode(teamToStalk.Roster.Members.Select(m => m.PlayerId).ToList());
+        }
+
+        [HttpGet]
+        public ActionResult SummonerStats(long summonerId)
+        {
+            return PartialView("Partial/SummonerStats", summonerId);
         }
     }
 }

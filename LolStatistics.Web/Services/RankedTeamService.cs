@@ -1,11 +1,9 @@
 ﻿using LolStatistics.Web.Models.WebServices;
 using LolStatistics.WebServiceConsumers;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Web;
+using Newtonsoft.Json.Linq;
 
 namespace LolStatistics.Web.Services
 {
@@ -23,9 +21,8 @@ namespace LolStatistics.Web.Services
                 }
                 return rt;
             }
-            WebServiceConsumerTemp webServiceConsumer = new WebServiceConsumerTemp(ConfigurationManager.AppSettings["BaseUri"], ConfigurationManager.AppSettings["RankedTeamApi"]);
-            Dictionary<string, string> parametres = new Dictionary<string, string>();
-            parametres.Add("summonerIds", summoner.Id.ToString());
+            WebServiceConsumer<JObject> webServiceConsumer = new WebServiceConsumer<JObject>(ConfigurationManager.AppSettings["BaseUri"], ConfigurationManager.AppSettings["RankedTeamApi"]);
+            Dictionary<string, string> parametres = new Dictionary<string, string> { { "summonerIds", summoner.Id.ToString() } };
             var res = webServiceConsumer.Consume(parametres);
             rt = JsonConvert.DeserializeObject<List<RankedTeam>>(res.GetValue(summoner.Id.ToString()).ToString());
             foreach (RankedTeam team in rt)

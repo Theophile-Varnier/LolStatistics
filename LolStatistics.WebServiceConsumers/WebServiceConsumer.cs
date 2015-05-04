@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using System;
+using log4net;
 using LolStatistics.Log;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -23,6 +24,8 @@ namespace LolStatistics.WebServiceConsumers
 
         private string BaseUri;
 
+        private static DateTime LastCall { get; set; }
+
         /// <summary>
         /// Constructeur par défaut
         /// </summary>
@@ -30,22 +33,41 @@ namespace LolStatistics.WebServiceConsumers
         /// <param name="webUri">Le web service à appeler</param>
         public WebServiceConsumer(string baseUri, string webUri)
         {
+            if (baseUri == null)
+            {
+                throw new ArgumentException("baseUri");
+            }
+            if (webUri == null)
+            {
+                throw new ArgumentException("webUri");
+            }
+
             BaseUri = baseUri;
             WebServiceUri = webUri;
+            LastCall = DateTime.Now;
         }
 
         /// <summary>
         /// Récupération d'un objet à partir d'un webservice
         /// </summary>
         /// <param name="uriParameters">Les paramètres du web service</param>
+        /// <param name="nbTentatives">Le nombre actuel de tentatives</param>
         /// <returns>L'objet retourné mappé</returns>
         public T Consume(Dictionary<string, string> uriParameters = null, int nbTentatives = 0)
         {
+            if (ConfigurationManager.AppSettings["ApiKey"] == null)
+            {
+                throw new ArgumentException("ApiKey");
+            }
             // Création de l'url à appeler
             string url = string.Concat(BaseUri, ReplaceParameters(WebServiceUri, uriParameters), WebServiceUri.Contains("?") ? "&" : "?", "api_key=", ConfigurationManager.AppSettings["ApiKey"]);
             logger.Info(string.Concat("Appel au WebService ", url));
             try
             {
+                while ((DateTime.Now - LastCall).Seconds < 1)
+                {
+
+                }
                 // Création de la requête
                 HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
 
@@ -57,7 +79,7 @@ namespace LolStatistics.WebServiceConsumers
                     using (StreamReader sr = new StreamReader(s, Encoding.UTF8))
                     {
                         T castResponse = JsonConvert.DeserializeObject<T>(sr.ReadToEnd());
-                        Thread.Sleep(1000);
+                        LastCall = DateTime.Now;
                         return castResponse;
                     }
                 }

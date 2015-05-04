@@ -69,8 +69,8 @@ namespace LolStatistics.Web
         /// <summary>
         /// Ajoute une team ranked à l'ensemble des teams connues
         /// </summary>
-        /// <param name="teamName">Le nom de la team</param>
-        /// <param name="team">Les paramètres de la team</param>
+        /// <param name="summonerName">Le nom de la team</param>
+        /// <param name="teamName">Les paramètres de la team</param>
         public static void AddTeamForSummoner(string summonerName, string teamName)
         {
             if (!RankedTeamsForSummoner.ContainsKey(summonerName))
@@ -84,9 +84,9 @@ namespace LolStatistics.Web
         }
 
         /// <summary>
-        /// Récupère une team si elle est déjà connue
+        /// Récupère une team d'un invocateur si elle est déjà connue
         /// </summary>
-        /// <param name="teamName"></param>
+        /// <param name="summonerName"></param>
         /// <returns></returns>
         public static List<string> GetTeamsForSummoner(string summonerName)
         {

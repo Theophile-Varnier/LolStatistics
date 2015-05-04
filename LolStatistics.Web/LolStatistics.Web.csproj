@@ -4991,7 +4991,9 @@
     <Content Include="Medias\sounds\Vladimir.mp3" />
     <Content Include="Medias\sounds\Volibear.mp3" />
     <Content Include="Medias\sounds\Warwick.mp3" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -5035,6 +5037,7 @@
     <Content Include="Views\TeamStalker\Index.cshtml" />
     <Content Include="Views\Shared\Partial\TeamList.cshtml" />
     <Content Include="Views\Shared\Partial\TeamStalk.cshtml" />
+    <Content Include="Views\Shared\Partial\SummonerStats.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
