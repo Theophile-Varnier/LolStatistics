@@ -19,6 +19,7 @@
         $("#stalk").empty();
         $("#stalkerLoader").removeClass("hidden");
         $("#stalk").addClass("hidden");
+        var summoners = 0;
         $.ajax({
             url: "TeamStalker/TeamMembers",
             type: "POST",
@@ -30,15 +31,18 @@
             $("#stalk").removeClass("hidden");
             for (var i in array) {
                 $.ajax({
-                        url: "TeamStalker/SummonerStats",
-                        type: "GET",
-                        data: "summonerId=" + array[i]
-                    })
-                    .done(function(response) {
+                    url: "TeamStalker/SummonerStats",
+                    type: "GET",
+                    data: "summonerId=" + array[i]
+                })
+                    .done(function (response) {
                         $("#stalk").append(response);
+                        summoners++;
+                        if (summoners == array.length) {
+                            $("#stalkerLoader").addClass("hidden");
+                        }
                     });
             }
-            $("#stalkerLoader").addClass("hidden");
         });
 
     });

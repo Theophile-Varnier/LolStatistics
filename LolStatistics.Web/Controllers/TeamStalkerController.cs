@@ -1,4 +1,5 @@
-﻿using LolStatistics.Web.Models.WebServices;
+﻿using LolStatistics.Web.Models;
+using LolStatistics.Web.Models.WebServices;
 using LolStatistics.Web.Services;
 using LolStatistics.WebServiceConsumers;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace LolStatistics.Web.Controllers
     public class TeamStalkerController : Controller
     {
         private RankedTeamService service = new RankedTeamService();
+        private RankedStatsService statsService = new RankedStatsService();
         // GET: TeamStalker
         public ActionResult Index()
         {
@@ -43,6 +45,7 @@ namespace LolStatistics.Web.Controllers
         [HttpGet]
         public ActionResult SummonerStats(long summonerId)
         {
+            StatisticsViewModel participations = statsService.GetStatsForSummoner(summonerId);
             return PartialView("Partial/SummonerStats", summonerId);
         }
     }

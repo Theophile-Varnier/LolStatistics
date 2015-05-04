@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI.WebControls.WebParts;
-using LolStatistics.Model.Participant;
+﻿using LolStatistics.Model.Participant;
 using LolStatistics.Model.Static;
+using System;
+using System.Collections.Generic;
 
 namespace LolStatistics.Web.Models.Mapper
 {
@@ -22,7 +19,7 @@ namespace LolStatistics.Web.Models.Mapper
                 FillDictionaryWithParticipant(res.ChampionStatistics, champion.Name, participant);
 
                 // Initialisation des statistiques par rôle
-                string key = GetChampionRole(participant.Timeline.Lane, participant.Timeline.Role);
+                string key = GetChampionRole(participant.Timeline == null ? "UKNOWN" : participant.Timeline.Lane, participant.Timeline == null ? "UKNOWN" : participant.Timeline.Role);
 
                 FillDictionaryWithParticipant(res.RoleStatistics, key, participant);
 

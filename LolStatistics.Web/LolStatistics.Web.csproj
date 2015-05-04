@@ -201,6 +201,7 @@
     <Compile Include="Models\WebServices\TeamMemberDto.cs" />
     <Compile Include="Models\WebServices\TeamStats.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\RankedStatsService.cs" />
     <Compile Include="Services\RankedTeamService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
