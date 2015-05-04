@@ -1,1 +1,15 @@
-﻿<div style="color:white;">@Model</div>
+﻿@using LolStatistics.Web.Models
+@model StatisticsViewModel
+
+<tr>
+    <td rowspan="3"></td>
+    <td>@Model.Mains[0]</td>
+    <td>@Model.ChampionStatistics[@Model.Mains[0]].WinRate</td>
+</tr>
+@for (int i = 1; i < Math.Min(3, @Model.Mains.Count); i++)
+{
+    <tr>
+        <td>@Model.Mains[i]</td>
+        <td>@Model.ChampionStatistics[@Model.Mains[i]].WinRate</td>
+    </tr>
+}

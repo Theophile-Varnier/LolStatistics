@@ -46,7 +46,7 @@ namespace LolStatistics.Web.Controllers
         public ActionResult SummonerStats(long summonerId)
         {
             StatisticsViewModel participations = statsService.GetStatsForSummoner(summonerId);
-            return PartialView("Partial/SummonerStats", summonerId);
+            return PartialView("Partial/SummonerStats", participations);
         }
     }
 }

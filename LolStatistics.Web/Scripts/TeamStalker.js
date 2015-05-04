@@ -1,5 +1,5 @@
 ﻿$(function () {
-
+    
     $("#searchTeams").on("click", function () {
         $("#loader").removeClass("hidden");
         $("#teamNames").addClass("hidden");
@@ -16,7 +16,7 @@
     });
 
     $("#teamNames").on("click", "#stalkTeam", function () {
-        $("#stalk").empty();
+        $("#stalk tbody").empty();
         $("#stalkerLoader").removeClass("hidden");
         $("#stalk").addClass("hidden");
         var summoners = 0;
@@ -36,7 +36,7 @@
                     data: "summonerId=" + array[i]
                 })
                     .done(function (response) {
-                        $("#stalk").append(response);
+                        $("#stalk tbody").append(response);
                         summoners++;
                         if (summoners == array.length) {
                             $("#stalkerLoader").addClass("hidden");
