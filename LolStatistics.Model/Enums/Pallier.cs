@@ -3,7 +3,8 @@ namespace LolStatistics.Model.Enums
 {
     public enum Pallier
     {
-        BRONZE = 0,
+        UNRANKED = 0,
+        BRONZE,
         SILVER,
         GOLD,
         PLATINUM,

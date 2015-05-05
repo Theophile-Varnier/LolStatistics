@@ -32,8 +32,9 @@ textarea {
     max-width: 280px;
 }
 
-.nav.navbar {
-    background-color: #000064;
+.navbar-inverse {
+    background-color: rgb(0, 0, 50);
+    background-image: none;
 }
 
 .match-history {
