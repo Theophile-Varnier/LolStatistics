@@ -1,19 +1,27 @@
 ﻿@using LolStatistics.Web.Models
 @model TeamStalkerViewModel
 
-<tr>
-    <td rowspan="@Math.Min(3, @Model.Mains.Count)">@Model.Name</td>
-    <td>@Model.Mains[0]</td>
-    <td>@Model.ChampionStatistics[@Model.Mains[0]].TotalGames</td>
-    <td>@Model.ChampionStatistics[@Model.Mains[0]].WinRate%</td>
-    <td>@Model.ChampionStatistics[@Model.Mains[0]].KDA</td>
-</tr>
-@for (int i = 1; i < Math.Min(3, @Model.Mains.Count); i++)
+@if (Model.Champions.Any())
 {
     <tr>
-        <td>@Model.Mains[i]</td>
-        <td>@Model.ChampionStatistics[@Model.Mains[i]].TotalGames</td>
-        <td>@Model.ChampionStatistics[@Model.Mains[i]].WinRate%</td>
-    <td>@Model.ChampionStatistics[@Model.Mains[i]].KDA</td>
+        <td>@Model.Name</td>
+        <td>@Model.Classement</td>
     </tr>
+    <tr>
+        <td rowspan="@Math.Min(3, @Model.Mains.Count)"></td>
+        <td rowspan="@Math.Min(3, @Model.Mains.Count)"></td>
+        <td>@Model.Mains[0].Name</td>
+        <td>@Model.ChampionStats(@Model.Mains[0].Id).TotalGames</td>
+        <td>@Model.ChampionStats(@Model.Mains[0].Id).WinRate%</td>
+        <td>@Model.ChampionStats(@Model.Mains[0].Id).KDA</td>
+    </tr>
+    for (int i = 1; i < Math.Min(3, @Model.Mains.Count); i++)
+    {
+        <tr>
+            <td>@Model.Mains[i].Name</td>
+            <td>@Model.ChampionStats(@Model.Mains[i].Id).TotalGames</td>
+            <td>@Model.ChampionStats(@Model.Mains[i].Id).WinRate%</td>
+            <td>@Model.ChampionStats(@Model.Mains[i].Id).KDA</td>
+        </tr>
+    }
 }

@@ -28,21 +28,6 @@ namespace LolStatistics.Web.Models.Mapper
             return res;
         }
 
-        public static TeamStalkerViewModel MapToTeamModel(IList<Participant> participations)
-        {
-            TeamStalkerViewModel res = new TeamStalkerViewModel();
-
-            foreach (Participant participant in participations)
-            {
-                Champion champion = LolStatisticsCache.Champion(participant.ChampionId);
-
-                // Initialisation des statistiques par champion
-                FillDictionaryWithParticipant(res.ChampionStatistics, champion.Name, participant);
-            }
-
-            return res;
-        }
-
         private static void FillDictionaryWithParticipant(Dictionary<string, ChampionStatisticsViewModel> dico, string key, Participant participant)
         {
             if (!dico.ContainsKey(key))

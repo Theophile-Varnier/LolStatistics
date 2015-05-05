@@ -38,11 +38,15 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App\League.cs" />
+    <Compile Include="App\LeagueEntry.cs" />
+    <Compile Include="App\LeagueInfo.cs" />
     <Compile Include="App\Summoner.cs" />
     <Compile Include="Dto\GameSummonerDto.cs" />
     <Compile Include="Dto\ParticipantDto.cs" />
     <Compile Include="Dto\StatsDto.cs" />
     <Compile Include="Dto\TeamMemberDto.cs" />
+    <Compile Include="Enums\Pallier.cs" />
     <Compile Include="Game\Game.cs" />
     <Compile Include="Game\GameHistory.cs" />
     <Compile Include="Game\MatchHistory.cs" />

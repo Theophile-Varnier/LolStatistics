@@ -122,12 +122,9 @@ textarea {
     padding: 20px;
 }
 
-.statistics-container h2{
-    color: white;
-}
-
 .statistics-container label, .statistics-container a,
-.statistics-container table, .statistics-container .fa {
+.statistics-container table, .statistics-container .fa,
+.statistics-container h2 {
     color: white;
 }
 

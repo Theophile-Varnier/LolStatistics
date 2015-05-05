@@ -194,6 +194,7 @@
     <Compile Include="Models\Mapper\StatisticsMapper.cs" />
     <Compile Include="Models\StatisticsViewModel.cs" />
     <Compile Include="Models\TeamStalkerViewModel.cs" />
+    <Compile Include="Models\WebServices\ChampionStats.cs" />
     <Compile Include="Models\WebServices\RankedTeam.cs" />
     <Compile Include="Models\WebServices\RankedTeamForSummoner.cs" />
     <Compile Include="Models\WebServices\RosterDto.cs" />
