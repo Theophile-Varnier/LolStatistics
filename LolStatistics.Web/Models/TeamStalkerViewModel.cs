@@ -10,5 +10,15 @@ namespace LolStatistics.Web.Models
         public string Name { get; set; }
 
         public Dictionary<string, ChampionStatisticsViewModel> ChampionStatistics { get; set; }
+
+        public List<string> Mains
+        {
+            get { return ChampionStatistics.OrderByDescending(f => f.Value.TotalGames).Select(f => f.Key).ToList(); }
+        }
+
+        public TeamStalkerViewModel()
+        {
+            ChampionStatistics = new Dictionary<string, ChampionStatisticsViewModel>();
+        }
     }
 }

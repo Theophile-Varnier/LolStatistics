@@ -2,6 +2,7 @@
 using LolStatistics.Model.Participant;
 using LolStatistics.Web.Models;
 using LolStatistics.Web.Models.Mapper;
+using LolStatistics.Web.Models.WebServices;
 using LolStatistics.WebServiceConsumers;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,7 +13,7 @@ namespace LolStatistics.Web.Services
 {
     public class RankedStatsService
     {
-        public StatisticsViewModel GetStatsForSummoner(long summonerId)
+        public TeamStalkerViewModel GetStatsForSummoner(long summonerId)
         {
             List<Participant> participations = new List<Participant>();
             WebServiceConsumer<MatchHistory> rankedGameWebServiceConsumer = new WebServiceConsumer<MatchHistory>(ConfigurationManager.AppSettings["BaseUri"], ConfigurationManager.AppSettings["SummonerHistoryUrl"]);
@@ -42,7 +43,23 @@ namespace LolStatistics.Web.Services
                 parameters["endIndex"] = (beginIndex + 14).ToString(CultureInfo.InvariantCulture);
             }
 
-            return StatisticsMapper.MapToModel(participations);
+            TeamStalkerViewModel res = StatisticsMapper.MapToTeamModel(participations);
+
+            string summonerName = LolStatisticsCache.GetSummonerName(summonerId);
+            if (summonerName != null)
+            {
+                res.Name = summonerName;
+            }
+            else
+            {
+                WebServiceConsumer<Summoners> summonerWebServiceConsumer = new WebServiceConsumer<Summoners>(ConfigurationManager.AppSettings["BaseUri"], ConfigurationManager.AppSettings["SummonerByIdApi"]);
+                Dictionary<string, string> parametres = new Dictionary<string, string> { { "summonerIds", summonerId.ToString(CultureInfo.InvariantCulture) } };
+                Summoners current = summonerWebServiceConsumer.Consume(parametres);
+                res.Name = current.First().Value.Name;
+                LolStatisticsCache.AddSummonerName(summonerId, res.Name);
+            }
+
+            return res;
         }
     }
 }

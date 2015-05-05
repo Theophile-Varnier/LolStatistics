@@ -23,10 +23,10 @@ namespace LolStatistics.Web.Controllers
         public ActionResult SummonerTeams(string summonerName)
         {
             WebServiceConsumer<Summoners> webServiceConsumer = new WebServiceConsumer<Summoners>(ConfigurationManager.AppSettings["BaseUri"], ConfigurationManager.AppSettings["SummonerApi"]);
-            Dictionary<string, string> parametres = new Dictionary<string, string>();
-            parametres.Add("summonerNames", summonerName);
+            Dictionary<string, string> parametres = new Dictionary<string, string> { { "summonerNames", summonerName } };
             Summoners current = webServiceConsumer.Consume(parametres);
             IList<RankedTeam> rankedTeams = service.GetRankedTeamsForSummoner(current.First().Value);
+            LolStatisticsCache.AddSummonerName(current.First().Value.Id, summonerName);
             return PartialView("Partial/TeamList", rankedTeams);
         }
 
@@ -45,7 +45,7 @@ namespace LolStatistics.Web.Controllers
         [HttpGet]
         public ActionResult SummonerStats(long summonerId)
         {
-            StatisticsViewModel participations = statsService.GetStatsForSummoner(summonerId);
+            TeamStalkerViewModel participations = statsService.GetStatsForSummoner(summonerId);
             return PartialView("Partial/SummonerStats", participations);
         }
     }

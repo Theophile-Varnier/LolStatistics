@@ -14,10 +14,5 @@ namespace LolStatistics.Web.Models
             ChampionStatistics = new Dictionary<string, ChampionStatisticsViewModel>();
             RoleStatistics = new Dictionary<string, ChampionStatisticsViewModel>();
         }
-
-        public List<string> Mains
-        {
-            get { return ChampionStatistics.OrderByDescending(f => f.Value.TotalGames).Select(f => f.Key).ToList(); }
-        }
     }
 }

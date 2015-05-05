@@ -1,8 +1,8 @@
 ﻿@using LolStatistics.Web.Models
-@model StatisticsViewModel
+@model TeamStalkerViewModel
 
 <tr>
-    <td rowspan="3"></td>
+    <td rowspan="@Math.Min(3, @Model.Mains.Count)">@Model.Name</td>
     <td>@Model.Mains[0]</td>
     <td>@Model.ChampionStatistics[@Model.Mains[0]].TotalGames</td>
     <td>@Model.ChampionStatistics[@Model.Mains[0]].WinRate%</td>

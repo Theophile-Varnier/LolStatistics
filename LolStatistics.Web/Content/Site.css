@@ -32,6 +32,10 @@ textarea {
     max-width: 280px;
 }
 
+.nav.navbar {
+    background-color: #000064;
+}
+
 .match-history {
     display: table;
     width: 100%;
