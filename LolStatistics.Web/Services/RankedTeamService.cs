@@ -1,4 +1,5 @@
-﻿using LolStatistics.Web.Models.WebServices;
+﻿using System.Globalization;
+using LolStatistics.Web.Models.WebServices;
 using LolStatistics.WebServiceConsumers;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace LolStatistics.Web.Services
                 return rt;
             }
             WebServiceConsumer<JObject> webServiceConsumer = new WebServiceConsumer<JObject>(ConfigurationManager.AppSettings["BaseUri"], ConfigurationManager.AppSettings["RankedTeamApi"]);
-            Dictionary<string, string> parametres = new Dictionary<string, string> { { "summonerIds", summoner.Id.ToString() } };
+            Dictionary<string, string> parametres = new Dictionary<string, string> { { "summonerIds", summoner.Id.ToString(CultureInfo.InvariantCulture) } };
             var res = webServiceConsumer.Consume(parametres);
             rt = JsonConvert.DeserializeObject<List<RankedTeam>>(res.GetValue(summoner.Id.ToString()).ToString());
             foreach (RankedTeam team in rt)

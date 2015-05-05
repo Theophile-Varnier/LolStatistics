@@ -182,6 +182,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DictionaryExtensions.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChampionStatisticsViewModel.cs" />
     <Compile Include="Models\GameHistoryViewModel.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="Models\Mapper\StatisticsMapper.cs" />
     <Compile Include="Models\StatisticsViewModel.cs" />
     <Compile Include="Models\TeamStalkerViewModel.cs" />
+    <Compile Include="Models\WebServices\ChampionStats.cs" />
     <Compile Include="Models\WebServices\RankedTeam.cs" />
     <Compile Include="Models\WebServices\RankedTeamForSummoner.cs" />
     <Compile Include="Models\WebServices\RosterDto.cs" />

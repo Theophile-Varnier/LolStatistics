@@ -1,5 +1,6 @@
 ﻿using LolStatistics.DataAccess.Repositories;
 using LolStatistics.Model.Static;
+using LolStatistics.Web.Helpers;
 using LolStatistics.Web.Models.WebServices;
 using System.Collections.Generic;
 
@@ -13,6 +14,8 @@ namespace LolStatistics.Web
 
         private static Dictionary<string, List<string>> RankedTeamsForSummoner;
 
+        private static Dictionary<long, string> SummonersName; 
+
         public static bool IsInitialized { get; set; }
 
         /// <summary>
@@ -23,6 +26,7 @@ namespace LolStatistics.Web
             RankedTeams = new Dictionary<string, RankedTeam>();
             RankedTeamsForSummoner = new Dictionary<string, List<string>>();
             Champions = new Dictionary<int, Champion>();
+            SummonersName = new Dictionary<long, string>();
             ChampionRepository championRepository = new ChampionRepository();
             List<Champion> temp = championRepository.GetAllChampions();
 
@@ -40,7 +44,7 @@ namespace LolStatistics.Web
         /// <returns></returns>
         public static Champion Champion(int id)
         {
-            return Champions.ContainsKey(id) ? Champions[id] : null;
+            return Champions.GetOrDefault(id);
         }
 
         /// <summary>
@@ -63,7 +67,7 @@ namespace LolStatistics.Web
         /// <returns></returns>
         public static RankedTeam GetTeam(string teamName)
         {
-            return RankedTeams.ContainsKey(teamName) ? RankedTeams[teamName] : null;
+            return RankedTeams.GetOrDefault(teamName);
         }
 
         /// <summary>
@@ -90,7 +94,30 @@ namespace LolStatistics.Web
         /// <returns></returns>
         public static List<string> GetTeamsForSummoner(string summonerName)
         {
-            return RankedTeamsForSummoner.ContainsKey(summonerName) ? RankedTeamsForSummoner[summonerName] : null;
+            return RankedTeamsForSummoner.GetOrDefault(summonerName);
+        }
+
+        /// <summary>
+        /// Récupère le nom d'un invocateur connu par son id
+        /// </summary>
+        /// <param name="summonerId"></param>
+        /// <returns></returns>
+        public static string GetSummonerName(long summonerId)
+        {
+            return SummonersName.GetOrDefault(summonerId);
+        }
+
+        /// <summary>
+        /// Ajoute une association id->nom
+        /// </summary>
+        /// <param name="summonerId"></param>
+        /// <param name="summonerName"></param>
+        public static void AddSummonerName(long summonerId, string summonerName)
+        {
+            if (!SummonersName.ContainsKey(summonerId))
+            {
+                SummonersName.Add(summonerId, summonerName);
+            }
         }
     }
 }
