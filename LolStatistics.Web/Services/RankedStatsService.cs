@@ -34,8 +34,8 @@ namespace LolStatistics.Web.Services
                                 game.Participants.Remove(game.Participants.First(p => p.ParticipantId == pi.ParticipantId));
                             }
                         }
+                        participations.AddRange(game.Participants);
                     }
-                    participations.AddRange(game.Participants);
                 }
                 beginIndex += 15;
                 parameters["beginIndex"] = (beginIndex).ToString(CultureInfo.InvariantCulture);

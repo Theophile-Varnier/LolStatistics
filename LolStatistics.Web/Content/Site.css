@@ -123,15 +123,11 @@ textarea {
 }
 
 .statistics-container label, .statistics-container a,
-.statistics-container th, .statistics-container .fa {
+.statistics-container table, .statistics-container .fa {
     color: white;
 }
 
-.statistics-container tbody {
-    background-color: white;
-}
-
-.statistics-container label select, input {
+.statistics-container label select, input, .statistics-container table.dataTable tbody {
     color: black;
 }
 

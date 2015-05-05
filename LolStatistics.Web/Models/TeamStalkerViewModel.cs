@@ -7,6 +7,8 @@ namespace LolStatistics.Web.Models
 {
     public class TeamStalkerViewModel
     {
-        IList<ChampionStatisticsViewModel> Membres { get; set; }
+        public string Name { get; set; }
+
+        public Dictionary<string, ChampionStatisticsViewModel> ChampionStatistics { get; set; }
     }
 }
