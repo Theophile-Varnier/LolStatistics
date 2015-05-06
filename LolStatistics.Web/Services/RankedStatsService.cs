@@ -21,9 +21,9 @@ namespace LolStatistics.Web.Services
             // TODO: Saison actuelle à paramétrer en base
             TeamStalkerViewModel res = GetRankedStats(summonerId);
 
-            res.Name = GetSummonerName(summonerId);
+            res.Name = LolStatisticsCache.GetSummonerName(summonerId);
 
-            res.LeagueInfo = getSummonerLeagueEntry(summonerId);
+            res.LeagueInfo = GetSummonerLeagueEntry(summonerId);
 
             return res;
         }
@@ -37,33 +37,16 @@ namespace LolStatistics.Web.Services
         {
             WebServiceConsumer<TeamStalkerViewModel> webServiceConsumer = new WebServiceConsumer<TeamStalkerViewModel>(ConfigurationManager.AppSettings["BaseUri"], ConfigurationManager.AppSettings["SummonerRankedStats"]);
             Dictionary<string, string> parameters = new Dictionary<string, string> { { "summonerId", summonerId.ToString(CultureInfo.InvariantCulture) } };
-            return webServiceConsumer.Consume(parameters);
+            TeamStalkerViewModel res = webServiceConsumer.Consume(parameters);
+            return res ?? new TeamStalkerViewModel(summonerId);
         }
 
         /// <summary>
-        /// Récupère le nom d'un invocateur à l'aide de son id
-        /// Via le cache si on le connaît
-        /// Via un web service sinon
+        /// Récupère les informations de league d'un invocateur
         /// </summary>
         /// <param name="summonerId"></param>
         /// <returns></returns>
-        private string GetSummonerName(long summonerId)
-        {
-            string summonerName = LolStatisticsCache.GetSummonerName(summonerId);
-            if (summonerName != null)
-            {
-                return summonerName;
-            }
-
-            WebServiceConsumer<Summoners> summonerWebServiceConsumer = new WebServiceConsumer<Summoners>(ConfigurationManager.AppSettings["BaseUri"], ConfigurationManager.AppSettings["SummonerByIdApi"]);
-            Dictionary<string, string> parametres = new Dictionary<string, string> { { "summonerIds", summonerId.ToString(CultureInfo.InvariantCulture) } };
-            Summoners current = summonerWebServiceConsumer.Consume(parametres);
-            string name = current.First().Value.Name;
-            LolStatisticsCache.AddSummonerName(summonerId, name);
-            return name;
-        }
-
-        private LeagueEntry getSummonerLeagueEntry(long summonerId)
+        private LeagueEntry GetSummonerLeagueEntry(long summonerId)
         {
             WebServiceConsumer<LeagueInfo> webServiceConsumer = new WebServiceConsumer<LeagueInfo>(ConfigurationManager.AppSettings["BaseUri"], ConfigurationManager.AppSettings["LeagueInfoApi"]);
             Dictionary<string, string> parameters = new Dictionary<string, string> { { "summonerId", summonerId.ToString(CultureInfo.InvariantCulture) } };

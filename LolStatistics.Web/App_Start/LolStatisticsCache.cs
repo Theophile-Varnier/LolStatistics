@@ -1,8 +1,12 @@
-﻿using LolStatistics.DataAccess.Repositories;
+﻿using System.Configuration;
+using System.Globalization;
+using System.Linq;
+using LolStatistics.DataAccess.Repositories;
 using LolStatistics.Model.Static;
 using LolStatistics.Web.Helpers;
 using LolStatistics.Web.Models.WebServices;
 using System.Collections.Generic;
+using LolStatistics.WebServiceConsumers;
 
 namespace LolStatistics.Web
 {
@@ -104,7 +108,10 @@ namespace LolStatistics.Web
         /// <returns></returns>
         public static string GetSummonerName(long summonerId)
         {
-            return SummonersName.GetOrDefault(summonerId);
+            WebServiceConsumer<Summoners> summonerWebServiceConsumer = new WebServiceConsumer<Summoners>(ConfigurationManager.AppSettings["BaseUri"], ConfigurationManager.AppSettings["SummonerByIdApi"]);
+            Dictionary<string, string> parametres = new Dictionary<string, string> { { "summonerIds", summonerId.ToString(CultureInfo.InvariantCulture) } };
+
+            return SummonersName.GetOrRetrieve(summonerId, summonerWebServiceConsumer, parametres, (s => s.First().Value.Name));
         }
 
         /// <summary>

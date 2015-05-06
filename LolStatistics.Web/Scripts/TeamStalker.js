@@ -1,5 +1,5 @@
 ﻿$(function () {
-    
+
     $("#searchTeams").on("click", function () {
         $("#loader").removeClass("hidden");
         $("#teamNames").addClass("hidden");
@@ -17,34 +17,25 @@
     });
 
     $("#teamNames").on("click", "#stalkTeam", function () {
+        $("#errorMessage").addClass("hidden");
         $("#stalk tbody").empty();
         $("#stalkerLoader").removeClass("hidden");
         $("#stalk").addClass("hidden");
-        var summoners = 0;
         $.ajax({
-            url: "TeamStalker/TeamMembers",
-            type: "POST",
+            url: "TeamStalker/TeamStats",
+            type: "GET",
             data: {
                 teamName: $("#team").val()
             }
         }).done(function (data) {
-            var array = JSON.parse(data);
             $("#stalk").removeClass("hidden");
-            for (var i in array) {
-                $.ajax({
-                    url: "TeamStalker/SummonerStats",
-                    type: "GET",
-                    data: "summonerId=" + array[i]
-                })
-                    .done(function (response) {
-                        $("#stalk tbody").append(response);
-                        summoners++;
-                        if (summoners == array.length) {
-                            $("#stalkerLoader").addClass("hidden");
-                        }
-                    });
-            }
-        });
+            $("#stalkerLoader").addClass("hidden");
+            $("#stalk tbody").append(data);
+        })
+            .error(function () {
+                $("#stalkerLoader").addClass("hidden");
+                $("#errorMessage").removeClass("hidden");
+            });
 
     });
 })

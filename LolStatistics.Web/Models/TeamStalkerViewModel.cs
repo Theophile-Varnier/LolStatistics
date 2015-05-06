@@ -37,12 +37,19 @@ namespace LolStatistics.Web.Models
         [JsonIgnore]
         public LeagueEntry LeagueInfo { get; set; }
 
+        [JsonIgnore]
         public string Classement
         {
             get
             {
                 return string.Concat(LeagueInfo.Tier.ToString(), " ", LeagueInfo.Division);
             }
+        }
+
+        public TeamStalkerViewModel(long summonerId)
+        {
+            SummonerId = summonerId;
+            Champions = new List<ChampionStats>();
         }
     }
 }

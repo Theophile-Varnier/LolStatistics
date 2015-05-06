@@ -1,27 +1,42 @@
 ﻿@using LolStatistics.Web.Models
-@model TeamStalkerViewModel
+@model List<TeamStalkerViewModel>
 
 
-<tr>
-    <th class="no-border-top">@Model.Name</th>
-</tr>
-@if (Model.Champions.Any())
-{
-    <tr>
-        <td rowspan="@Math.Min(3, @Model.Mains.Count)">@Model.Classement</td>
-        <td rowspan="@Math.Min(3, @Model.Mains.Count)"></td>
-        <td>@Model.Mains[0].Name</td>
-        <td>@Model.ChampionStats(@Model.Mains[0].Id).TotalGames</td>
-        <td>@Model.ChampionStats(@Model.Mains[0].Id).WinRate%</td>
-        <td>@Model.ChampionStats(@Model.Mains[0].Id).KDA</td>
-    </tr>
-    for (int i = 1; i < Math.Min(3, @Model.Mains.Count); i++)
+    @foreach (TeamStalkerViewModel subModel in Model)
     {
         <tr>
-            <td>@Model.Mains[i].Name</td>
-            <td>@Model.ChampionStats(@Model.Mains[i].Id).TotalGames</td>
-            <td>@Model.ChampionStats(@Model.Mains[i].Id).WinRate%</td>
-            <td>@Model.ChampionStats(@Model.Mains[i].Id).KDA</td>
+            <th class="no-border-top">@subModel.Name</th>
         </tr>
+        if (subModel.Champions.Any())
+        {
+            <tr>
+                <td rowspan="@Math.Min(3, @subModel.Mains.Count)">@subModel.Classement</td>
+                <td rowspan="@Math.Min(3, @subModel.Mains.Count)">@subModel.LeagueInfo.LeaguePoints LP</td>
+                <td>@subModel.Mains[0].Name</td>
+                <td>@subModel.ChampionStats(@subModel.Mains[0].Id).TotalGames</td>
+                <td>@subModel.ChampionStats(@subModel.Mains[0].Id).WinRate%</td>
+                <td>@subModel.ChampionStats(@subModel.Mains[0].Id).KDA</td>
+            </tr>
+            for (int i = 1; i < Math.Min(3, @subModel.Mains.Count); i++)
+            {
+                <tr>
+                    <td>@subModel.Mains[i].Name</td>
+                    <td>@subModel.ChampionStats(@subModel.Mains[i].Id).TotalGames</td>
+                    <td>@subModel.ChampionStats(@subModel.Mains[i].Id).WinRate%</td>
+                    <td>@subModel.ChampionStats(@subModel.Mains[i].Id).KDA</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td>@subModel.Classement</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr></tr>
+        }
     }
-}

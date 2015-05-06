@@ -4,9 +4,6 @@
     background-color: darkgray;
 }
 
-html {
-}
-
 #top {
     position: absolute;
     top: 0;
@@ -17,6 +14,14 @@ html {
 }
 
 .no-border-bottom {
+    border-bottom: none !important;
+}
+
+tr.no-border-top th, tr.no-border-top td {
+    border-top: none !important;
+}
+
+tr.no-border-bottom th, tr.no-border-bottom td {
     border-bottom: none !important;
 }
 
@@ -39,43 +44,6 @@ select,
 textarea {
     max-width: 280px;
 }
-
-.navbar-inverse {
-    background-color: rgb(0, 0, 50);
-    background-image: none;
-}
-
-.match-history {
-    display: table;
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 10px;
-}
-
-    .match-history > div {
-        margin-top: 10px;
-        display: table-row;
-        height: 75px;
-    }
-
-        .match-history > div > div {
-            max-width: 75px;
-            padding-left: 10px;
-            display: table-cell;
-            vertical-align: middle;
-            border-top: 1px solid black;
-            border-bottom: 1px solid black;
-        }
-
-            .match-history > div > div:first-child {
-                border-left: 1px solid black;
-                /*border-radius: 10px 0 0 10px;*/
-            }
-
-            .match-history > div > div:last-child {
-                border-right: 1px solid black;
-                /*border-radius: 0 10px 10px 0;*/
-            }
 
 .champion-thumbnail-container > .champion-thumbnail {
     display: inline-block;

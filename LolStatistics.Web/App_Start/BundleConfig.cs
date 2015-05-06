@@ -8,6 +8,9 @@ namespace LolStatistics.Web
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/app").Include(
+                        "~/Scripts/app.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -25,11 +28,13 @@ namespace LolStatistics.Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/bootstrap-theme.css",
+                //"~/Content/bootstrap-theme.css",
                       "~/Content/site.css",
                       "~/Content/jquery.dataTables.css",
                       "~/Content/jquery.dataTables_themeroller.css",
                       "~/Content/font-awesome.min.css"));
+
+            bundles.Add(new LessBundle("~/Content/less").Include("~/Content/less/*.less"));
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using LolStatistics.Model.Enums;
+﻿using LolStatistics.Model.Enums;
 using Newtonsoft.Json;
 
 namespace LolStatistics.Model.App

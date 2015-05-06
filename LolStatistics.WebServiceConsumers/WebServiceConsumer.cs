@@ -86,18 +86,31 @@ namespace LolStatistics.WebServiceConsumers
             }
             catch (WebException we)
             {
-                // En cas d'erreur, on temporise avant de réessayer
-                // Jusqu'à un certain nombre de tentatives
-                if (nbTentatives >= 10)
+                switch (we.Status)
                 {
-                    logger.Error("Nombre max de tentatives atteint. Mise à jour annulée.");
-                    return null;
+                    case WebExceptionStatus.ProtocolError:
+                        switch ((int)((HttpWebResponse)we.Response).StatusCode)
+                        {
+                            case 429:
+                                // En cas d'erreur, on temporise avant de réessayer
+                                // Jusqu'à un certain nombre de tentatives
+                                if (nbTentatives >= 10)
+                                {
+                                    logger.Error("Nombre max de tentatives atteint. Mise à jour annulée.");
+                                    return null;
+                                }
+                                logger.Info("Temporisation 10 secondes avant nouvel appel");
+                                nbTentatives++;
+                                Thread.Sleep(1000);
+                                return Consume(uriParameters, nbTentatives + 1);
+                            default:
+                                logger.Error(string.Format("Erreur {0} lors de l'appel au webservice : {1}", we.Status, we.Message));
+                                return null;
+                        }
+                    default:
+                        logger.Error(string.Format("Erreur {0} lors de l'appel au webservice : {1}", we.Status, we.Message));
+                        return null;
                 }
-                logger.Warn(string.Format("Erreur {0} lors de l'appel au webservice : {1}", we.Status, we.Message));
-                logger.Info("Temporisation 10 secondes avant nouvel appel");
-                nbTentatives++;
-                Thread.Sleep(10000);
-                return Consume(uriParameters, nbTentatives + 1);
             }
         }
 

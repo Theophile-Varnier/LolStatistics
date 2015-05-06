@@ -13,12 +13,22 @@ namespace LolStatistics.Web.Controllers
     {
         private RankedTeamService service = new RankedTeamService();
         private RankedStatsService statsService = new RankedStatsService();
+
         // GET: TeamStalker
+        /// <summary>
+        /// Vue initiale
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// Récupère l'ensemble des teams auxquelles appartient un invocateur
+        /// </summary>
+        /// <param name="summonerName">le nom de l'invocateur</param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult SummonerTeams(string summonerName)
         {
@@ -31,22 +41,20 @@ namespace LolStatistics.Web.Controllers
         }
 
         /// <summary>
-        /// Récupère la liste des ids des membres d'une team
+        /// Récupère l'ensemble des statistiques en ranked des membres d'une team
         /// </summary>
-        /// <param name="teamName">Le nom de la team</param>
+        /// <param name="teamName">Le nom de la team en question</param>
         /// <returns></returns>
-        [HttpPost]
-        public string TeamMembers(string teamName)
+        [HttpGet]
+        public ActionResult TeamStats(string teamName)
         {
             RankedTeam teamToStalk = LolStatisticsCache.GetTeam(teamName);
-            return System.Web.Helpers.Json.Encode(teamToStalk.Roster.Members.Select(m => m.PlayerId).ToList());
-        }
-
-        [HttpGet]
-        public ActionResult SummonerStats(long summonerId)
-        {
-            TeamStalkerViewModel participations = statsService.GetStatsForSummoner(summonerId);
-            return PartialView("Partial/SummonerStats", participations);
+            List<TeamStalkerViewModel> models = new List<TeamStalkerViewModel>();
+            foreach (long summonerId in teamToStalk.Roster.Members.Select(m => m.PlayerId))
+            {
+                models.Add(statsService.GetStatsForSummoner(summonerId));
+            }
+            return PartialView("Partial/SummonerStats", models.OrderByDescending(m => m.LeagueInfo.Tier).ThenBy(m => m.LeagueInfo.Division).ThenByDescending(m => m.LeagueInfo.LeaguePoints).ToList());
         }
     }
 }
