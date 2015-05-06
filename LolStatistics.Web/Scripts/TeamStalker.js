@@ -3,6 +3,7 @@
     $("#searchTeams").on("click", function () {
         $("#loader").removeClass("hidden");
         $("#teamNames").addClass("hidden");
+        $("#stalk").addClass("hidden");
         $.ajax({
             url: "TeamStalker/SummonerTeams",
             type: "GET",

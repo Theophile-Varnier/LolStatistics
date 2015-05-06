@@ -1,14 +1,14 @@
 ﻿@using LolStatistics.Web.Models
 @model TeamStalkerViewModel
 
+
+<tr>
+    <th class="no-border-top">@Model.Name</th>
+</tr>
 @if (Model.Champions.Any())
 {
     <tr>
-        <td>@Model.Name</td>
-        <td>@Model.Classement</td>
-    </tr>
-    <tr>
-        <td rowspan="@Math.Min(3, @Model.Mains.Count)"></td>
+        <td rowspan="@Math.Min(3, @Model.Mains.Count)">@Model.Classement</td>
         <td rowspan="@Math.Min(3, @Model.Mains.Count)"></td>
         <td>@Model.Mains[0].Name</td>
         <td>@Model.ChampionStats(@Model.Mains[0].Id).TotalGames</td>

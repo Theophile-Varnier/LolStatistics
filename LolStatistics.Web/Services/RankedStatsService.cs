@@ -69,18 +69,21 @@ namespace LolStatistics.Web.Services
             Dictionary<string, string> parameters = new Dictionary<string, string> { { "summonerId", summonerId.ToString(CultureInfo.InvariantCulture) } };
             LeagueInfo infos = webServiceConsumer.Consume(parameters);
             LeagueEntry res = new LeagueEntry();
-            List<League> leagues = infos.FirstOrDefault().Value;
-            if (leagues != null && leagues.Any())
+            if (infos != null)
             {
-                League entry = leagues.FirstOrDefault(l => l.Queue == "RANKED_SOLO_5x5");
-                if (entry != null)
+                List<League> leagues = infos.FirstOrDefault().Value;
+                if (leagues != null && leagues.Any())
                 {
-                    res.Tier = entry.Tier;
-                    LeagueEntry defaut = entry.Entries.FirstOrDefault(v => v.Id == summonerId.ToString(CultureInfo.InvariantCulture));
-                    if (defaut != null)
+                    League entry = leagues.FirstOrDefault(l => l.Queue == "RANKED_SOLO_5x5");
+                    if (entry != null)
                     {
-                        res.Division = defaut.Division;
-                        res.LeaguePoints = defaut.LeaguePoints;
+                        res.Tier = entry.Tier;
+                        LeagueEntry defaut = entry.Entries.FirstOrDefault(v => v.Id == summonerId.ToString(CultureInfo.InvariantCulture));
+                        if (defaut != null)
+                        {
+                            res.Division = defaut.Division;
+                            res.LeaguePoints = defaut.LeaguePoints;
+                        }
                     }
                 }
             }
