@@ -26,7 +26,7 @@ namespace LolStatistics.DataAccess.Repositories
         /// Insertion d'une partie
         /// </summary>
         /// <param name="game">Partie à insérer</param>
-        public void Insert(Game game)
+        public bool Insert(Game game)
         {
             using (DbConnection conn = Command.GetConnexion())
             {
@@ -46,10 +46,12 @@ namespace LolStatistics.DataAccess.Repositories
                             playerDao.Insert(player, conn, tran);
                         }
                         tran.Commit();
+                        return true;
                     }
                     catch (DaoException e)
                     {
                         tran.Rollback();
+                        return false;
                     }
                 }
             }

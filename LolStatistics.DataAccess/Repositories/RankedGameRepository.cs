@@ -31,8 +31,9 @@ namespace LolStatistics.DataAccess.Repositories
         /// Insertion d'une partie classée 
         /// </summary>
         /// <param name="t">La partie classée à insérer</param>
-        public void Insert(RankedGame t)
+        public bool Insert(RankedGame t)
         {
+            bool res = false;
             using (DbConnection conn = Command.GetConnexion())
             {
                 conn.Open();
@@ -66,6 +67,9 @@ namespace LolStatistics.DataAccess.Repositories
                             }
                             else
                             {
+                                // On renvoie true si au moins une donnée a été insérée
+                                res = true;
+
                                 // Insertion en base
                                 participantDao.Insert(participantDto, conn, tran);
                                 participant.Stats.ParticipantId = participant.ParticipantId;
@@ -83,10 +87,12 @@ namespace LolStatistics.DataAccess.Repositories
                             }
                         }
                         tran.Commit();
+                        return res;
                     }
                     catch (DaoException e)
                     {
                         tran.Rollback();
+                        return false;
                     }
                     finally
                     {

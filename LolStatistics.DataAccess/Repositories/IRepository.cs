@@ -12,7 +12,7 @@ namespace LolStatistics.DataAccess.Repositories
         /// Insertion d'un objet
         /// </summary>
         /// <param name="t">Objet à insérer</param>
-        void Insert(T t);
+        bool Insert(T t);
 
         /// <summary>
         /// Récupération en base depuis un id

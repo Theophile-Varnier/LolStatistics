@@ -7,7 +7,6 @@ using LolStatistics.WebServiceConsumers;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 
 namespace LolStatistics.Reprise
@@ -31,10 +30,14 @@ namespace LolStatistics.Reprise
                 parameters.Clear();
                 parameters.Add("summonerId", summoner.Id.ToString(CultureInfo.InvariantCulture));
                 int beginIndex = 0;
+                bool dataInserted = true;
                 parameters.Add("beginIndex", beginIndex.ToString(CultureInfo.InvariantCulture));
                 parameters.Add("endIndex", (beginIndex + 14).ToString(CultureInfo.InvariantCulture));
-                while ((games = rankedGameWebServiceConsumer.Consume(parameters)).Matches != null)
+
+                // On continue tant qu'on a des games et qu'on insert des données
+                while ((games = rankedGameWebServiceConsumer.Consume(parameters)).Matches != null && dataInserted)
                 {
+                    dataInserted = false;
                     foreach (RankedGame game in games.Matches)
                     {
                         if (game.Season == "SEASON2015")
@@ -46,7 +49,7 @@ namespace LolStatistics.Reprise
                                     game.Participants.Remove(game.Participants.First(p => p.ParticipantId == pi.ParticipantId));
                                 }
                             }
-                            rankedGameRepository.Insert(game);
+                            dataInserted |= rankedGameRepository.Insert(game);
                         }
                     }
                     beginIndex += 15;

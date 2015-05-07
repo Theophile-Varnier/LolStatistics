@@ -18,7 +18,7 @@ namespace LolStatistics.DataAccess.Repositories
         /// Insert un invocateur en base
         /// </summary>
         /// <param name="t"></param>
-        public void Insert(Summoner t)
+        public bool Insert(Summoner t)
         {
             throw new NotImplementedException();
         }

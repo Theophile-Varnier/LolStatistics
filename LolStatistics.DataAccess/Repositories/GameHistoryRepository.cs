@@ -23,7 +23,7 @@ namespace LolStatistics.DataAccess.Repositories
         /// Insertion d'un historique
         /// </summary>
         /// <param name="t">Historique à insérer</param>
-        public void Insert(GameHistory t)
+        public bool Insert(GameHistory t)
         {
             throw new NotImplementedException();
         }

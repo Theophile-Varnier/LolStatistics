@@ -22,7 +22,7 @@ namespace LolStatistics.DataAccess.Repositories
         private readonly ParticipantDao participantDao = new ParticipantDao();
         private readonly ParticipantStatsDao participantStatsDao = new ParticipantStatsDao();
 
-        public void Insert(RankedTeam t)
+        public bool Insert(RankedTeam t)
         {
             throw new NotImplementedException();
         }

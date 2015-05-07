@@ -18,7 +18,7 @@ namespace LolStatistics.DataAccess.Repositories
         /// Insert un champion en base
         /// </summary>
         /// <param name="t"></param>
-        public void Insert(Champion t)
+        public bool Insert(Champion t)
         {
             using (DbConnection conn = Command.GetConnexion())
             {
@@ -29,10 +29,12 @@ namespace LolStatistics.DataAccess.Repositories
                     {
                         championDao.Insert(t, conn, tran);
                         tran.Commit();
+                        return true;
                     }
                     catch (DaoException e)
                     {
                         tran.Rollback();
+                        return false;
                     }
                     finally
                     {
