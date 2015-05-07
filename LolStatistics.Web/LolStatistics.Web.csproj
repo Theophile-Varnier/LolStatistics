@@ -4941,6 +4941,7 @@
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="LolStatistics.Web.wpp.targets" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\HighCharts\dark-blue.js" />
     <Content Include="Scripts\HighCharts\dark-green.js" />
@@ -5005,12 +5006,6 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -5049,6 +5044,16 @@
     <Content Include="Views\Shared\Partial\TeamList.cshtml" />
     <Content Include="Views\Shared\Partial\TeamStalk.cshtml" />
     <Content Include="Views\Shared\Partial\SummonerStats.cshtml" />
+    <Content Include="Web.Template.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Template.Debug.config">
+      <DependentUpon>Web.Template.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Template.Release.config">
+      <DependentUpon>Web.Template.config</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -5103,9 +5108,11 @@
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-       Other similar extension points exist, see Microsoft.Common.targets.
+       Other similar extension points exist, see Microsoft.Common.targets. -->
+  <!--   <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\Web\Microsoft.Web.Publishing.Tasks.dll" />
   <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
+    <TransformXml Source="Web.config" Destination="$(OutputPath)$(TargetFileName).config" Transform="Web.$(Configuration).config" ContinueOnError="False" StackTrace="True" />
+  </Target> -->
+  <!-- <Target Name="AfterBuild">
   </Target> -->
 </Project>

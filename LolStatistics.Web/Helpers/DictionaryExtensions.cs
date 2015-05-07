@@ -1,8 +1,6 @@
-﻿using System;
+﻿using LolStatistics.WebServiceConsumers;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using LolStatistics.WebServiceConsumers;
 
 namespace LolStatistics.Web.Helpers
 {
