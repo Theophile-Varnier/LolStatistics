@@ -21,6 +21,7 @@
     var chartOptions = {
         colors: ["#c0c0c0", "#FFD700", "#cd7f32"],
         chart: {
+            backgroundColor: null,
             type: 'column'
         },
         title: {
@@ -28,7 +29,18 @@
         },
         xAxis: {
             type: 'category',
+            tickLength: 0,
             categories: labels
+        },
+        yAxis: {
+            gridLineColor: null,
+            tickLength: 0,
+            labels: {
+                enabled: false
+            },
+            title: {
+                text: null
+            }
         },
         legend: {
             enabled: false
